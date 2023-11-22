@@ -10,6 +10,8 @@ app.get('/api/utenti', (req, res) => {
   res.json({ "users": users });
 });
 
+//Questa è una prova di commit
+
 /* Il "catchall" server: se richiesto qualsiasi altro percorso rispetto alle app.get sopra, restituisci la tua pagina di default */
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/client/index.html'));
