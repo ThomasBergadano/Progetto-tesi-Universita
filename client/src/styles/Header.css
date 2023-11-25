@@ -1,0 +1,63 @@
+/*Header per intero*/
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 150px;
+  text-align: center;
+  background: #1abc9c;
+  color: white;
+  font-size: 20px;
+  box-shadow: 0 0 3px #000000;
+}
+
+/*Top header*/
+.top-header{
+  display: flex;
+  justify-content: space-between;
+  outline: none;
+  background-color: rgb(72, 212, 29);
+  border-bottom: 1px solid #000000;
+  height: 90px;
+  width: 100%;
+}
+
+#logo{
+  height: 50px;
+  width: 100px;
+  margin: 20px 0px 0px 20px;
+}
+
+#searchbar{
+  flex-grow: 1;
+  margin: 0 20px;
+}
+
+
+.navbar {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/*Bottom header*/
+li{
+  display: inline;
+  padding-left: 45px;
+}
+
+li a{
+  /*Questo è per gli a*/
+  color: #333;
+  text-decoration: none;
+  padding: 13px;
+}
+
+li a:hover{
+  color: royalblue;
+}

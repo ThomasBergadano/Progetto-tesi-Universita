@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import Header from './HeaderComponent.jsx'
-import Home from './HomeComponent.jsx'
-import About from './AboutComponent.jsx'
-import CatalogoProdotti from './CatalogoProdottiComponent.jsx'
-import IdeeSpunti from './IdeeSpuntiComponent.jsx'
-import AssistenzaClienti from './AssistenzaClientiComponent.jsx'
-import Dashboard from './DashboardComponent.jsx'
-import Login from './LoginComponent.jsx'
-import Signin from './SigninComponent.jsx'
-import Profilo from './ProfileComponent.jsx'
-import Wishlist from './WishlistComponent.jsx'
-import Carrello from './CarrelloComponent.jsx'
-import Footer from './FooterComponent.jsx'
-import { Route, Routes } from 'react-router-dom'
+import Home from '../pages/HomePage.jsx'
+import About from '../pages/AboutPage.jsx'
+import CatalogoProdotti from '../pages/CatalogoProdottiPage.jsx'
+import IdeeSpunti from '../pages/IdeeSpuntiPage.jsx'
+import AssistenzaClienti from '../pages/AssistenzaClientiPage.jsx'
+import Dashboard from '../pages/DashboardPage.jsx'
+import Login from '../pages/LoginPage.jsx'
+import Signin from '../pages/SigninPage.jsx'
+import Profilo from '../pages/ProfilePage.jsx'
+import Wishlist from '../pages/WishlistPage.jsx'
+import Carrello from '../pages/CarrelloPage.jsx'
+import { Navigate, Route, Routes } from 'react-router-dom'
 
 /* Autenticazione utente */
 const USER_TYPES = {
@@ -28,7 +26,16 @@ function RoutingComponents() {
       <Routes>
         <Route path="/" element={<Home/>}></Route>
         <Route path="/ChiSiamo" element={<About/>}></Route>
-        <Route path="*" element={<div>Page Not Found</div>}></Route>
+        <Route path="/CatalogoProdotti" element={<CatalogoProdotti/>}></Route>
+        <Route path="/Idee" element={<IdeeSpunti/>}></Route>
+        <Route path="/AssistenzaClienti" element={<AssistenzaClienti/>}></Route>
+        <Route path="/Dashboard" element={<Dashboard/>}></Route>
+        <Route path="/Login" element={<Login/>}></Route>
+        <Route path="/Signin" element={<Signin/>}></Route>
+        <Route path="/Profilo" element={<Profilo/>}></Route>
+        <Route path="/Wishlist" element={<Wishlist/>}></Route>
+        <Route path="/Carrello" element={<Carrello/>}></Route>
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
   )
 }
