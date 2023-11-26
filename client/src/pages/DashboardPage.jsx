@@ -6,7 +6,7 @@ function Dashboard() {
     return(
         <div>
             <Header/>
-            <p>Dashboardomponent</p>
+            <p>Dashboard Page</p>
             <Footer/>
         </div>
     )

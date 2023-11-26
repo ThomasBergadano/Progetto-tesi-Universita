@@ -1,3 +1,5 @@
+@import './constants.css';
+
 /*Header per intero*/
 header {
   display: flex;
@@ -9,7 +11,7 @@ header {
   width: 100%;
   height: 150px;
   text-align: center;
-  background: #1abc9c;
+  background: var(--maastrict-blue);
   color: white;
   font-size: 20px;
   box-shadow: 0 0 3px #000000;
@@ -20,8 +22,8 @@ header {
   display: flex;
   justify-content: space-between;
   outline: none;
-  background-color: rgb(72, 212, 29);
-  border-bottom: 1px solid #000000;
+  /*background-color: rgb(72, 212, 29);*/
+  border-bottom: 1px solid #ffffff;
   height: 90px;
   width: 100%;
 }
@@ -32,32 +34,98 @@ header {
   margin: 20px 0px 0px 20px;
 }
 
-#searchbar{
-  flex-grow: 1;
-  margin: 0 20px;
-}
-
-
-.navbar {
+/*Search Bar component dentro top header*/
+#searchbar {
+  width: 400px;
+  height: 40px;
+  margin-top: 24px; /*90-40=50/2=25*/
+  border: 1px solid #000;
+  border-radius: 15px;
+  font-size: 10px;
+  overflow: hidden;
   display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  flex-flow: row nowrap;
+  align-items: center; /* Aggiunto per centrare verticalmente */
+  margin-left: 20%; /* Aggiunto per spostare .search a destra */
+  margin-right: 0px; /* Aggiunto margine destro per separare da altri elementi */
 }
 
-/*Bottom header*/
-li{
-  display: inline;
-  padding-left: 45px;
+.search_input,
+.search_button{
+  background-color: rgb(255, 255, 255);
+  border: none;
+  outline: none;
+}
+
+.search_input{
+  padding: 16px;
+  width: 85%;
+}
+
+.search_button{
+  width: 15%;
+  height: 100%;
+  font-size: 1.5rem;
+  padding-right: 10px;
+  background-color: var(--firefly);
+  color: var(--maastrict-blue);
+  display: grid;
+  place-content: center;
+}
+
+.search_button:hover{
+  background-color: var(--maastrict-blue);
+  color: var(--firefly);
 }
 
 li a{
-  /*Questo è per gli a*/
-  color: #333;
+  color: #f3e9e9;
   text-decoration: none;
-  padding: 13px;
+  padding-left: 13px;
+  padding-right: 13px;
 }
 
 li a:hover{
-  color: royalblue;
+  color: var(--firefly);
+}
+
+#user-tools{
+  margin-top: 34px;/*90-20 (dimensione font)-1(border)=69/2=34...*/
+  margin-right: 10px;
+}
+
+.user-tool,
+.navbar-link{
+  margin-left: 45px;
+  display: inline;
+}
+
+/*Bottom header*/
+#navbar {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  margin-top: 20px;/*60-20 (dimensione font)=40/2=20*/
+  padding: 0px;
+}
+
+li.dashboard:hover {
+  background-color: var(--firefly);
+  color: red;
+  border-radius: 4px;
+}
+/*
+.dashboard {
+  background-color: var(--firefly);
+  border-radius: 10px;
+  padding: 4px 16px;
+  color: var(--maastrict-blue);
+  text-decoration: none;
+  margin-left: auto;
+}*/
+
+#navbar li.dashboard:hover {
+  background-color: red;
+  color: white;
+  border-radius: 3px;
 }
