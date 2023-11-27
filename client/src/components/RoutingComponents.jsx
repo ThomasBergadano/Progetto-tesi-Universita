@@ -12,15 +12,6 @@ import Wishlist from '../pages/WishlistPage.jsx'
 import Carrello from '../pages/CarrelloPage.jsx'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
-/* Autenticazione utente */
-const USER_TYPES = {
-  Admin: 'Administrator',
-  Employee: 'Employee',
-  Client: 'Client user',
-  User: 'Unlogged user'
-}
-const CURRENT_USER_TYPES = USER_TYPES.User
-
 function RoutingComponents() {  
   return(
       <Routes>

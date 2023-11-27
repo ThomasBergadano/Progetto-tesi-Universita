@@ -87,16 +87,6 @@ li a:hover{
   color: var(--firefly);
 }
 
-/*
-li:first-child a{
-  border-bottom: 1px solid yellow;
-}
-
-li a:active{
-  border-bottom: 1px solid yellow;
-}*/
-
-
 #user-tools{
   margin-top: 34px;/*90-20 (dimensione font)-1(border)=69/2=34...*/
   margin-right: 23px;
@@ -124,7 +114,6 @@ li a:active{
   list-style: none;
   align-items: center;
   margin-left: 262px;
-  /*margin-top: 20px;*//*60-20 (dimensione font)=40/2=20*/
   padding: 0px;
 }
 
@@ -158,5 +147,22 @@ li.dashboard a:hover {
   background-color: var(--maastrict-blue);
   border: 1px solid var(--firefly);
   color: var(--firefly);
-  border-radius: 3px;
+  border-radius: 4px;
+}
+
+li.navbar-link.active a,
+li.user-tool.active a{
+  color: var(--firefly);
+}
+
+li.dashboard.active a{
+  color: var(--firefly);
+  background-color: var(--maastrict-blue);
+  border: 1px solid var(--firefly);
+}
+li.dashboard.active a:hover{
+  color: var(--maastrict-blue);
+  background-color: var(--firefly);
+  border: 1px solid var(--maastrict-blue);
+  border-radius: 4px;
 }
