@@ -26,6 +26,7 @@ header {
   border-bottom: 1px solid #ffffff;
   height: 90px;
   width: 100%;
+  /*margin: 0px;*/
 }
 
 #logo{
@@ -36,6 +37,7 @@ header {
 
 /*Search Bar component dentro top header*/
 #searchbar {
+  position: absolute;
   width: 450px;
   height: 40px;
   margin-top: 24px; /*90-40=50/2=25*/
@@ -46,8 +48,7 @@ header {
   display: flex;
   flex-flow: row nowrap;
   align-items: center; /* Aggiunto per centrare verticalmente */
-  margin-left: 20%; /* Aggiunto per spostare .search a destra */
-  margin-right: 0px; /* Aggiunto margine destro per separare da altri elementi */
+  margin-left: 32%; /* Aggiunto per spostare .search a destra */
 }
 
 .search_input,
@@ -100,6 +101,53 @@ li a:hover{
 
 .user-tool{
   margin-left: 45px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+/*Elementi per i non users (profilo, wishlist, carrello)*/
+.user-tool-content{
+  display: inline-flex;
+  margin-left: 35px;
+  align-items: center;
+  /*background-color: purple;*/
+}
+.link{
+  display: inline-flex;
+}
+.user-tools-icons {
+  display: inline-flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.icon-user-tool{
+  margin-right: 5px;
+  margin-top: 1px;
+  /*background-color: aqua;*/
+}
+
+
+/* Elementi per gli users */
+li.user-tool.user a{
+  background-color: var(--firefly);
+  color: var(--maastrict-blue);
+  margin-left: auto ;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 4px;
+}
+
+li.user-tool.user a:hover{
+  background-color: var(--maastrict-blue);
+  border: 1px solid var(--firefly);
+  color: var(--firefly);
+  border-radius: 4px;
+  margin-left: -2px;
 }
 
 /*Bottom header*/
@@ -151,7 +199,8 @@ li.dashboard a:hover {
 }
 
 li.navbar-link.active a,
-li.user-tool.active a{
+li.user-tool.active a,
+li.user-tool-content.active a{
   color: var(--firefly);
 }
 
