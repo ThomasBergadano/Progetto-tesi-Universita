@@ -18,6 +18,21 @@ function Header() {
                 </ul>
             </div>
             <nav className="bottom-header">
+            <ul id="navbar">
+                    <li className="navbar-link"><Link to="/">Home</Link></li>
+                    <li className="navbar-link"><Link to="/ChiSiamo">Chi siamo</Link></li>
+                    <li className="navbar-link"><Link to="/CatalogoProdotti">Catalogo prodotti</Link></li>
+                    <li className="navbar-link"><Link to="/Idee">Idee e spunti</Link></li>
+                    <li className="navbar-link"><Link to="/AssistenzaClienti">Assistenza clienti</Link></li>
+                    <li className="navbar-link dashboard"><Link to="/Dashboard">Dashboard</Link></li>
+                </ul>                
+            </nav>
+        </header>
+    )
+}
+
+/*
+            <nav className="bottom-header">
                 <ul id="navbar">
                     <li className="navbar-link"><Link to="/">Home</Link></li>
                     <li className="navbar-link"><Link to="/ChiSiamo">Chi siamo</Link></li>
@@ -27,8 +42,5 @@ function Header() {
                     <li className="dashboard"><Link to="/Dashboard">Dashboard</Link></li>
                 </ul>
             </nav>
-        </header>
-    )
-}
-
+*/
 export default Header;

@@ -9,7 +9,7 @@ header {
   position: fixed;
   top: 0;
   width: 100%;
-  height: 150px;
+  height: 151px; /*150px+1px border*/
   text-align: center;
   background: var(--maastrict-blue);
   color: white;
@@ -19,10 +19,10 @@ header {
 
 /*Top header*/
 .top-header{
+  background-color: var(--maastrict-blue);
   display: flex;
   justify-content: space-between;
   outline: none;
-  /*background-color: rgb(72, 212, 29);*/
   border-bottom: 1px solid #ffffff;
   height: 90px;
   width: 100%;
@@ -36,7 +36,7 @@ header {
 
 /*Search Bar component dentro top header*/
 #searchbar {
-  width: 400px;
+  width: 450px;
   height: 40px;
   margin-top: 24px; /*90-40=50/2=25*/
   border: 1px solid #000;
@@ -81,51 +81,82 @@ header {
 li a{
   color: #f3e9e9;
   text-decoration: none;
-  padding-left: 13px;
-  padding-right: 13px;
 }
 
 li a:hover{
   color: var(--firefly);
 }
 
+/*
+li:first-child a{
+  border-bottom: 1px solid yellow;
+}
+
+li a:active{
+  border-bottom: 1px solid yellow;
+}*/
+
+
 #user-tools{
   margin-top: 34px;/*90-20 (dimensione font)-1(border)=69/2=34...*/
-  margin-right: 10px;
+  margin-right: 23px;
 }
 
 .user-tool,
-.navbar-link{
-  margin-left: 45px;
+.navbar-link,
+.dashboard{
   display: inline;
 }
 
+.user-tool{
+  margin-left: 45px;
+}
+
 /*Bottom header*/
+.bottom-header{
+  background-color: var(--maastrict-blue);
+  height: 60px;
+  width: 100%;
+}
+
 #navbar {
   display: flex;
   list-style: none;
   align-items: center;
-  margin-top: 20px;/*60-20 (dimensione font)=40/2=20*/
+  margin-left: 262px;
+  /*margin-top: 20px;*//*60-20 (dimensione font)=40/2=20*/
   padding: 0px;
 }
 
-li.dashboard:hover {
+li.navbar-link a{
+  background-color: var(--maastrict-blue);
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-left: 45px;
+}
+
+li.dashboard a{
   background-color: var(--firefly);
-  color: red;
+  color: var(--maastrict-blue);
+  margin-left: auto ;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-left: 45px;
   border-radius: 4px;
 }
-/*
-.dashboard {
-  background-color: var(--firefly);
-  border-radius: 10px;
-  padding: 4px 16px;
-  color: var(--maastrict-blue);
-  text-decoration: none;
-  margin-left: auto;
-}*/
 
-#navbar li.dashboard:hover {
-  background-color: red;
-  color: white;
+.dashboard{
+  margin-left: auto ;
+  margin-right: 20px;
+}
+
+li.dashboard a:hover {
+  background-color: var(--maastrict-blue);
+  border: 1px solid var(--firefly);
+  color: var(--firefly);
   border-radius: 3px;
 }
