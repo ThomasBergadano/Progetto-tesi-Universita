@@ -6,7 +6,10 @@ function Carrello() {
     return(
         <div>
             <Header/>
-            <p>CarrelloComponent</p>
+            <div id="wishlist">
+                <p>CarrelloComponent</p>
+                <p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p>
+            </div>
             <Footer/>
         </div>
     )

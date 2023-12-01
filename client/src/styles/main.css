@@ -2,11 +2,9 @@
 body{
   margin: 0;
   padding: 0;
-  margin-top: 200px;
-  background-color: white;
-  overflow: hidden;
+  background-color: rgb(219, 46, 46);
+  /*overflow: hidden;*/
 }
-
 
 /*:root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

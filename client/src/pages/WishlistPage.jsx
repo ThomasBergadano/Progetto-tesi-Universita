@@ -6,7 +6,10 @@ function Wishlist() {
     return(
         <div>
             <Header/>
-            <p>WishlistComponent</p>
+            <div id="wishlist">
+                <p>WishlistComponent</p>
+                <p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p>
+            </div>
             <Footer/>
         </div>
     )

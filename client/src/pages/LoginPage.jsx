@@ -6,7 +6,11 @@ function Login() {
     return(
         <div>
             <Header/>
-            <p>LoginComponent</p>
+            
+            <div id="login">
+                <p>LoginComponent</p>
+                <p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p>
+            </div>
             <Footer/>
         </div>
     )

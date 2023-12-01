@@ -6,7 +6,10 @@ function CatalogoProdotti() {
     return(
         <div>
             <Header/>
-            <p>CatalogoProdottiComponent</p>
+            <div id="catalogo">
+                <p>CatalogoProdottiComponent</p>
+                <p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p>
+            </div>
             <Footer/>
         </div>
     )

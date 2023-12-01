@@ -1,0 +1,13 @@
+@import './constants.css';
+
+footer{
+    z-index: 1;
+    height: 300px;
+    /*position: fixed;*/
+    margin-left: auto;
+    margin-right: auto;
+    bottom: 0px;
+    margin-bottom: 0;
+    width: 100%;
+    background-color: var(--maastrict-blue);
+}

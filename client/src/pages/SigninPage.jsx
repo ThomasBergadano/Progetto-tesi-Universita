@@ -6,7 +6,10 @@ function Signin() {
     return(
         <div>
             <Header/>
-            <p>SigninComponent</p>
+            <div id="sign-in">
+                <p>SigninComponent</p>
+                <p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p>
+            </div>
             <Footer/>
         </div>
     )

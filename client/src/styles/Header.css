@@ -1,12 +1,12 @@
 @import './constants.css';
 
 /*Header per intero*/
-header {
+header {  
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow: hidden;
-  position: fixed;
+  /*position: fixed;*/
   top: 0;
   width: 100%;
   height: 151px; /*150px+1px border*/
@@ -26,7 +26,6 @@ header {
   border-bottom: 1px solid #ffffff;
   height: 90px;
   width: 100%;
-  /*margin: 0px;*/
 }
 
 #logo{
@@ -93,18 +92,6 @@ li a:hover{
   margin-right: 23px;
 }
 
-.user-tool,
-.navbar-link,
-.dashboard{
-  display: inline;
-}
-
-.user-tool{
-  margin-left: 45px;
-  padding-bottom: 10px;
-  padding-top: 10px;
-}
-
 /*Elementi per i non users (profilo, wishlist, carrello)*/
 .user-tool-content{
   display: inline-flex;
@@ -126,11 +113,21 @@ li a:hover{
 .icon-user-tool{
   margin-right: 5px;
   margin-top: 1px;
-  /*background-color: aqua;*/
 }
 
-
 /* Elementi per gli users */
+.user-tool,
+.navbar-link,
+.dashboard{
+  display: inline;
+}
+
+.user-tool{
+  margin-left: 45px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
 li.user-tool.user a{
   background-color: var(--firefly);
   color: var(--maastrict-blue);

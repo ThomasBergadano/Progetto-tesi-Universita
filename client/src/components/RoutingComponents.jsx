@@ -38,3 +38,21 @@ function PublicElement({children}){
 }
 
 export default RoutingComponents; 
+
+
+/*
+      <Routes>
+        <Route path="/" element={<Home/>}></Route>
+        <Route path="/ChiSiamo" element={<About/>}></Route>
+        <Route path="/CatalogoProdotti" element={<CatalogoProdotti/>}></Route>
+        <Route path="/Idee" element={<IdeeSpunti/>}></Route>
+        <Route path="/AssistenzaClienti" element={<AssistenzaClienti/>}></Route>
+        <Route path="/Dashboard" element={<Dashboard/>}></Route>
+        <Route path="/Login" element={<Login/>}></Route>
+        <Route path="/Signin" element={<Signin/>}></Route>
+        <Route path="/Profilo" element={<Profilo/>}></Route>
+        <Route path="/Wishlist" element={<Wishlist/>}></Route>
+        <Route path="/Carrello" element={<Carrello/>}></Route>
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+*/

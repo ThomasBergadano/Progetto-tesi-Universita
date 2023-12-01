@@ -6,7 +6,10 @@ function IdeeSpunti() {
     return(
         <div>
             <Header/>
-            <p>IdeeSpuntiComponent</p>
+            <div id="suggerimenti">
+                <p>IdeeSpuntiComponent</p>
+                <p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p>
+            </div>
             <Footer/>
         </div>
     )

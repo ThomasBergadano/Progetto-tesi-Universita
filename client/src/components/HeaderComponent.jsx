@@ -14,7 +14,7 @@ const USER_TYPES = {
     Client: 'Client user',
     User: 'Unlogged user'
 }
-const CURRENT_USER_TYPES = USER_TYPES.Admin  
+const CURRENT_USER_TYPES = USER_TYPES.User  
 
 
 function Header() {

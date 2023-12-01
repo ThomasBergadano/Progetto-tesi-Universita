@@ -6,7 +6,10 @@ function AssistenzaClienti() {
     return(
         <div>
             <Header/>
-            <p>AssistenzaClientiComponent</p>
+            <div id="assistenza-clienti">
+                <p>AssistenzaClientiComponent</p>
+                <p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p>
+            </div>
             <Footer/>
         </div>
     )

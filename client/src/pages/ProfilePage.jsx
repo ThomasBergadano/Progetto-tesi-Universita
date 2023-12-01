@@ -6,7 +6,11 @@ function Profilo() {
     return(
         <div>
             <Header/>
-            <p>ProfileComponent</p>
+            <div id="assistenza-clienti">
+                <p>ProfileComponent</p>
+                <p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p>
+            </div>
+            
             <Footer/>
         </div>
     )
