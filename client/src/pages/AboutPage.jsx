@@ -5,7 +5,7 @@ import '../styles/main.css'
 
 function About() {
     return(
-        <div>
+        <div id="#">
             <Header/>
             <p>AboutComponent</p>
             <p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p>

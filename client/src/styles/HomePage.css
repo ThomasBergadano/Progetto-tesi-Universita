@@ -1,7 +1,7 @@
 @import './constants.css';
 
 #homepage{
-    background-color: #FFD95C;
+    background-color: var(--light-yellow);
     padding-top: 10px;
     padding-left: 10px;
     padding-right: 10px;

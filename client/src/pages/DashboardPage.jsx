@@ -6,7 +6,6 @@ function Dashboard() {
     return(
         <div>
             <Header/>
-            
             <div id="assistenza-clienti">
                 <p>Dashboard Page</p>
                 <p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p>

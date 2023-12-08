@@ -1,4 +1,5 @@
 @import './constants.css';
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 footer{
     z-index: 1;
@@ -10,29 +11,30 @@ footer{
     margin-bottom: 0;
     width: 100%;
     background-color: var(--maastrict-blue);
+    font-family: 'Poppins', sans-serif;
 }
 
-/*Parte di sopra*/
+/*Parte di sopra - struttura*/
 #container{
     width: 100%;
     height: 275px;
     background-color: var(--maastrict-blue);
-    display: flex
+    display: flex;
 }
 
 .foot{
     display: flex;
-    align-items: center;
     justify-content: center;
+    color: var(--white);
 }
 
 .left-footer,
 .right-footer {
-  width: 30%;
+    width: 30%;
 }
 
 .left-footer{
-    background-color: blue;
+    align-items: center;
 }
 
 .center-footer {
@@ -48,25 +50,60 @@ footer{
     justify-content: center;
     display: flex;
 }
-.center-one{
-    background-color: green;
-    text-align: center;
-    justify-content: center;
-}
 .content{
     text-align: center;
     justify-content: center;
-    margin-top: 50%;
-}
-.center-two{
-    background-color: yellow;
+    margin-top: 36%;
 }
 
 .right-footer{
-    background-color: blueviolet;
+    display: flex;
+    flex-direction: column;
+    /*padding-top: 80px;*/
+    text-align: center;
 }
 
+/*Parte di sopra - contenuto*/
+#logo-footer{
+    width: 200px;
+    height: 100px;
+    margin-right: 25px;
+}
+footer span{
+    text-decoration: solid;
+    letter-spacing: 0.5px;
+    font-size: 18px;
+    color: var(--firefly);
+    font-size: 20px;
+}
+.lista-link{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
 
+.social-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.social-item{
+    size: 70px;
+    font-size: 30px;
+    margin: 0px 5px;
+}
+
+.custom-link{
+    color: white;
+    text-decoration: none;
+}
+
+.custom-link:hover{
+    color: var(--light-yellow);
+}
 
 /*Parte di sotto*/
 .copyright{
@@ -84,5 +121,5 @@ footer{
     justify-content: center; /* Centra orizzontalmente */
     color: var(--white);
     text-decoration: none;
-    font-size: 12px;
+    font-size: 10px;
 }
