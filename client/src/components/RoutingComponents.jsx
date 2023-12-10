@@ -6,7 +6,7 @@ import IdeeSpunti from '../pages/IdeeSpuntiPage.jsx'
 import AssistenzaClienti from '../pages/AssistenzaClientiPage.jsx'
 import Dashboard from '../pages/DashboardPage.jsx'
 import Login from '../pages/LoginPage.jsx'
-import Signin from '../pages/SigninPage.jsx'
+import Signup from '../pages/SignupPage.jsx'
 import Profilo from '../pages/ProfilePage.jsx'
 import Wishlist from '../pages/WishlistPage.jsx'
 import Carrello from '../pages/CarrelloPage.jsx'
@@ -22,18 +22,12 @@ function RoutingComponents() {
         <Route path="/AssistenzaClienti" element={<AssistenzaClienti/>}></Route>
         <Route path="/Dashboard" element={<Dashboard/>}></Route>
         <Route path="/Login" element={<Login/>}></Route>
-        <Route path="/Signin" element={<Signin/>}></Route>
+        <Route path="/Signup" element={<Signup/>}></Route>
         <Route path="/Profilo" element={<Profilo/>}></Route>
         <Route path="/Wishlist" element={<Wishlist/>}></Route>
         <Route path="/Carrello" element={<Carrello/>}></Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
-  )
-}
-
-function PublicElement({children}){
-  return(
-    <div>{children}</div>
   )
 }
 

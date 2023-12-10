@@ -1,0 +1,7 @@
+@import './constants.css';
+
+#signup{
+    background-color: var(--light-yellow);
+    width: 100%;
+    min-height: 619px;
+}

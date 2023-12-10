@@ -15,7 +15,7 @@ header{
   text-align: center;
   background: var(--maastrict-blue);
   color: white;
-  font-size: 18px;
+  font-size: 16px;
   box-shadow: 0 0 3px #000000;
 }
 
@@ -164,8 +164,9 @@ li.user-tool.user a:hover{
   display: flex;
   list-style: none;
   align-items: center;
-  margin-left: 242px;
+  margin-left: 200px;
   padding: 0px;
+  padding-top: 2px;
 }
 
 li.navbar-link a{
@@ -251,7 +252,7 @@ li.dashboard.active a:hover{
 }
 
 .scroll-navbar ul{
-  margin-left: 80px;
+  margin-left: 40px;
 }
 
 #logo-scroll-navbar{
@@ -260,7 +261,7 @@ li.dashboard.active a:hover{
 }
 
 li.scroll-dashboard a{
-  margin-left: 120px; /*margina da sinistra, dall'immagine, non lo faccio da destra*/
+  margin-left: 120px; /*margine da sinistra, dall'immagine, non lo faccio da destra*/
 }
 
 .scroll-navbar a {
@@ -281,7 +282,7 @@ li.scroll-dashboard a{
   display: flex;
   flex-flow: row nowrap;
   align-items: center; /* Aggiunto per centrare verticalmente */
-  margin-left: 84%; /* Aggiunto per spostare .search a destra */
+  margin-left: 83%; /* Aggiunto per spostare .search a destra */
 }
 
 .scroll-navbar .search_input{

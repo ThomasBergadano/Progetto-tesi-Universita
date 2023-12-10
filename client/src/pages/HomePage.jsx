@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect }  from "react"
 import Header from "../components/HeaderComponent.jsx"
 import Footer from "../components/FooterComponent.jsx"
 import '../styles/HomePage.css'
@@ -20,3 +20,5 @@ function Home() {
 }
 
 export default Home;
+
+/* <h1>Hello {location.state.id} e benvenuto nella pagina</h1> */

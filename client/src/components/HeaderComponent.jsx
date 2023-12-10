@@ -114,7 +114,7 @@ function Header() {
                             </Link></li>
                         }
                         { canSeeUserTools() && <li className={`user-tool user login${location.pathname === "/Login" ? "active" : ""}`}><Link to="/Login">Accedi</Link></li> }
-                        { canSeeUserTools() && <li className={`user-tool user signin${location.pathname === "/Signin" ? "active" : ""}`}><Link to="/Signin">Registrati</Link></li> }
+                        { canSeeUserTools() && <li className={`user-tool user signup${location.pathname === "/Signup" ? "active" : ""}`}><Link to="/Signup">Registrati</Link></li> }
                     </ul>
                 </div>
                 <nav className="bottom-header">
