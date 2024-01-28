@@ -12,7 +12,7 @@ import Wishlist from '../pages/WishlistPage.jsx'
 import Carrello from '../pages/CarrelloPage.jsx'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
-function RoutingComponents() {  
+function RoutingComponents(){  
   return(
       <Routes>
         <Route path="/" element={<Home/>}></Route>

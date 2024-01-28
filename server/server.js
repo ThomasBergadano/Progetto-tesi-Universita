@@ -20,9 +20,6 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
-
-
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
-

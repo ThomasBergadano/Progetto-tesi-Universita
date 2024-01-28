@@ -1,7 +1,135 @@
 @import './constants.css';
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+#full-page{
+    margin: 0;
+    padding: 0;
+    background-color: var(--light-yellow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 552px;
+    font-family: 'Poppins', sans-serif;
+    color: var(--night);
+    overflow: auto;
+}
 
 #signup{
-    background-color: var(--light-yellow);
-    width: 100%;
-    min-height: 619px;
+    margin-top: 5px;
+    border: 6px solid var(--maastricht-blue);
+    width: 450px;
+    height: 500px;
+    border-radius: 20px;
+}
+
+/* Titoletto e link */
+#signup h2{
+    font-size: 30px;
+    margin-left: 30px;
+}
+
+.link-to-login{
+    font-size: 14px;
+    margin-left: 30px;
+    margin-top: -25px;
+}
+
+.accedi{
+    text-decoration: none;
+    color: var(--maastricht-blue);
+    font-weight: bold;
+    display: inline-block;
+}
+.accedi:hover{
+    text-decoration: underline;
+}
+
+/* Form */
+.signup-form{
+    margin-left: 30px;
+}
+
+.label{
+    display: block;
+}
+
+.name-inputs{
+    margin-top: 20px;
+    display: flex;
+    gap: 50px;
+}
+
+.full-form{
+    width: 390px;
+    padding: 10px;
+    border: 1px solid var(--maastricht-blue);
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 15px;
+}
+
+.half-form{
+    width: 170px;
+    padding: 10px;
+    border: 1px solid var(--maastricht-blue);
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 15px;
+}
+
+.passwords-section-input{
+    margin-top: 20px;
+    display: flex;
+    gap: 50px;
+}
+
+/*Numero di telefono*/
+.phone-number-input{
+    margin-top: 20px;
+    align-items: center;
+    justify-content: center;
+    margin-left: 105px;
+}
+
+.prefisso-paesi option:before {
+    content: attr(data-label) !important;
+    display: none;
+}
+
+.prefisso-paesi:hover option:before {
+    display: inline-block;
+}
+
+.prefisso-paesi option {
+    padding-left: 5px;
+}
+
+/*Bottone*/
+.button-signup{
+    display: block;
+    width: 390px;
+    height: 40px;
+    margin-top: 20px;
+    margin-left: 30px;
+    background-color: var(--maastricht-blue);
+    color: var(--white);
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 1px;
+}
+.button-signup:hover{
+    background-color: var(--firefly);
+    color: var(--maastricht-blue);
+    border: 2px solid var(--maastricht-blue);
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+}
+
+.icon-home{
+    position: absolute;
+    margin-right: -1px;
+    margin-bottom: -6px;
+    font-size: 30px;
+    color: var(--maastricht-blue);
 }

@@ -13,7 +13,7 @@ header{
   width: 100%;
   height: 151px; /*150px+1px border*/
   text-align: center;
-  background: var(--maastrict-blue);
+  background: var(--maastricht-blue);
   color: white;
   font-size: 16px;
   box-shadow: 0 0 3px #000000;
@@ -21,7 +21,7 @@ header{
 
 /*Top header*/
 .top-header{
-  background-color: var(--maastrict-blue);
+  background-color: var(--maastricht-blue);
   display: flex;
   justify-content: space-between;
   outline: none;
@@ -75,13 +75,13 @@ header{
   font-size: 1.5rem;
   padding-right: 10px;
   background-color: var(--firefly);
-  color: var(--maastrict-blue);
+  color: var(--maastricht-blue);
   display: grid;
   place-content: center;
 }
 
 .search_button:hover{
-  background-color: var(--maastrict-blue);
+  background-color: var(--maastricht-blue);
   color: var(--firefly);
 }
 
@@ -136,7 +136,7 @@ li a:hover{
 
 li.user-tool.user a{
   background-color: var(--firefly);
-  color: var(--maastrict-blue);
+  color: var(--maastricht-blue);
   margin-left: auto ;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -146,7 +146,7 @@ li.user-tool.user a{
 }
 
 li.user-tool.user a:hover{
-  background-color: var(--maastrict-blue);
+  background-color: var(--maastricht-blue);
   border: 1px solid var(--firefly);
   color: var(--firefly);
   border-radius: 4px;
@@ -155,7 +155,7 @@ li.user-tool.user a:hover{
 
 /*Bottom header*/
 .bottom-header{
-  background-color: var(--maastrict-blue);
+  background-color: var(--maastricht-blue);
   height: 60px;
   width: 100%;
 }
@@ -170,7 +170,7 @@ li.user-tool.user a:hover{
 }
 
 li.navbar-link a{
-  background-color: var(--maastrict-blue);
+  background-color: var(--maastricht-blue);
   padding-left: 5px;
   padding-right: 5px;
   margin-left: 45px;
@@ -178,7 +178,7 @@ li.navbar-link a{
 
 li.dashboard a{
   background-color: var(--firefly);
-  color: var(--maastrict-blue);
+  color: var(--maastricht-blue);
   margin-left: auto ;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -194,7 +194,7 @@ li.dashboard a{
 }
 
 li.dashboard a:hover {
-  background-color: var(--maastrict-blue);
+  background-color: var(--maastricht-blue);
   border: 1px solid var(--firefly);
   color: var(--firefly);
   border-radius: 4px;
@@ -208,13 +208,13 @@ li.user-tool-content.active a{
 
 li.dashboard.active a{
   color: var(--firefly);
-  background-color: var(--maastrict-blue);
+  background-color: var(--maastricht-blue);
   border: 1px solid var(--firefly);
 }
 li.dashboard.active a:hover{
-  color: var(--maastrict-blue);
+  color: var(--maastricht-blue);
   background-color: var(--firefly);
-  border: 1px solid var(--maastrict-blue);
+  border: 1px solid var(--maastricht-blue);
   border-radius: 4px;
 }
 
@@ -232,7 +232,7 @@ li.dashboard.active a:hover{
   top: 0;
   width: 100%;
   height: 60px;
-  background-color: var(--maastrict-blue);
+  background-color: var(--maastricht-blue);
   z-index: 1; 
 }
 
@@ -296,12 +296,12 @@ li.scroll-dashboard a{
   font-size: 1.5rem;
   padding-right: 10px;
   background-color: var(--firefly);
-  color: var(--maastrict-blue);
+  color: var(--maastricht-blue);
   display: grid;
   place-content: center;
 }
 
 .search_button:hover{
-  background-color: var(--maastrict-blue);
+  background-color: var(--maastricht-blue);
   color: var(--firefly);
 }

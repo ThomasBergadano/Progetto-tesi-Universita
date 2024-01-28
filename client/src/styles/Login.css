@@ -1,7 +1,138 @@
 @import './constants.css';
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+#full-page{
+    margin: 0;
+    padding: 0;
+    background-color: var(--light-yellow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 552px;
+    font-family: 'Poppins', sans-serif;
+    color: var(--night);
+}
 
 #login{
-    background-color: var(--light-yellow);
-    width: 100%;
-    min-height: 619px;
+    border: 6px solid var(--maastricht-blue);
+    width: 450px;
+    height: 380px;
+    border-radius: 20px;
+}
+
+/* Titoletto e link */
+#login h2{
+    font-size: 30px;
+    margin-left: 30px;
+}
+
+.link-to-signup{
+    font-size: 14px;
+    margin-left: 30px;
+    margin-top: -25px;
+}
+
+/* Form */
+.login-form{
+    margin-left: 30px;
+}
+
+.label{
+    display: block;
+}
+
+.email-input{
+    margin-top: 20px;
+}
+.password-input{
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+
+.input-form{
+    width: 390px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid var(--maastricht-blue);
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 15px;
+}
+
+/*Checkbox*/
+#myCheckbox,
+.checkbox-label{
+    cursor: pointer;
+}
+
+.checkbox-label{
+    font-size: 14px;
+}
+
+.password-dimenticata{
+    font-size: 14px;
+    margin-left: 135px;
+}
+
+.crea-account,
+.password-dimenticata{
+    text-decoration: none;
+    color: var(--maastricht-blue);
+    font-weight: bold;
+    display: inline-block;
+}
+
+.crea-account:hover,
+.password-dimenticata:hover {
+    text-decoration: underline;
+}
+
+
+/*Bottone di invio*/
+.button-login{
+    display: block;
+    width: 390px;
+    height: 40px;
+    margin-top: 15px;
+    background-color: var(--maastricht-blue);
+    color: var(--white);
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 1px;
+}
+.button-login:hover{
+    background-color: var(--firefly);
+    color: var(--maastricht-blue);
+    border: 2px solid var(--maastricht-blue);
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+}
+
+/*Floating button per tornare alla home*/
+.icon-container {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    margin-bottom: 15px;
+    margin-right: 25px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 2px solid var(--maastricht-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.icon-container:hover{
+    background-color: var(--firefly);
+}
+.icon-home{
+    position: absolute;
+    margin-right: -1px;
+    margin-bottom: -6px;
+    font-size: 30px;
+    color: var(--maastricht-blue);
 }

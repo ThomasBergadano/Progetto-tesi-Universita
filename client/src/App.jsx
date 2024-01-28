@@ -4,9 +4,6 @@ import RoutingComponents from './components/RoutingComponents.jsx'
 function App() {  
   useEffect(() => {
       document.title = 'Lumia Arredamenti';
-    return () => {
-      document.title = 'Titolo Predefinito o Appropriato';
-    };
   }, []);
 
   return(
@@ -28,4 +25,10 @@ export default App;
       .then(data => { setBackendData(data); }) 
       .catch(error => console.error('Errore nella richiesta fetch:', error));
   },[])
+*/
+
+/*
+    return () => {
+      document.title = 'Lumia Arredamenti'; //Titolo che verrà utilizzato nel caso in cui il componente App venisse smontato (=se e quando, per qualsiasi ragione, il DOM venisse modificato)
+    };
 */
