@@ -6,11 +6,8 @@ import '../styles/main.css'
 function About() {
     return(
         <div id="#">
-            <Header/>
             <p>AboutComponent</p>
             <p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p>
-            <Footer/>
-            
         </div>
     )
 }

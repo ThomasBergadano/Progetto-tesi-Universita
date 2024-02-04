@@ -1,10 +1,182 @@
 @import './constants.css';
 
 #homepage{
+    width: 100%;
     background-color: var(--light-yellow);
-    padding-top: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 30px;
-    margin-bottom: -20px;
+    font-family: 'Poppins', sans-serif;
+}
+
+/*Hero image*/
+#hero-image{
+    width: 100%;
+    height: 456px;
+    background-color: var(--night);
+    overflow: hidden;
+    position: relative;
+}
+
+.hero-image-phrase1,
+.hero-image-phrase2{
+    position: absolute;
+    right: 80px;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    font-size: 42px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px var(--night);
+}
+
+.hero-image-phrase1{
+    position: absolute;
+    top: 37%;
+}
+.hero-image-phrase2{
+    position: absolute;
+    top: 48%;
+}
+
+#hero-image img{
+    width: 100%;
+    height: 456px;
+    opacity: 0.4;
+    transform: scale(1.1);
+    transition: transform 10s ease; 
+}
+#hero-image:hover img {
+    transform: scale(1); /* Torna alla dimensione originale al passaggio del mouse */
+}
+
+.button-hero-image {
+    position: absolute;
+    top: 70%;
+    right: 80px;
+    transform: translate(0, -50%);
+    background-color: var(--firefly);
+    color: var(--maastricht-blue);
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+}
+.button-hero-image:hover {
+    background-color: var(--maastricht-blue);
+    border: 1px solid var(--firefly);
+    color: var(--firefly);
+    border-radius: 4px;
+    margin-left: -2px;
+    font-family: 'Poppins', sans-serif;
+}
+
+/*Categorie prodotti*/
+#categorie-prodotti{
+    width: 100%;
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    color: var(--white);
+}
+
+.categoria1{
+    width: 50%;
+    height: 100%;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    /*background-color: aqua;*/
+}
+.categoria2{
+    width: 50%;
+    height: 100%;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    /*background-color: blue;*/
+}
+
+.categoria{
+    width: 450px;
+    height: 400px;
+    margin-top: 130px;
+    background-color: white;
+    border: 2px solid var(--maastricht-blue);
+    display: flex;
+    position: relative;
+    border-radius: 15px;
+}
+
+/*Advice-section*/
+#advice-section{
+    position: relative;
+    width: 100%;
+    height: 400px;
+    background-color: var(--night);
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+}
+
+#advice-section img{
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    object-position: center 70%;
+    opacity: 0.5;
+    transform: scale(1.1);
+    transition: transform 10s ease;
+}
+#advice-section:hover img {
+    transform: scale(1); /* Torna alla dimensione originale al passaggio del mouse */
+}
+
+.advice-section-span{
+    position: absolute;
+    top: 27%;
+    left: 50%;
+    font-size: 32px;
+    color: white;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px var(--night);
+}
+
+.advice-section-span-small{
+    position: absolute;
+    top: 37%;
+    left: 50%;
+    font-size: 16px;
+    color: white;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    text-shadow: 2px 2px 4px var(--night);
+}
+
+.button-advice-section{
+    position: absolute;
+    top: 60%;
+    left: 600px;
+    transform: translate(0, -50%);
+    background-color: var(--firefly);
+    color: var(--maastricht-blue);
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;  
+}
+.button-advice-section:hover{
+    background-color: var(--maastricht-blue);
+    border: 1px solid var(--firefly);
+    color: var(--firefly);
+    border-radius: 4px;
+    margin-left: -2px;
+    font-family: 'Poppins', sans-serif;
 }

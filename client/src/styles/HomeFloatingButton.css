@@ -1,0 +1,26 @@
+/*Floating button per tornare alla home*/
+.icon-container {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    margin-bottom: 15px;
+    margin-right: 25px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 2px solid var(--maastricht-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.icon-container:hover{
+    background-color: var(--firefly);
+}
+.icon-home{
+    position: absolute;
+    margin-right: -1px;
+    margin-bottom: -6px;
+    font-size: 30px;
+    color: var(--maastricht-blue);
+}

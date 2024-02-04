@@ -32,9 +32,9 @@ header{
 
 #logo,
 #logo-scroll-navbar{
-  height: 50px;
-  width: 100px;
-  margin: 20px 0px 0px 20px;
+  height: 120px;
+  width: 120px;
+  margin: -10px 0px 0px 20px;
 }
 
 /*Search Bar component dentro top header*/
@@ -99,14 +99,12 @@ li a:hover{
   margin-right: 23px;
 }
 
-/*Elementi per i non users (profilo, wishlist, carrello)*/
+/*Elementi per i non Users (profilo, wishlist, carrello)*/
 .user-tool-content{
-  display: inline-flex;
+  display: inline-block; /*!!!!!ERA INLINE-FLEX!!!*/
   margin-left: 35px;
   align-items: center;
-}
-.link{
-  display: inline-flex;
+  position: relative;
 }
 .user-tools-icons {
   display: inline-flex;
@@ -121,10 +119,67 @@ li a:hover{
   margin-top: 1px;
 }
 
+/*Dropdown menu profilo*/
+.link{
+  display: inline-flex;
+  cursor: pointer;
+  user-select: none;
+  /*position: relative;*/
+}
+.link:hover{
+  cursor: pointer;
+  color: var(--firefly);
+}
+
+.dropdown-profilo{
+  /*display: none;*/
+  position: absolute;
+  left: -40px;
+  top: 100%;
+  right: 0;
+  width: 150px;
+  height: 0px;
+  z-index: 1;
+  background-color: var(--firefly);
+  flex-direction: column;
+}
+.dropdown-profilo ul {
+  padding: 0;
+}
+
+.dropdown-profilo hr {
+  margin: 0px 0;
+  border: 0;
+  border-bottom: 1px solid var(--maastricht-blue); /* Colore della riga */
+}
+
+.dropdown-profilo li,
+.dropdown-profilo li a{
+  height: 25px;
+  background-color: var(--firefly);
+  color: var(--maastricht-blue);
+}
+
+.dropdown-profilo li a:hover {
+  display: block;
+  background-color: var(--light-yellow);
+  color: var(--night);
+  cursor: pointer;
+  outline: 1px solid var(--maastricht-blue);
+}
+.dropdown-profilo .li-logout:hover{
+  display: block;
+  background-color: var(--light-yellow);
+  color: var(--night);
+  cursor: pointer;
+  outline: 1px solid var(--maastricht-blue);
+}
+
 /* Elementi per gli users */
 .user-tool,
 .navbar-link,
-.dashboard{
+.dashboard
+.scroll-dashboard{
   display: inline;
 }
 
@@ -155,6 +210,7 @@ li.user-tool.user a:hover{
 
 /*Bottom header*/
 .bottom-header{
+  display: flex;
   background-color: var(--maastricht-blue);
   height: 60px;
   width: 100%;
@@ -164,7 +220,7 @@ li.user-tool.user a:hover{
   display: flex;
   list-style: none;
   align-items: center;
-  margin-left: 200px;
+  margin-left: 270px; /*200px*/
   padding: 0px;
   padding-top: 2px;
 }
@@ -176,7 +232,8 @@ li.navbar-link a{
   margin-left: 45px;
 }
 
-li.dashboard a{
+li.dashboard a,
+li.scroll-dashboard a{
   background-color: var(--firefly);
   color: var(--maastricht-blue);
   margin-left: auto ;
@@ -189,11 +246,12 @@ li.dashboard a{
 }
 
 .dashboard{
-  margin-left: auto ;
-  margin-right: 20px;
+  margin-left: 130px ;
+  margin-right: 0px;
 }
 
-li.dashboard a:hover {
+li.dashboard a:hover,
+li.scroll-dashboard a:hover{
   background-color: var(--maastricht-blue);
   border: 1px solid var(--firefly);
   color: var(--firefly);
@@ -202,16 +260,23 @@ li.dashboard a:hover {
 
 li.navbar-link.active a,
 li.user-tool.active a,
-li.user-tool-content.active a{
+li.user-tool-content.active a,
+.user-tool-content.profile.active{
   color: var(--firefly);
 }
 
-li.dashboard.active a{
+.user-tool-content.profile.active .exclude-from-color a {
+  color: var(--night); /*In questo modo, quando sono in /Profilo, solamente il bottone "Profilo" si colora di firefly, e non anche "Il tuo profilo"*/
+}
+
+li.dashboard.active a,
+li.scroll-dashboard.active a{
   color: var(--firefly);
   background-color: var(--maastricht-blue);
   border: 1px solid var(--firefly);
 }
-li.dashboard.active a:hover{
+li.dashboard.active a:hover,
+li.scroll-dashboard.active a:hover{
   color: var(--maastricht-blue);
   background-color: var(--firefly);
   border: 1px solid var(--maastricht-blue);
@@ -252,7 +317,7 @@ li.dashboard.active a:hover{
 }
 
 .scroll-navbar ul{
-  margin-left: 40px;
+  margin-left: 100px; /*40px*/
 }
 
 #logo-scroll-navbar{
@@ -261,7 +326,7 @@ li.dashboard.active a:hover{
 }
 
 li.scroll-dashboard a{
-  margin-left: 120px; /*margine da sinistra, dall'immagine, non lo faccio da destra*/
+  margin-left: 182px; /*margine da sinistra, da 'Assistenza Clienti', non lo faccio da destra*/
 }
 
 .scroll-navbar a {
@@ -304,4 +369,33 @@ li.scroll-dashboard a{
 .search_button:hover{
   background-color: var(--maastricht-blue);
   color: var(--firefly);
+}
+
+/* Dropdown language */
+.language-container {
+  margin-left: auto; /* Sposta il dropdown alla fine della navbar */
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-language {
+  position: relative;
+  display: inline-block;
+  margin-right: 25px; /* Aggiunto per aggiustare la distanza dalla navbar */
+}
+
+.dropdown-language:hover .dropdown-content {
+  display: block;
+}
+
+.language{
+  width: 80px;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--night);
+  border: 1px solid var(--maastricht-blue);
+  color: var(--white);
+}
+
+.language:focus {
+  outline: none;
 }

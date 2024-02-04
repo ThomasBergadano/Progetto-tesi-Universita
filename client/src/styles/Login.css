@@ -1,9 +1,10 @@
 @import './constants.css';
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
-#full-page{
+#full-page-login{
     margin: 0;
     padding: 0;
+    padding-bottom: 55px;
     background-color: var(--light-yellow);
     display: flex;
     align-items: center;
@@ -14,9 +15,12 @@
 }
 
 #login{
+    position: absolute;
+    margin-top: 55px;
     border: 6px solid var(--maastricht-blue);
+    background-color: var(--light-yellow);
     width: 450px;
-    height: 380px;
+    height: 500px;
     border-radius: 20px;
 }
 
@@ -95,6 +99,7 @@
     width: 390px;
     height: 40px;
     margin-top: 15px;
+    margin-bottom: 25px;
     background-color: var(--maastricht-blue);
     color: var(--white);
     border-radius: 4px;
@@ -108,31 +113,51 @@
     border-radius: 4px;
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
-}
-
-/*Floating button per tornare alla home*/
-.icon-container {
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
-    margin-bottom: 15px;
-    margin-right: 25px;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    border: 2px solid var(--maastricht-blue);
-    display: flex;
-    align-items: center;
-    justify-content: center;
     cursor: pointer;
 }
-.icon-container:hover{
-    background-color: var(--firefly);
+
+/*Scritta "oppure"*/
+.alternative{
+    font-size: 14px;
+    margin-left: 168px;
 }
-.icon-home{
-    position: absolute;
-    margin-right: -1px;
-    margin-bottom: -6px;
-    font-size: 30px;
+
+/*Google login*/
+.google-login{
+    display: flex;
+    width: 390px;
+    height: 40px;
+    margin-top: 25px;
+    background-color: red;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 2px solid var(--maastricht-blue);
+}
+.google-login:hover{
+    border: 2px solid var(--firefly); /*#00ffff*/
+}
+
+.logo-google-login{
+    width: 40px;
+    height: 40px;
+    background-color: var(--white);
+    border-radius: 2px 0px 0px 2px;
+}
+.logo-google{
+    width: 30px;
+    height: 30px;
+    margin: 5px 0px 0px 5px;
+}
+
+.span-google-login{
+    display: flex;
+    width: 350px;
+    height: 40px;
+    background-color: white;
     color: var(--maastricht-blue);
+}
+
+.span-google-login span{
+    margin-left: 80px;
+    margin-top: 6px;
 }

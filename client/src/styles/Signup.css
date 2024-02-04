@@ -4,6 +4,7 @@
 #full-page{
     margin: 0;
     padding: 0;
+    padding-bottom: 55px;
     background-color: var(--light-yellow);
     display: flex;
     align-items: center;
@@ -15,8 +16,10 @@
 }
 
 #signup{
-    margin-top: 5px;
+    position: absolute;
+    margin-top: 55px;
     border: 6px solid var(--maastricht-blue);
+    background-color: var(--light-yellow);
     width: 450px;
     height: 500px;
     border-radius: 20px;
@@ -124,12 +127,5 @@
     border-radius: 4px;
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
-}
-
-.icon-home{
-    position: absolute;
-    margin-right: -1px;
-    margin-bottom: -6px;
-    font-size: 30px;
-    color: var(--maastricht-blue);
+    cursor: pointer;
 }

@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import Header from '../components/HeaderComponent'
+import Footer from '../components/FooterComponent'
 import Home from '../pages/HomePage.jsx'
 import About from '../pages/AboutPage.jsx'
 import CatalogoProdotti from '../pages/CatalogoProdottiPage.jsx'
@@ -10,10 +13,14 @@ import Signup from '../pages/SignupPage.jsx'
 import Profilo from '../pages/ProfilePage.jsx'
 import Wishlist from '../pages/WishlistPage.jsx'
 import Carrello from '../pages/CarrelloPage.jsx'
-import { Navigate, Route, Routes } from 'react-router-dom'
 
-function RoutingComponents(){  
+function RoutingComponents(){
+  const location = useLocation();
+  const nascondiHeaderFooter = ['/Login', '/Signup'].includes(location.pathname);
+
   return(
+    <>
+      {!nascondiHeaderFooter && <Header/>}
       <Routes>
         <Route path="/" element={<Home/>}></Route>
         <Route path="/ChiSiamo" element={<About/>}></Route>
@@ -28,6 +35,8 @@ function RoutingComponents(){
         <Route path="/Carrello" element={<Carrello/>}></Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
+      {!nascondiHeaderFooter && <Footer/>}
+    </>
   )
 }
 

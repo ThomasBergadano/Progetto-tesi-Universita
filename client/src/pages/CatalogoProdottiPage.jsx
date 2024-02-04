@@ -1,16 +1,16 @@
 import React from "react";
-import Header from "../components/HeaderComponent"
-import Footer from "../components/FooterComponent"
+import it from '../assets/images/it.png'
+import en from '../assets/images/en.png'
 
 function CatalogoProdotti() {
     return(
         <div>
-            <Header/>
             <div id="catalogo">
                 <p>CatalogoProdottiComponent</p>
+                <img src={it} alt="ITA"/>
+                <img src={en} alt="ENG"/>
                 <p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p>
             </div>
-            <Footer/>
         </div>
     )
 }

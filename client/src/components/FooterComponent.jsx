@@ -67,7 +67,7 @@ function Footer() {
                 </div>
             </div>
             <div className="copyright">
-                <span className="copyright-content">Copyright © 2023 Lumia - Tutti i diritti riservati</span>
+                <span className="copyright-content">Copyright © 2024 Lumia - Tutti i diritti riservati</span>
             </div>
         </footer>
     )
