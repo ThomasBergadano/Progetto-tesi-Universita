@@ -49,7 +49,7 @@ header{
   overflow: hidden;
   display: flex;
   flex-flow: row nowrap;
-  align-items: center; /* Aggiunto per centrare verticalmente */
+  align-items: center;
   margin-left: 32%; /* Aggiunto per spostare .search a destra */
 }
 
@@ -78,6 +78,7 @@ header{
   color: var(--maastricht-blue);
   display: grid;
   place-content: center;
+  cursor: pointer;
 }
 
 .search_button:hover{
@@ -326,7 +327,7 @@ li.scroll-dashboard.active a:hover{
 }
 
 li.scroll-dashboard a{
-  margin-left: 182px; /*margine da sinistra, da 'Assistenza Clienti', non lo faccio da destra*/
+  margin-left: 165px; /*margine da sinistra, da 'Assistenza Clienti', non lo faccio da destra*/
 }
 
 .scroll-navbar a {
@@ -339,15 +340,16 @@ li.scroll-dashboard a{
   position: absolute;
   width: 200px;
   height: 40px;
-  margin-top: 0px; /*60-40=20/2=10*/
+  margin-top: 0px;
   border: 1px solid #000;
   border-radius: 15px;
   font-size: 10px;
   overflow: hidden;
   display: flex;
   flex-flow: row nowrap;
-  align-items: center; /* Aggiunto per centrare verticalmente */
-  margin-left: 83%; /* Aggiunto per spostare .search a destra */
+  align-items: center;
+  margin-left: 83%;
+  cursor: pointer;
 }
 
 .scroll-navbar .search_input{

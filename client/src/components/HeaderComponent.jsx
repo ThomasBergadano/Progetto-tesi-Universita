@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from "react"
+import React, { useState, useEffect, useRef }  from "react"
 import { Link, useLocation } from 'react-router-dom'
 import { FaUserCircle } from "react-icons/fa"
 import { FaRegHeart } from "react-icons/fa6"
@@ -99,8 +99,22 @@ function Header() {
     const handleDropdownProfilo = () => {
         setDropdownVisible(!isDropdownVisibile);
     }
+    /*Chiusura del dropdown appena clicco al di fuori del dropdown stesso*/
+    const dropdownRef = useRef(null);
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setDropdownVisible(false);
+            }
+        };
 
-/*<img id="logo" src={lumia2} alt="Logo"></img>*/
+        document.addEventListener('click', handleClickOutside);
+
+        return () => { /*Rimuovo il listener alla rimozione del componente*/
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
+
     return(
         <>
             <header className={`main-header ${isScrolled ? 'hidden' : ''}`}>
@@ -109,7 +123,7 @@ function Header() {
                     <SearchBar/>
                     <ul id="user-tools">
                         { (currentUserType !== USER_TYPES.User) && (<li className={`user-tool-content profile ${location.pathname === "/Profilo" ? "active" : ""}`}>
-                                <div className="link" onClick={handleDropdownProfilo}>
+                                <div className="link" ref={dropdownRef} onClick={handleDropdownProfilo}>
                                     <div className="icon-user-tool">
                                         <FaUserCircle />
                                     </div>

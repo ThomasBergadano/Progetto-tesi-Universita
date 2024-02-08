@@ -1,0 +1,208 @@
+@import './constants.css';
+
+#aboutpage{
+    width: 100%;
+    height: 100%;
+    background-color: var(--light-yellow);
+    font-family: 'Poppins', sans-serif;
+}
+
+/*Prima parte, riga 1, "Chi siamo?"*/
+.about-riga1{
+    width: 100%;
+    height: 350px;
+    margin-top: 30px;
+    align-items: center;
+    display: flex;
+}
+
+.chi-siamo{
+    display: flex;
+    flex-direction: column;
+    width: 420px;
+    height: 300px;
+    margin: 0px 80px 0px 220px;
+    justify-content: center;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.sottotitolo-chi-siamo{
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.about-logo{
+    display: flex;
+    width: 420px;
+    height: 300px;
+    background-color: var(--night);
+    margin: 0px 0px 0px 80px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 10px;
+}
+.lumia-about{
+    width: 450px;
+    height: 450px;
+}
+
+/*Seconda riga, frase con font diverso*/
+.about-riga2{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 150px;
+    margin-top: 50px;
+    margin-bottom: 80px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--maastricht-blue);
+}
+
+.about-riga2 p{
+    font-style: italic;
+    font-weight: 300;
+    font-size: 25px;
+    line-height: 2px;
+    letter-spacing: 1px;
+    color: var(--white);
+}
+
+
+/*Terza riga*/
+.about-riga3{
+    /*align-items: center;*/
+    display: flex;
+    width: 100%;
+    height: 550px;
+    margin-top: 40px;
+    /*background-color: rgb(23, 247, 228);*/
+}
+
+.riga3-immagini{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+    /*background-color: blueviolet;*/
+}
+.riga3-immagine1{
+    display: flex;
+    width: 500px;
+    height: 250px;
+    background-color: var(--night);
+    margin: 0px 0px 0px 80px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 10px;
+}
+.riga3-immagine2{
+    display: flex;
+    width: 500px;
+    height: 250px;
+    background-color: var(--night);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 30px 0px 0px 80px;
+    border-radius: 10px;
+}
+
+.box-obiettivo{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+    /*background-color: blanchedalmond;*/
+    margin: 0px 80px 0px 220px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.sottotitolo-obiettivo{
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/*Quarta riga*/
+.about-riga4{
+    align-items: center;
+    display: flex;
+    width: 100%;
+    height: 350px;
+    margin-top: 40px;
+    background-color: var(--maastricht-blue);
+    color: var(--white);
+}
+.responsabile{
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    width: 34%;
+    height: 100%;
+    margin-top: 35px;
+}
+.responsabile-info{
+    display: flex;
+    flex-direction: column;
+}
+.responsabile-nome{
+    font-size: 20px;
+    font-weight: bold;
+}
+.img-responsabile{
+    width: 240px;
+    height: 240px;
+}
+
+/*Quinta riga*/
+.about-riga5{
+    display: inline-flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+    height: 200px;
+    margin-top: 40px;
+    background-color: var(--night);
+    color: white;
+}
+.indirizzi{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    width: 50%;
+    height: 100%;
+
+}
+.orari{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    justify-content: center;
+    width: 50%;
+    height: 100%;
+    margin-left: 50px;
+    letter-spacing: 1px;
+
+}
+.orari .span-orari,
+.indirizzi .span-indirizzi{
+    text-align: center;
+
+    font-weight: bold;
+    font-size: 18px;
+    color: var(--firefly);
+}
+
+.orario-negozio{
+    margin-left: 135px;
+}
