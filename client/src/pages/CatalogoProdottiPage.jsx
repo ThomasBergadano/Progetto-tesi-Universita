@@ -6,9 +6,6 @@ function CatalogoProdotti() {
     return(
         <div>
             <div id="catalogo">
-                <p>CatalogoProdottiComponent</p>
-                <img src={it} alt="ITA"/>
-                <img src={en} alt="ENG"/>
                 <p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p>
             </div>
         </div>

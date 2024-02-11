@@ -15,7 +15,7 @@ function Signup() {
     const [numeroTelefonoUtente, setTelefono] = useState("");
     const navigate = useNavigate();
 
-    const Registrati = async(e) =>{
+    const Registrati = async(e) => {
         e.preventDefault();
 
         /*Creo un utente in Firebase Authentication (solo email e password)*/

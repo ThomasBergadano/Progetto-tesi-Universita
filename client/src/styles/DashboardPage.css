@@ -7,13 +7,13 @@
     font-family: 'Poppins', sans-serif;
 }
 
-/*Gestione utenti*/
+/* ---------- Gestione utenti ---------- */
 #gestione-utenti{
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 350px;
-    margin-bottom: 25px;
+    margin-bottom: 45px;
     margin-top: 10px;
 }
 #gestione-utenti .titolo-form{
@@ -26,9 +26,22 @@
     font-weight: bold;
 }
 
-.sub-1{
-    bottom: 55%;
-    left: 83.5%;
+.form-gestione-utenti{
+    width: 85%;
+    height: 250px;
+    border: 5px solid var(--night);
+    border-radius: 15px;
+    margin-left: 7%;
+}
+
+.dashboard-input-form{
+    width: 390px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid var(--maastricht-blue);
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 15px;
 }
 
 .email-aggiorna-ruolo,
@@ -37,13 +50,28 @@
     margin-top: 20px;
 }
 
+.divisore-aggiorna-ruolo{
+    display: flex;
+    height: 230px;
+    width: 3px;
+    background-color: var(--night);
+    margin-left: 80%;
+    margin-top: -183px;
+}
 
-/*Gestione prodotti*/
+.sub-1{
+    bottom: 55%;
+    left: 83.5%;
+}
+
+
+
+/* ----------- Gestione prodotti ---------- */
 #gestione-prodotti{
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 650px;
+    height: auto;
     margin-bottom: 45px;
 }
 #gestione-prodotti .titolo-form{
@@ -55,22 +83,143 @@
     position: relative;
     font-weight: bold;
 }
-.separate{ /*Per separare un form dall'altro, nel caso rientrassero nella stessa categoria*/
-    margin-bottom: 50px;
+
+/* --- Form "Inserisci prodotto" --- */
+.form-gestione-inserisci-prodotto{
+    width: 85%;
+    height: 565px;
+    border: 5px solid var(--night);
+    border-radius: 15px;
+    margin-left: 7%;
+    margin-bottom: 75px;
+}
+.container-form-inserisci-prodotto{
+    display: flex;
+    width: 100%;
+    height: 535px;
+    margin-top: -15px;
+}
+.inserisci-prodotto-colonna-sx{
+    width: 457px;
+    height: 565px;
+}
+.inserisci-prodotto-colonna-dx{
+    width: 457px;
+    height: 565px;
+}
+.prodotti-input-form{
+    width: 320px;
+    padding: 6px;
+    border: 1px solid var(--maastricht-blue);
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 15px;
 }
 
-.sub-2{ /*Coordinate bottone "inserisci prodotto"*/
-    bottom: 55%;
-    left: 82.4%;
+    /*Colonna sinistra*/
+.categoria-inserisci-prodotto{
+    margin-left: 50px;
+    margin-top: 20px;
+    margin-bottom: 25px;
 }
 
-.sub-3{ /*Coordinate bottone "elimina prodotto"*/
-    bottom: 55%;
-    left: 82.8%;
+.sottocategoria-inserisci-prodotto{
+    margin-left: 50px;
+    margin-top: 20px;
+    margin-bottom: 25px;
 }
 
-/*Classi condivise*/
-.form-gestione{
+.nomeprodotto-inserisci-prodotto{
+    margin-left: 50px;
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+.nomeset-inserisci-prodotto{
+    margin-left: 50px;
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+.descrizione-inserisci-prodotto{
+    margin-left: 50px;
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+.colore-inserisci-prodotto{
+    margin-left: 50px;
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+.descrizione-textarea{
+    width: 350px;
+    height: 100px;
+    margin-top: 5px;
+    font-family: 'Poppins', sans-serif;
+    resize: none;
+}
+
+    /*Colonna destra*/
+.prezzo-inserisci-prodotto{
+    margin-left: 50px;
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+.quantita-inserisci-prodotto{
+    margin-left: 50px;
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+.altezza-inserisci-prodotto{
+    margin-left: 50px;
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+.lunghezza-inserisci-prodotto{
+    margin-left: 50px;
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+.profondita-inserisci-prodotto{
+    margin-left: 50px;
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+.custom-file-upload{
+    width: 150px;
+    margin-left: 50px;
+    margin-top: 56px;
+    margin-bottom: 25px;
+}
+
+
+
+    /*Divisore e bottone*/
+.divisore-inserisci-prodotto{
+    height: 535px;
+    width: 3px;
+    margin-top: 0px;
+    background-color: var(--night);
+}
+/*Coordinate bottone "inserisci prodotto"*/
+.sub-2{
+    position: relative;
+    display: block;
+    height: 50px;
+    margin-top: 230px;
+    margin-left: 27px;
+}
+
+
+/* Form "Elimina prodotto" */
+.form-gestione-elimina-prodotto{
     width: 85%;
     height: 250px;
     border: 5px solid var(--night);
@@ -78,16 +227,7 @@
     margin-left: 7%;
 }
 
-.label-gestione{
-    margin-left: 7%;
-    margin-top: 20px;
-    margin-bottom: 30px;
-    font-size: 25px;
-    font-weight: bold;
-    color: var(--night);
-}
-
-.divisore-gestione{
+.divisore-elimina-prodotto{
     display: flex;
     height: 230px;
     width: 3px;
@@ -96,15 +236,23 @@
     margin-top: -183px;
 }
 
-.label-gestione{
-    margin-left: 7%;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    font-size: 22px;
-    font-weight: bold;
-    color: var(--night);
+.sub-3{ /*Coordinate bottone "elimina prodotto"*/
+    bottom: 55%;
+    left: 82.8%;
 }
 
+
+
+/*Classi condivise*/
+.label-gestione{
+    padding-left: 7%;
+    margin-top: 35px;
+    margin-bottom: 35px;
+    font-size: 22px;
+    font-weight: bold;
+    background-color: var(--night);
+    color: var(--firefly);
+}
 .submit-dashboard{
     position: relative;
     display: flex;
@@ -126,21 +274,10 @@
     color: var(--maastricht-blue);
     border: 1px solid var(--maastricht-blue);
     border-radius: 4px;
-    margin-left: -2px;
     font-family: 'Poppins', sans-serif;
 }
 
 .label-dashpage{
     display: block;
     margin-top: 15px;
-}
-
-.input-form{
-    width: 390px;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid var(--maastricht-blue);
-    border-radius: 5px;
-    box-sizing: border-box;
-    font-size: 15px;
 }

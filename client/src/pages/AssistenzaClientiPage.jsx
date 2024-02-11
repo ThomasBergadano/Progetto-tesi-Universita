@@ -22,27 +22,27 @@ function AssistenzaClienti() {
                 <p>Ecco le domande a noi solitamente più richieste. Nel caso non fossero abbastanza esaustive, avete la possibilità di contattarci utilizzando il form sottostante.</p>
                 <div className="FAQ-item">
                     <div className="question" onClick = {() => apriRisposta("Domanda 1")} >Domanda 1</div>
-                    {rispostaAperta === "Domanda 1" && <div class="answer">Risposta alla Domanda 1</div>}
+                    {rispostaAperta === "Domanda 1" && <div className="answer">Risposta alla Domanda 1</div>}
                 </div>
                 <div className="FAQ-item">
                     <div className="question" onClick = {() => apriRisposta("Domanda 2")} >Domanda 2</div>
-                    {rispostaAperta === "Domanda 2"&& <div class="answer">Risposta alla Domanda 1</div>}
+                    {rispostaAperta === "Domanda 2"&& <div className="answer">Risposta alla Domanda 1</div>}
                 </div>
                 <div className="FAQ-item">
                     <div className="question" onClick = {() => apriRisposta("Domanda 3")} >Domanda 3</div>
-                    {rispostaAperta === "Domanda 3" && <div class="answer">Risposta alla Domanda 1</div>}
+                    {rispostaAperta === "Domanda 3" && <div className="answer">Risposta alla Domanda 1</div>}
                 </div>
                 <div className="FAQ-item">
                     <div className="question" onClick = {() => apriRisposta("Domanda 4")} >Domanda 4</div>
-                    {rispostaAperta === "Domanda 4" && <div class="answer">Risposta alla Domanda 1</div>}
+                    {rispostaAperta === "Domanda 4" && <div className="answer">Risposta alla Domanda 1</div>}
                 </div>
                 <div className="FAQ-item">
                     <div className="question" onClick = {() => apriRisposta("Domanda 5")} >Domanda 5</div>
-                    {rispostaAperta === "Domanda 5" && <div class="answer">Risposta alla Domanda 1</div>}
+                    {rispostaAperta === "Domanda 5" && <div className="answer">Risposta alla Domanda 1</div>}
                 </div>
                 <div className="FAQ-item">
                     <div className="question" onClick = {() => apriRisposta("Domanda 6")} >Domanda 6</div>
-                    {rispostaAperta === "Domanda 6" && <div class="answer">Risposta alla Domanda 1</div>}
+                    {rispostaAperta === "Domanda 6" && <div className="answer">Risposta alla Domanda 1</div>}
                 </div>
             </div>
             <div className="contattaci">

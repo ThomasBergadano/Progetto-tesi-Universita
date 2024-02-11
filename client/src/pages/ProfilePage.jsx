@@ -38,6 +38,8 @@ function Profilo(){
         <div>
             <div id="assistenza-clienti">
                 <p>ProfileComponent</p>
+                <img src={it} alt="ITA"/>
+                <img src={en} alt="ENG"/>
                 <p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p>
             </div>
         </div>
