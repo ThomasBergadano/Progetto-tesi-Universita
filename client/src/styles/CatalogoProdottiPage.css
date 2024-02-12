@@ -1,0 +1,189 @@
+@import './constants.css';
+
+#catalogo{
+    width: 100%;
+    height: 100%;
+    background-color: var(--light-yellow);
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Filtro */
+#filter{
+    display: flex;
+    margin-top: 30px;
+    margin-left: 54px;
+    width: 1241px; /*1349px - 54*2px*/
+    height: 220px;
+    background-color: var(--dark-gray);
+    border: 5px solid var(--night);
+    border-radius: 15px;
+    color: var(--firefly);
+}
+
+/* --- Filtro ricerca --- */
+.filter-ricerca{
+    display: flex;
+    flex-direction: column;
+    width: 961px;
+    height: 100%;
+}
+
+.filtro-superiore,
+.filtro-inferiore{
+    display: flex;
+    width: 100%;
+    height: 110px;
+}
+
+.nomeprodotto-cercaprodotto,
+.prezzo-cercaprodotto,
+.categoria-cercaprodotto,
+.sottocategoria-cercaprodotto{
+    font-size: 16px;
+    margin-left: 50px;
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+.colore-cercaprodotto,
+.altezza-cercaprodotto,
+.lunghezza-cercaprodotto,
+.profondita-cercaprodotto{
+    font-size: 16px;
+    margin-left: 50px;
+    margin-bottom: 25px;
+}
+
+.nomeprodotto-cercaprodotto input{
+    width: 160px;
+    height: 30px;
+    margin-right: 15px;
+    border-radius: 4px;
+    text-decoration: none;
+    border: none;
+    outline: none;
+}
+.nomeprodotto-cercaprodotto input:focus{
+    outline: 3px solid var(--firefly);
+}
+
+.input-in-riga{
+    display: flex;
+}
+.input-in-riga input{
+    width: 80px;
+    height: 30px;
+    margin-right: 15px;
+    border-radius: 4px;
+    text-decoration: none;
+    border: none;
+    outline: none;
+}
+.input-in-riga input:focus{
+    outline: 3px solid var(--firefly);
+}
+
+.categoria-cercaprodotto select,
+.sottocategoria-cercaprodotto select{
+    width: 200px;
+    height: 30px;
+    border-radius: 4px;
+}
+.colore-cercaprodotto select{
+    width: 150px;
+    height: 30px;
+    border-radius: 4px;
+}
+.categoria-cercaprodotto select:focus,
+.sottocategoria-cercaprodotto select:focus,
+.colore-cercaprodotto select:focus{
+    outline: 3px solid var(--firefly);
+}
+
+
+
+/* --- Filtro bottone --- */
+.filtro-bottone{
+    width: 280px;
+    height: 100%;
+}
+.bottone-filtro{
+    margin-left: 125px;
+    margin-top: 90px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--firefly);
+    color: var(--maastricht-blue);
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+.bottone-filtro:hover{
+    background-color: var(--maastricht-blue);
+    color: var(--firefly);
+    border: 1px solid var(--firefly);
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.label-filter{
+    display: block;
+    margin-top: 15px;
+}
+
+
+
+
+/* ---------------------------------------------------------------------- */
+#visualizzazione-prodotti{
+    display: flex;
+    width: 100%;
+    height: 30px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+}
+
+.ordina-prodotti{
+    display: flex;
+}
+
+.label-sort{
+    margin-right: 10px;
+    margin-left: 54px;
+}
+
+.ordina-prodotti select{
+    width: 200px;
+    border-radius: 4px;
+}
+.ordina-prodotti select:focus{
+    outline: 3px solid var(--firefly);
+}
+
+.numero-prodotti-disponibili{
+    display: left;
+    margin-right: 54px;
+}
+
+
+
+/* ---------------------------------------------------------------------- */
+/* Stampa dei prodotti */
+.blocchi{
+    display: flex;
+    width: 100%;
+    height: 260px;
+}
+
+.blocco{
+    margin-left: 54px;
+    width: 270px;
+    height: 260px;
+    background-color: blueviolet;
+}
