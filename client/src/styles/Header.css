@@ -30,11 +30,10 @@ header{
   width: 100%;
 }
 
-#logo,
-#logo-scroll-navbar{
-  height: 120px;
-  width: 120px;
-  margin: -10px 0px 0px 20px;
+#logo{
+  height: 232px;
+  width: 232px;
+  margin: -69px 0px 0px -68px;
 }
 
 /*Search Bar component dentro top header*/
@@ -322,9 +321,13 @@ li.scroll-dashboard.active a:hover{
 }
 
 #logo-scroll-navbar{
-  margin-bottom: 20px;
-  margin-left: 20px;
+  height: 190px;
+  width: 120px;
+  margin-left: -15px;
+  margin-right: 35px;
+  overflow: hidden;
 }
+
 
 li.scroll-dashboard a{
   margin-left: 165px; /*margine da sinistra, da 'Assistenza Clienti', non lo faccio da destra*/

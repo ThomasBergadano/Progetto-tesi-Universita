@@ -1,6 +1,7 @@
 import React from "react"
 import lumia2 from "../assets/images/Lumia2.png"
 import responsabile from "../assets/images/responsabile.png"
+import lumialogo from "../assets/images/lumia-logo.svg"
 import "../styles/AboutPage.css"
 
 function About() {
@@ -12,7 +13,7 @@ function About() {
                     <p>"Attraverso le nebbie del tempo, emerge una storia intrecciata di avventure e misteri. Un viaggiatore solitario si addentra nella foresta, affrontando sfide e scoprendo segreti nascosti. Le foglie cadute sotto i suoi passi narrano storie dimenticate, mentre il vento sussurra antiche melodie. Nell'oscurità della notte, la luna veglia silenziosa, rivelando un mondo di possibilità infinite."</p>
                 </div>
                 <div className="about-logo">
-                    <img className="lumia-about" src={lumia2} alt="Logo"></img>
+                    <img className="lumia-about" src={lumialogo} alt="Logo"></img>
                 </div>
             </div>
 

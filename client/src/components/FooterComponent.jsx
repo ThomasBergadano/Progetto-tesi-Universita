@@ -2,6 +2,8 @@ import React from "react"
 import { Link } from 'react-router-dom'
 import '../styles/Footer.css'
 import logo from '../assets/images/Lucciola.png'
+import lumiafinale from '../assets/images/lumiafinale.png'
+import lumialogo from "../assets/images/lumia-logo.svg"
 import { FaLinkedin } from "react-icons/fa";
 import { FaFacebookSquare } from "react-icons/fa";
 import { FaPinterestSquare } from "react-icons/fa";
@@ -26,7 +28,7 @@ function Footer() {
         <footer>
             <div id="container">
                 <div className="foot left-footer">
-                    <img id="logo-footer" src={logo} alt="Logo"></img>
+                    <img id="logo-footer" src={lumialogo} alt="Logo"></img>
                 </div>
                 <div className="foot center-footer">
                     <div className="center-one">
@@ -67,7 +69,7 @@ function Footer() {
                 </div>
             </div>
             <div className="copyright">
-                <span className="copyright-content">Copyright © 2024 Lumia - Tutti i diritti riservati</span>
+                <span className="copyright-content">Copyright © 2024 Lumia Arredamenti - Tutti i diritti riservati</span>
             </div>
         </footer>
     )

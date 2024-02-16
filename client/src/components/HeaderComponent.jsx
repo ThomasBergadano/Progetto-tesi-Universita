@@ -8,10 +8,8 @@ import { doc, getDoc, setDoc, collection, getFirestore } from "firebase/firestor
 import db from "../database/firebase"
 import { onAuthStateChanged, signOut } from "firebase/auth"
 import logo from '../assets/images/Lucciola.png'
-import it from '../assets/images/it.png'
-import en from '../assets/images/en.png'
-import lumia from "../assets/images/Lumia.png"
 import lumia2 from "../assets/images/Lumia2.png"
+import lumialogo from "../assets/images/lumia-logo.svg"
 import SearchBar from './SearchBarComponent.jsx'
 import '../styles/Header.css'
 
@@ -119,7 +117,7 @@ function Header() {
         <>
             <header className={`main-header ${isScrolled ? 'hidden' : ''}`}>
                 <div className="top-header">
-                    <img id="logo" src={lumia2} alt="Logo"></img>
+                    <img id="logo" src={lumialogo} alt="Logo"></img>
                     <SearchBar/>
                     <ul id="user-tools">
                         { (currentUserType !== USER_TYPES.User) && (<li className={`user-tool-content profile ${location.pathname === "/Profilo" ? "active" : ""}`}>
@@ -189,7 +187,7 @@ function Header() {
                 <header className="scroll-header">
                     <nav className="scroll-navbar">
                         <div className="scroll-navbar-wrapper">
-                            <img id="logo-scroll-navbar" src={logo} alt="Logo"></img>
+                            <img id="logo-scroll-navbar" src={lumialogo} alt="Logo"></img>
                             <ul>
                                 <li className={`navbar-link ${location.pathname === "/" ? "active" : ""}`}><Link to="/" onClick={scrollToTop}>Home</Link></li>
                                 <li className={`navbar-link ${location.pathname === "/CatalogoProdotti" ? "active" : ""}`}><Link to="/CatalogoProdotti" onClick={scrollToTop}>Catalogo prodotti</Link></li>

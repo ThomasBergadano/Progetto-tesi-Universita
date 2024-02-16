@@ -8,7 +8,8 @@
     width: 45px;
     height: 45px;
     border-radius: 50%;
-    border: 2px solid var(--maastricht-blue);
+    border: 2px solid var(--firefly);
+    background-color: var(--maastricht-blue);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -16,11 +17,18 @@
 }
 .icon-filter-container:hover{
     background-color: var(--firefly);
+    border: 2px solid var(--maastricht-blue);
 }
 .icon-filter{
     position: absolute;
-    margin-right: -1px;
-    margin-bottom: -12px;
+    width: 43px;
+    height: 43px;
+    border-radius: 50%;
+    padding-top: 10px;
+    padding-left: 13px;
     font-size: 30px;
+    color: var(--firefly);
+}
+.icon-filter:hover{
     color: var(--maastricht-blue);
 }

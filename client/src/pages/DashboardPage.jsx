@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { useNavigate } from 'react-router-dom'
 import { auth } from "../database/firebase"
 import { doc, getDoc, getDocs, setDoc, collection, query, where, getFirestore, addDoc } from "firebase/firestore"
@@ -25,7 +25,7 @@ function Dashboard() {
     const [lunghezzaProdotto, setLunghezzaProdotto] = useState("");
     const [profonditaProdotto, setProfonditaProdotto] = useState("");
     const [coloreProdotto, setColoreProdotto] = useState("");
-    
+    const inserimentoProdottoRef = useRef(null); /*Riferimento all'elemento nel DOM in modo da resettare gli input*/
 
 
     /*Gestione autorizzazone e permessi per accesso in /Dashboard*/
@@ -151,6 +151,7 @@ function Dashboard() {
         setLunghezzaProdotto(0);
         setProfonditaProdotto(0);
         setColoreProdotto("");
+        inserimentoProdottoRef.current.reset(); /*Resetto i campi input appena compilati*/
 
         console.log("Prodotto appena creato: ", ProdottoDoc.id);
     }
@@ -182,7 +183,7 @@ function Dashboard() {
 
             <div id="gestione-prodotti">
                 <label type="text" className="label-gestione">GESTIONE PRODOTTI</label>
-                <form className="form-gestione-inserisci-prodotto" method="POST">
+                <form className="form-gestione-inserisci-prodotto" method="POST" ref={inserimentoProdottoRef}>
                     <span className="titolo-form">Inserisci prodotto</span>
 
                     <div className="container-form-inserisci-prodotto">
@@ -217,11 +218,14 @@ function Dashboard() {
                                 <label className="label-dashpage">Seleziona il colore primario: </label>
                                 <select className="select-colore" name="colore" defaultValue="Rosso" onChange={(e) => setColoreProdotto(e.target.value)} required>
                                     <option value="Rosso">Rosso</option>
+                                    <option value="Marrone">Marrone</option>
                                     <option value="Arancione">Arancione</option>
                                     <option value="Giallo">Giallo</option>
                                     <option value="Verde">Verde</option>
                                     <option value="Azzurro">Azzurro</option>
                                     <option value="Blu">Blu</option>
+                                    <option value="Viola">Viola</option>
+                                    <option value="Rosa">Rosa</option>
                                     <option value="Grigio">Grigio</option>
                                     <option value="Bianco">Bianco</option>
                                     <option value="Nero">Nero</option>
