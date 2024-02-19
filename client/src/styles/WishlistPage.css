@@ -1,0 +1,101 @@
+@import './constants.css';
+
+#wishlist{
+    width: 100%;
+    height: 100%;
+    background-color: var(--light-yellow);
+    font-family: 'Poppins', sans-serif;
+}
+
+.wishlist-titolo{
+    display: flex;
+    width: 100%;
+    height: 30px;
+    margin-top: 30px;
+    margin-left: 54px;
+    margin-bottom: 50px;
+    font-size: 35px;
+    color: var(--maastricht-blue);
+    font-weight: bold;
+}
+
+.divisore-wishlist{
+    width: 1241px;
+    height: 3px;
+    margin-left: 54px;
+    background-color: var(--maastricht-blue);
+}
+
+/*Gestione prodotti*/
+.wishlist-product{
+    position: relative;
+    margin-top: 35px;
+}
+
+.interagisci-prodotto-wishlist{
+    position: absolute;
+    display: none;
+    justify-content: space-between;
+    width: 270px;
+    height: 90px;
+    margin-top: 180px;
+}
+
+.addtocart{
+    position: absolute;
+    display: none;
+    width: 75%;
+    height: 40px;
+    margin: 30px 0px 0px 12%;
+    background-color: var(--firefly);
+    color: var(--maastricht-blue);
+    border: 2px solid var(--maastricht-blue);
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    padding: 10px 20px;
+    display: inline-block;
+    cursor: pointer;
+    user-select: none;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 4px;
+}
+.addtocart:hover{
+    background-color: var(--maastricht-blue);
+    border: 2px solid var(--firefly);
+    color: var(--firefly);
+    font-weight: bold;
+}
+.addtocart span{
+    margin-top: -100px;
+}
+
+.rimuovi-da-wishlist{
+    position: absolute;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    margin-left: 225px;
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+    background-color: var(--dark-gray);
+    color: white;
+    border: 1px solid var(--white);
+    border-radius: 50px;
+}
+.rimuovi-da-wishlist:hover{
+    background-color: var(--firefly);
+    color: var(--maastricht-blue);
+    cursor: pointer;
+}
+
+.wishlist-product:hover .interagisci-prodotto-wishlist,
+.wishlist-product:hover .rimuovi-da-wishlist{
+    display: flex;
+}

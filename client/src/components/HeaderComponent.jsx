@@ -7,8 +7,6 @@ import { auth } from "../database/firebase"
 import { doc, getDoc, setDoc, collection, getFirestore } from "firebase/firestore"
 import db from "../database/firebase"
 import { onAuthStateChanged, signOut } from "firebase/auth"
-import logo from '../assets/images/Lucciola.png'
-import lumia2 from "../assets/images/Lumia2.png"
 import lumialogo from "../assets/images/lumia-logo.svg"
 import SearchBar from './SearchBarComponent.jsx'
 import '../styles/Header.css'

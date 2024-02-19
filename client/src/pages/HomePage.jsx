@@ -1,10 +1,7 @@
 import React, { useState, useEffect }  from "react"
-import it from '../assets/images/it.png'
-import en from '../assets/images/en.png'
-import lucciola from  '../assets/images/Lucciola.png'
 import furniture from  '../assets/images/furniture.png'
 import aesthetic2 from  '../assets/images/aesthetic2.png'
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 import '../styles/HomePage.css'
 
 function Home() {

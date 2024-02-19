@@ -1,8 +1,6 @@
 import React from "react"
 import { Link } from 'react-router-dom'
 import '../styles/Footer.css'
-import logo from '../assets/images/Lucciola.png'
-import lumiafinale from '../assets/images/lumiafinale.png'
 import lumialogo from "../assets/images/lumia-logo.svg"
 import { FaLinkedin } from "react-icons/fa";
 import { FaFacebookSquare } from "react-icons/fa";

@@ -43,6 +43,7 @@
     justify-content: center;
     text-align: center;
     border-radius: 10px;
+    overflow: hidden;
 }
 .lumia-about{
     width: 750px;

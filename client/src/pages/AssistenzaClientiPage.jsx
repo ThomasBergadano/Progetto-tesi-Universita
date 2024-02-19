@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
 import "../styles/assistenzaclientipage.css"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FaUpload } from "react-icons/fa6";
 
 function AssistenzaClienti() {

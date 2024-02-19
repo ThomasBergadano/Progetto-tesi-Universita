@@ -1,5 +1,4 @@
 import React from "react"
-import lumia2 from "../assets/images/Lumia2.png"
 import responsabile from "../assets/images/responsabile.png"
 import lumialogo from "../assets/images/lumia-logo.svg"
 import "../styles/AboutPage.css"

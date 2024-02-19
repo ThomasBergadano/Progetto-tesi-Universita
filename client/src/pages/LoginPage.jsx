@@ -4,8 +4,6 @@ import { auth, googleAuthProvider } from "../database/firebase"
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth"
 import { doc, getDoc, setDoc, collection, getFirestore } from "firebase/firestore"
 import db from "../database/firebase"
-import axios from "axios"
-import logo from '../assets/images/Lucciola.png'
 import google from '../assets/images/google.png'
 import HomeFloatingButton from "../components/HomeFloatingButton"
 //import { loginEseguito } from "../components/HeaderComponent.jsx" //importo la funzione dall'header in modo da richiamarla
