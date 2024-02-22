@@ -1,11 +1,12 @@
 import React, { useEffect } from "react"
 import { useNavigate } from 'react-router-dom'
-import { auth } from "../database/firebase"
+import { auth } from "../../database/firebase"
 import { doc, getDoc } from "firebase/firestore"
-import db from "../database/firebase"
+import db from "../../database/firebase"
 import { onAuthStateChanged, signOut } from "firebase/auth"
 
-function Profilo(){
+
+function CronologiaOrdini(){
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -27,23 +28,18 @@ function Profilo(){
               }
             }
             else {
-                /*Quando l'utente fa logout da questa pagina, lo porto nella home anzichè nel login*/
+                /*Tentativo di accesso da parte di un utente non autenticato*/
                 console.log("L'utente che prova ad accedere in Profile non è autenticato");
-                navigate("/");
+                navigate("/Login");
             }
         });
     }, []);
 
     return(
-        <div>
-            <div id="assistenza-clienti">
-                <p>ProfileComponent</p>
-                <img src={it} alt="ITA"/>
-                <img src={en} alt="ENG"/>
-                <p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p><p>  .</p>
-            </div>
+        <div id="pagina-informazioni-personali">
+            <p>Sono dentro Cronologia Ordini</p>
         </div>
     )
 }
 
-export default Profilo;
+export default CronologiaOrdini;

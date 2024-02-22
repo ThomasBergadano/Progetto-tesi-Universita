@@ -1,5 +1,5 @@
 import React, { useState, useEffect }  from "react"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { doc, getDoc, getDocs, setDoc, collection, query, where, getFirestore, addDoc } from "firebase/firestore"
 import db from "../database/firebase"
 import { FaRegHeart } from "react-icons/fa6"
@@ -9,6 +9,8 @@ import "../styles/CatalogoProdottiPage.css"
 import soggiorno from '../assets/images/soggiorno.jpg'
 
 function CatalogoProdotti() {
+    const navigate = useNavigate();
+    
     /*Caricamento dei prodotti*/
     const [showButton, setShowButton] = useState(false); //useState(true);
     const [numeroProdotti, setNumeroProdotti] = useState(0);
@@ -56,9 +58,13 @@ function CatalogoProdotti() {
                     /*Ottengo riferimento alla raccolta Prodotti e inserisco nell'array*/
                     const RiferimentoRaccoltaProdotti = collection(sottocategoriaDoc.ref, "Prodotti");
                     const snapshotProdotti = await getDocs(RiferimentoRaccoltaProdotti);
-                    if (snapshotProdotti.docs.length > 0) {
+                    if(snapshotProdotti.docs.length > 0){
                         for (const prodottoDoc of snapshotProdotti.docs) {
-                            prodottiArray.push(prodottoDoc.data());
+
+                            /*Voglio inserire nell'array sia l'id del documento che i campi del prodotto*/
+                            const datiProdotto = prodottoDoc.data();
+                            const prodottoConId = { id: prodottoDoc.id, ...datiProdotto }
+                            prodottiArray.push(prodottoConId);
                         }
                     }
                 }
@@ -321,7 +327,6 @@ function CatalogoProdotti() {
     }
 
 
-
     return(
         <div id="catalogo">
             <div id="filter">
@@ -427,22 +432,24 @@ function CatalogoProdotti() {
                 }
                 {numeroProdotti !== 0 && prodotti.slice(0, prodottiVisualizzati).map((prodotto, index) => (
                     <div className="card-prodotto" key={index}>
-                        <div className="prodotto-img">
-                            <img src={soggiorno} alt="icona-prodotto"></img>
-                            <div className="interagisci-prodotto">
+                        <Link to={`/CatalogoProdotti/id:${prodotto.id}`}>
+                            <div className="prodotto-img">
+                                <img src={soggiorno} alt="icona-prodotto"></img>
+                                <div className="interagisci-prodotto">
 
-                                <Link to="/Wishlist">
-                                    <div className="prodotto-in-wishlist">
-                                        <FaRegHeart />
-                                    </div>
-                                </Link>
-                                <Link to="/Carrello">
-                                    <div className="prodotto-in-carrello">
-                                        <FiShoppingCart />
-                                    </div>
-                                </Link>
+                                    <Link to="/Wishlist">
+                                        <div className="prodotto-in-wishlist">
+                                            <FaRegHeart />
+                                        </div>
+                                    </Link>
+                                    <Link to="/Carrello">
+                                        <div className="prodotto-in-carrello">
+                                            <FiShoppingCart />
+                                        </div>
+                                    </Link>
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                         <div className="prodotto-info">
                             <p className="info1">{String(prodotto.NomeProdotto)}</p>
                             <p className="info2">Set: {String(prodotto.NomeSet)}</p>

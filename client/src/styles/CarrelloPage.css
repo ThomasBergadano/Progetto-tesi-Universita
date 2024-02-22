@@ -10,7 +10,6 @@
 /* --- Carrello vuoto --- */
 .emptycart{
     width: 100%;
-    width: auto;
     margin-top: 100px;
     margin-bottom: 100px;
     text-align: center;
@@ -201,7 +200,7 @@
     display: flex;
     flex-direction: column;
     width: 30%;
-    height: 220px;
+    height: 210px;
     border: 2px solid var(--maastricht-blue);
     margin: 60px 50px 0px 0px;
 }
@@ -231,7 +230,7 @@
     width: 92%;
     height: 2px;
     background-color: var(--maastricht-blue);
-    margin: 45px 0px 16px 4%;
+    margin: 35px 0px 16px 4%;
 }
 
 .notemptycart-button{

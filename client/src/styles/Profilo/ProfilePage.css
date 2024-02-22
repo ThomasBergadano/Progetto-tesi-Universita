@@ -1,0 +1,85 @@
+@import '../constants.css';
+
+#pagina-profilo{
+    width: 100%;
+    height: 100%;
+    background-color: var(--light-yellow);
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+}
+
+a{
+    text-decoration: none;
+}
+/* Navbar laterale */
+.nav-profilo{
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: 190px;
+    margin: 40px 0 0px 80px;
+    background-color: beige;
+    border: 1px solid var(--maastricht-blue);
+}
+.nav-profilo-title{
+    justify-content: center;
+
+    vertical-align: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 10px 0px 15px 12px;
+}
+
+.link-nav-profilo{
+    display: flex;
+    width: 90%;
+    height: 40px;
+    background-color: var(--relaxing-gray);
+    color: var(--white);
+    text-decoration: none;
+    border: 1px solid var(--maastricht-blue);
+    margin: 0 0 0 12px;
+    vertical-align: center;
+    align-items: center;
+    font-size: 14px;
+}
+.link-nav-profilo p{
+    margin-left: 12px;
+
+}
+.link-nav-profilo.active{
+    background-color: var(--maastricht-blue);
+    color: var(--firefly);
+    font-weight: bold;
+    text-decoration: underline;
+    text-decoration-skip-ink: none;
+    text-underline-offset: 2px;
+}
+
+
+
+.profilo-click-icon{
+    margin: 10px 0 0 0;
+    font-size: 35px;
+}
+.icon-informazionipersonali{
+    margin-left: 22px;
+}
+.icon-cambiopassword{
+    margin-left: 48px;
+}
+.icon-cronologiaordini{
+    margin-left: 56px;  
+}
+
+
+/* Body della pagina profilo */
+.profilo-container{
+    width: 830px;
+    height: 800px;
+    background-color: azure;
+    margin: 40px 0 200px 100px;
+    border: 1px solid var(--maastricht-blue);
+    padding: 0;
+}

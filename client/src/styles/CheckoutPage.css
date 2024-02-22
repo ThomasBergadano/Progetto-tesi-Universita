@@ -1,0 +1,226 @@
+@import './constants.css';
+
+#checkout{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background-color: var(--light-yellow);
+    font-family: 'Poppins', sans-serif;
+}
+
+.checkout-containter{
+    display: flex;
+    width: 100%;
+    height: auto;
+}
+    
+    /* Indirizzo di spedizione e metodo di pagamento (colonna di sinistra) */
+.informazioni-checkout{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    height: auto;
+    margin: 60px 100px 200px 60px;
+}
+
+    /* - Indirizzo di spedizione - */
+.checkout-spedizione{
+    display: flex;
+    width: 100%;
+    height: 200px;
+    border: 2px solid var(--maastricht-blue);
+}
+
+.checkout-titolo{
+    font-size: 20px;
+    color: var(--maastricht-blue);
+    font-weight: bold;
+    margin: 15px 0px 10px 30px;
+}
+
+.checkout-info{
+    margin: 5px 0px 0px 30px;
+}
+.checkout-info span{
+    font-weight: bold;
+}
+
+.spedizione-sx{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    height: 200px;
+}
+.spedizione-dx{
+    display: flex;
+    width: 40%;
+    height: 200px;
+}
+
+.modifica-dati-check{
+    display: flex;
+    width: 150px;
+    height: 40px;
+    margin: 88px 0px 0px 80px;
+    background-color: var(--night);
+    color: var(--white);
+    border: 1px solid var(--white);
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    line-height: 15px;
+}
+.modifica-dati-check:hover{
+    background-color: var(--maastricht-blue);
+    border: 1px solid var(--firefly);
+    color: var(--firefly);
+    border-radius: 4px;
+}
+
+
+
+
+    /* - Modalità di pagamento - */
+.checkout-pagamento{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 250px;
+    border: 2px solid var(--maastricht-blue);
+    margin: 20px 0 0 0;
+}
+
+.metodo-pagamento-select {
+    display: flex;
+    flex-direction: column;
+    height: 345px;
+    font-size: 16px;
+    margin: 0 0 0 20px;
+}
+
+.pagamenti-icon img{
+    width: 50px;
+    margin-right: 10px;
+}
+
+.payment-item{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+.payment-item span{
+    margin-left: 10px;
+    user-select: none;
+}
+.payment-item input:checked + span{
+    font-weight: bold;
+    color: var(--maastricht-blue);
+}
+
+.payment-img{
+    width: 60px;
+    height: 38px;
+    margin-left: 15px;
+}
+.payment-img-postepay{
+    width: 63px;
+    height: 42px;
+    margin-left: 15px;
+}
+.payment-img-paypal{
+    width: 60px;
+    height: 60px;
+    margin-left: 20px; 
+}
+.payment-img-googlepay{
+    width: 70px;
+    height: 40px;
+    margin-left: 20px; 
+}
+
+
+    /* Riepilogo dell'ordine (colonna di destra) */
+.riepilogo-ordine{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    height: 280px;
+    border: 2px solid var(--maastricht-blue);
+    margin: 60px 50px 0px 0px;
+}
+
+.riepilogo-subtitle{
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--maastricht-blue);
+    margin: 5px 0px 0px 4%;
+    font-size: 20px;
+}
+
+.costo-totale-checkout{
+    display: flex;
+    margin: 0px 0px -20px 4%;
+    font-size: 16px;
+}
+.somma-totale{
+    display: flex;
+    margin: 30px 0px -20px 4%;
+    font-size: 16px; 
+    font-weight: bold;  
+}
+
+.riepilogo-costo-totale{
+    margin-left: 170px;
+    justify-content: right;
+    align-items: right;
+    text-align: right;
+}
+.riepilogo-spese-trasporto{
+    margin-left: 143px;
+    justify-content: right;
+    align-items: right;
+    text-align: right;
+}
+.riepilogo-somma-totale{
+    margin-left: 170px;
+    justify-content: right;
+    align-items: right;
+    text-align: right;
+}
+
+
+.divisore-riepilogo{
+    width: 92%;
+    height: 2px;
+    background-color: var(--maastricht-blue);
+    margin: 20px 0px 16px 4%;
+}
+
+.ordina-button{
+    width: 92%;
+    margin: 0px 0px 0px 4%;
+    background-color: var(--maastricht-blue);
+    color: var(--firefly);
+    border: 2px solid var(--firefly);
+    font-size: 20px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    user-select: none;
+}
+.ordina-button:hover{
+    background-color: var(--firefly);
+    border: 2px solid var(--maastricht-blue);
+    color: var(--maastricht-blue);
+    font-weight: bold;
+}

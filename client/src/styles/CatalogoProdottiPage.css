@@ -207,6 +207,7 @@
     width: 270px;
     height: 270px;
     overflow: hidden;
+    text-decoration: none;
 }
 .prodotto-img img{
     width: 400px;

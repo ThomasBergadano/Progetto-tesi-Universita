@@ -22,6 +22,8 @@ const USER_TYPES = {
 }
 
 function Header() {
+    const location = useLocation();
+    
     /*useEffect che viene aggiornato 1 volta appena auth cambia, ovvero appena l'utente fa il login firebase fa partire una sessione*/
     /*useEffect in realtà viene "runnato" appena il componente viene caricato nel DOM*/
     const [currentUserType, setCurrentUserType] = useState(USER_TYPES.User);
@@ -192,7 +194,7 @@ function Header() {
                                 <li className={`navbar-link ${location.pathname === "/Idee" ? "active" : ""}`}><Link to="/Idee" onClick={scrollToTop}>Idee e spunti</Link></li>
                                 <li className={`navbar-link ${location.pathname === "/ChiSiamo" ? "active" : ""}`}><Link to="/ChiSiamo" onClick={scrollToTop}>Chi siamo</Link></li>
                                 <li className={`navbar-link ${location.pathname === "/AssistenzaClienti" ? "active" : ""}`}><Link to="/AssistenzaClienti" onClick={scrollToTop}>Assistenza clienti</Link></li>
-                                { ((currentUserType === USER_TYPES.Admin) || (currentUserType === USER_TYPES.Employee)) && <li className={`navbar-link scroll-dashboard${location.pathname === "/Dashboard" ? "active" : ""}`}><Link to="/Dashboard" onClick={scrollToTop}>Dashboard</Link></li> }
+                                { ((currentUserType === USER_TYPES.Admin) || (currentUserType === USER_TYPES.Employee)) && <li className={`navbar-link scroll-dashboard ${location.pathname === "/Dashboard" ? "active" : ""}`}><Link to="/Dashboard" onClick={scrollToTop}>Dashboard</Link></li> }
                             </ul>
                             {(currentUserType !== USER_TYPES.Admin) && (currentUserType !== USER_TYPES.Employee) && <SearchBar/>} 
                         </div>      

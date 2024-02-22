@@ -208,11 +208,11 @@ function Dashboard() {
                             </div>
                             <div className="nomeprodotto-inserisci-prodotto">
                                 <label className="label-dashpage">Inserisci il nome del prodotto: </label>
-                                <input type="text" className="nomeprodotto prodotti-input-form" placeholder="Nome prodotto" autoComplete="Nome prodotto" onChange={(e) => setNomeProdotto(e.target.value)} required/>
+                                <input type="text" className="prodotti-input-form" placeholder="Nome prodotto" autoComplete="Nome prodotto" onChange={(e) => setNomeProdotto(e.target.value)} required/>
                             </div>
                             <div className="nomeset-inserisci-prodotto">
                                 <label className="label-dashpage">Inserisci, se esiste, il set del prodotto: </label>
-                                <input type="text" className="nomeset prodotti-input-form" placeholder="Set prodotto" autoComplete="Set prodotto" onChange={(e) => setNomeSet(e.target.value)} required/>
+                                <input type="text" className="prodotti-input-form" placeholder="Set prodotto" autoComplete="Set prodotto" onChange={(e) => setNomeSet(e.target.value)} required/>
                             </div>
                             <div className="colore-inserisci-prodotto">
                                 <label className="label-dashpage">Seleziona il colore primario: </label>
@@ -239,27 +239,27 @@ function Dashboard() {
                         <div className="inserisci-prodotto-colonna-dx">
                             <div className="prezzo-inserisci-prodotto">
                                 <label className="label-dashpage">Inserisci il prezzo del prodotto: </label>
-                                <input type="number" className="prezzo-prodotto prodotti-input-form" placeholder="Prezzo prodotto: €" autoComplete="0" onChange={(e) => setPrezzoProdotto(e.target.value)} required/>
+                                <input type="number" className="prodotti-input-form" placeholder="Prezzo prodotto: €" autoComplete="0" onChange={(e) => setPrezzoProdotto(e.target.value)} required/>
                             </div>
                             <div className="quantita-inserisci-prodotto">
                                 <label className="label-dashpage">Inserisci la quantità del prodotto (pz.): </label>
-                                <input type="number" className="quantita-prodotto prodotti-input-form" placeholder="Quantità prodotto: QTY" autoComplete="0" onChange={(e) => setQuantitaProdotto(e.target.value)} required/>
+                                <input type="number" className="prodotti-input-form" placeholder="Quantità prodotto: QTY" autoComplete="0" onChange={(e) => setQuantitaProdotto(e.target.value)} required/>
                             </div>
                             <div className="altezza-inserisci-prodotto">
                                 <label className="label-dashpage">Inserisci l'altezza del prodotto (in cm): </label>
-                                <input type="number" className="altezza-prodotto prodotti-input-form" placeholder="Altezza prodotto: cm" autoComplete="0" onChange={(e) => setAltezzaProdotto(e.target.value)} required/>
+                                <input type="number" className="prodotti-input-form" placeholder="Altezza prodotto: cm" autoComplete="0" onChange={(e) => setAltezzaProdotto(e.target.value)} required/>
                             </div>
                             <div className="lunghezza-inserisci-prodotto">
                                 <label className="label-dashpage">Inserisci la lunghezza del prodotto (in cm): </label>
-                                <input type="number" className="lunghezza-prodotto prodotti-input-form" placeholder="Lunghezza prodotto: cm" autoComplete="0" onChange={(e) => setLunghezzaProdotto(e.target.value)} required/>
+                                <input type="number" className="prodotti-input-form" placeholder="Lunghezza prodotto: cm" autoComplete="0" onChange={(e) => setLunghezzaProdotto(e.target.value)} required/>
                             </div>
                             <div className="profondita-inserisci-prodotto">
                                 <label className="label-dashpage">Inserisci la profondita del prodotto (in cm): </label>
-                                <input type="number" className="profondita-prodotto prodotti-input-form" placeholder="Profondità prodotto: cm" autoComplete="0" onChange={(e) => setProfonditaProdotto(e.target.value)} required/>
+                                <input type="number" className="prodotti-input-form" placeholder="Profondità prodotto: cm" autoComplete="0" onChange={(e) => setProfonditaProdotto(e.target.value)} required/>
                             </div>
                             <label className="custom-file-upload">
-                                    <input className="input-file-upload" type="file"/><span>Carica immagine</span>
-                                    <FaUpload />
+                                <input className="input-file-upload" type="file"/><span>Carica immagine</span>
+                                <FaUpload />
                             </label>
                         </div>
                         <div className="divisore-inserisci-prodotto"/>
