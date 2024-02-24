@@ -1,0 +1,102 @@
+@import '../constants.css';
+
+#pagina-informazioni-personali{
+    width: 100%;
+    height: 100%;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    background-color: var(--maastricht-blue);
+    color: var(--white);
+}
+
+.page-info-title{
+    font-size: 22px;
+    font-weight: bold;
+    margin: 20px 0 0 20px;
+}
+
+.container-informazioni{
+    width: 780px;
+    height: auto;
+    margin: 20px 0 30px 20px;
+}
+
+.informazione-personale{
+    display: flex;
+    width: 100%;
+    height: 40px;
+    background-color: var(--relaxing-gray);
+    color: var(--white);
+    justify-content: center;
+    align-items: center;
+    vertical-align: center;
+}
+.informazione-specifica p,
+.informazione-contenuto p{
+    margin-top: 8px;
+    margin-left: 8px;
+}
+.informazione-specifica{
+    width: 20%;
+    height: 100%;
+    border: 2px solid var(--maastricht-blue);
+    color: var(--firefly);
+    border-right: none;
+    letter-spacing: 1px;
+}
+.informazione-contenuto{
+    width: 80%;
+    height: 100%;
+    border: 2px solid var(--maastricht-blue);
+    color: var(--yellow-off-white);
+}
+
+/* Informazioni gruppo in alto */
+.informazioni-gruppo1{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    background-color: var(--white);
+}
+
+/* Informazioni gruppo in basso */
+.informazioni-gruppo2{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    background-color: var(--white);
+    margin-top: 20px;
+}
+
+.modifica-informazioni-personali{
+    width: 100%;
+    height: 60px;
+}
+
+.btn-modifica-informazioni-personali{
+    margin: 25px 0px 0px 350px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--firefly);
+    border: 1px solid var(--maastricht-blue);
+    color: var(--maastricht-blue);
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+.btn-modifica-informazioni-personali:hover{
+    background-color: var(--maastricht-blue);
+    color: var(--firefly);
+    border: 1px solid var(--firefly);
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+}

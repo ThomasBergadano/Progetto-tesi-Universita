@@ -223,6 +223,7 @@ li.user-tool.user a:hover{
   margin-left: 270px; /*200px*/
   padding: 0px;
   padding-top: 2px;
+  user-select: none;
 }
 
 li.navbar-link a{

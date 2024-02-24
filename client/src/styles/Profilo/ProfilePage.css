@@ -16,18 +16,17 @@ a{
     display: flex;
     flex-direction: column;
     width: 250px;
-    height: 190px;
+    height: 195px;
     margin: 40px 0 0px 80px;
-    background-color: beige;
+    background-color: var(--white);
     border: 1px solid var(--maastricht-blue);
 }
 .nav-profilo-title{
     justify-content: center;
-
     vertical-align: center;
     align-items: center;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 20px;
     margin: 10px 0px 15px 12px;
 }
 
@@ -77,8 +76,8 @@ a{
 /* Body della pagina profilo */
 .profilo-container{
     width: 830px;
-    height: 800px;
-    background-color: azure;
+    height: auto;
+    background-color: white;
     margin: 40px 0 200px 100px;
     border: 1px solid var(--maastricht-blue);
     padding: 0;
