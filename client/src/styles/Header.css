@@ -244,6 +244,7 @@ li.scroll-dashboard a{
   padding-right: 5px;
   margin-left: 45px;
   border-radius: 4px;
+  font-weight: bold;
 }
 
 .dashboard{
@@ -299,7 +300,8 @@ li.scroll-dashboard.active a:hover{
   width: 100%;
   height: 60px;
   background-color: var(--maastricht-blue);
-  z-index: 1; 
+  z-index: 1;
+  user-select: none;
 }
 
 .scroll-navbar {
@@ -372,10 +374,6 @@ li.scroll-dashboard a{
   place-content: center;
 }
 
-.search_button:hover{
-  background-color: var(--maastricht-blue);
-  color: var(--firefly);
-}
 
 /* Dropdown language */
 .language-container {

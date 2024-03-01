@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 #full-page{
+    position: relative;
     margin: 0;
     padding: 0;
     padding-bottom: 55px;
@@ -15,11 +16,20 @@
     overflow: auto;
 }
 
+#full-page img{
+    margin-left: 280px;
+    position: absolute;
+    width: 190px;
+    height: 190px;
+    transform: rotate(270deg);
+}
 #signup{
     position: absolute;
     margin-top: 55px;
-    border: 6px solid var(--maastricht-blue);
-    background-color: var(--light-yellow);
+    border: 6px solid var(--night);
+    background-color: var(--maastricht-blue);
+    box-shadow: 8px 8px 12px 5px rgba(0, 0, 0, 0.6);
+    color: var(--white);
     width: 450px;
     height: 500px;
     border-radius: 20px;
@@ -29,12 +39,17 @@
 #signup h2{
     font-size: 30px;
     margin-left: 30px;
+    color: var(--firefly);
+    letter-spacing: 1px;
 }
 
 .link-to-login{
     font-size: 14px;
     margin-left: 30px;
     margin-top: -25px;
+}
+.link-to-login span{
+    color: var(--firefly);
 }
 
 .accedi{
@@ -65,21 +80,33 @@
 .full-form{
     width: 390px;
     padding: 10px;
-    border: 1px solid var(--maastricht-blue);
     border-radius: 5px;
     box-sizing: border-box;
     font-size: 15px;
+    border: none;
+    outline: 3px solid var(--maastricht-blue);
+}
+.full-form:focus{
+    outline: 3px solid var(--firefly);
 }
 
 .half-form{
     width: 170px;
     padding: 10px;
-    border: 1px solid var(--maastricht-blue);
     border-radius: 5px;
     box-sizing: border-box;
     font-size: 15px;
+    border: none;
+    outline: 3px solid var(--maastricht-blue);
+}
+.half-form:focus{
+    outline: 3px solid var(--firefly);
 }
 
+.last-name-input{
+    position: relative;
+    z-index: 1;
+}
 .passwords-section-input{
     margin-top: 20px;
     display: flex;
@@ -114,16 +141,19 @@
     height: 40px;
     margin-top: 20px;
     margin-left: 30px;
-    background-color: var(--maastricht-blue);
-    color: var(--white);
+    background-color: var(--firefly);
+    color: var(--maastricht-blue) !important;
     border-radius: 4px;
+    border: none;
     font-family: 'Poppins', sans-serif;
+    font-weight: bold;
     letter-spacing: 1px;
+    font-size: 16px;
 }
 .button-signup:hover{
-    background-color: var(--firefly);
-    color: var(--maastricht-blue);
-    border: 2px solid var(--maastricht-blue);
+    background-color: var(--maastricht-blue);
+    color: var(--firefly) !important;
+    border: 2px solid var(--firefly);
     border-radius: 4px;
     font-family: 'Poppins', sans-serif;
     font-weight: bold;

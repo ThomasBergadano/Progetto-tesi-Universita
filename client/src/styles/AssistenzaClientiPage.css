@@ -11,26 +11,42 @@
 .FAQ{
     display: flex;
     flex-direction: column;
-    width: 100%;
-    height: 750px;
-    margin-bottom: 30px;
+    width: 96%;
+    height: auto;
+    margin: 30px 0 100px 30px;
+    background-color: var(--relaxing-gray);
+    border-radius: 20px;
+    color: var(--white);
+    padding-bottom: 35px;
+    box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.3);
 }
 
 .FAQ-title{
     font-size: 36px;
     font-weight: bold;
     margin-top: 20px;
-    margin-left: 20px;
+    margin-left: 60px;
+    color: var(--firefly);
 }
 
 .FAQ p{
-    margin-left: 20px;
+    margin-left: 60px;
     margin-top: 0px;
+    padding-right: 25px;
 }
 
 .FAQ-item{
+    position: relative;
     width: 90%;
     margin: 30px 0px 10px 60px; 
+}
+
+.FAQ img{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    margin-top: 30px;
+    right: 45px;
 }
 
 .question{
@@ -44,34 +60,66 @@
 }
 
 .answer{
-    padding-top: 10px;
-    padding-left: 25px;
+    padding-top: 4px;
+    padding-left: 20px;
+    padding-right: 20px;
     height: 80px;
     display: flex;
-    background-color: coral;
+    background-color: rgb(250, 180, 30);
+    color: var(--night);
+    font-size: 16px;
 }
 
-
+.icon-question-down{
+    font-size: 23px;
+    position: absolute;
+    color: var(--firefly);
+    top: 50%;
+    right: 25px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+.icon-question-up{
+    font-size: 23px;
+    position: absolute;
+    color: var(--firefly);
+    top: 10%;
+    right: 25px;
+    cursor: pointer;
+}
 
 /*Contattaci*/
 .contattaci{
     display: flex;
     flex-direction: column;
-    width: 100%;
-    height: 800px;
-    background-color: var(--light-yellow);
+    width: 96%;
+    height: 850px; /*800px*/
+    margin: 30px 0 100px 30px;
+    color: var(--white);
+    background-color: var(--relaxing-gray);
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.3);
+}
+.contattaci img{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    margin-top: 30px;
+    right: 45px;
 }
 
 .contattaci-title{
     font-size: 36px;
     font-weight: bold;
     margin-top: 20px;
-    margin-left: 20px;
+    margin-left: 60px;
+    color: var(--firefly);
 }
 
 .contattaci p{
-    margin-left: 20px;
+    margin-left: 60px;
     margin-top: 0px;
+    padding-right: 45px;
 }
 
 .contattaci-section-block{
@@ -91,46 +139,64 @@
 .contattaci-contatti{
     display: flex;
     flex-direction: column;
-    width: 320px;
-    height: 180px;
-    background-color: var(--night);
+    width: 346px;
+    height: 140px;
     margin: 20px 0px 15px 30px;
-    text-align: left;
-    padding-left: 25px;
+    padding-left: 0px;
     border-radius: 10px;
+    background-color: var(--dark-gray);
+    border: 5px solid var(--night);
 }
 .contattaci-contatti p{
     color: white;
     margin-top: 15px;
     margin-bottom: 0px;
     font-size: 14px;
+    margin: 0;
+    padding: 0;
+    margin-top: 15px;
+    margin-bottom: 0px;
+    margin-left: 40px;
 }
 
 /*Informazioni in alto*/
 .contattaci-dovesiamo{
     display: flex;
     flex-direction: column;
-    width: 320px;
+    width: 346px;
     height: 180px;
-    background-color: var(--night);
     margin: 20px 0px 15px 30px;
     text-align: left;
-    padding-left: 25px;
+    padding-left: 0px;
     border-radius: 10px;
+    background-color: var(--dark-gray);
+    border: 5px solid var(--night);
 }
 .contattaci-dovesiamo p{
     color: white;
     margin-top: 15px;
     margin-bottom: 0px;
     font-size: 14px;
+    margin: 0;
+    padding: 0;
+    margin-top: 15px;
+    margin-bottom: 0px;
+    margin-left: 40px;
 }
 
 .contattaci-titoletto{
     color: var(--firefly);
     font-size: 20px;
     margin-top: 10px;
-    margin-left: 34%;
+    margin-left: 133px;
 }
+.contattaci-titoletto-b{
+    color: var(--firefly);
+    font-size: 20px;
+    margin-top: 10px;
+    margin-left: 115px;  
+}
+
 
 /*Colonna di destra, parte del form per l'invio di messaggi (richiesta di aiuto da parte dell'utente)*/
 .assistenza-form-container{
@@ -148,31 +214,67 @@
     width: 80%;
     padding: 15px;
     margin-bottom: 10px;
-    border: 1px solid var(--maastricht-blue);
+    border: none;
     border-radius: 5px;
     box-sizing: border-box;
-    font-size: 15px;
+    font-size: 16px;
     margin-left: 100px;
+}
+.assistenza-input:focus{
+    outline: 3px solid var(--firefly);
 }
 
 .assistenza-textarea{
-    width: 79.5%;
+    width: 670px;
     height: 200px;
+    padding: 15px;
     margin-left: 100px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
     font-family: 'Poppins', sans-serif;
     resize: none;
 }
+.assistenza-textarea:focus{
+    outline: 3px solid var(--firefly);
+}
 
 .assistenza-allegato{
-    margin-left: 100px;
-    margin-top: 5px;
-}
-.custom-file-upload {
-    display: inline-block;
     position: relative;
+    width: 200px;
     margin-left: 100px;
+    margin-top: 25px;
+    display: inline-block;
+}
+.assistenza-allegato:before {
+    content: 'Carica file'; /* Aggiungi il testo "Carica file" come contenuto prima dell'icona */
+    display: inline-block;
+    padding: 10px 15px;
+    padding-right: 50px;
+    font-size: 16px;
+    color: #333;
+    background-color: #e9e9e9;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.assistenza-allegato:hover:before {
+    background-color: #e9e9e9;
+}
+
+.assistenza-allegato:active:before {
+    background-color: #ddd;
+}
+
+.assistenza-allegato-upload + FaUpload {
+    margin-left: 10px; /* Aggiungi un margine tra il testo e l'icona */
+}
+
+.assistenza-allegato-upload {
+    display: none;
+    position: relative;
     margin-top: 10px;
-    width: 10%;
+    width: 20%;
     padding: 10px 15px;
     font-family: Arial, sans-serif;
     font-size: 14px;
@@ -182,21 +284,23 @@
     border-radius: 5px;
     cursor: pointer;
 }
-.custom-file-upload input[type="file"] {
-    display: none;
-}
 
-.custom-file-upload:hover {
+.assistenza-allegato-upload:hover {
     background-color: #e9e9e9;
 }
 
-.custom-file-upload:active {
+.assistenza-allegato-upload:active {
     background-color: #ddd;
 }
-
-.input-file-upload {
-    margin-right: 10px;
+.upload-icon {
+    position: absolute;
+    margin-top: 14px;
+    margin-left: -38px;
+    padding-top: 2px;
+    color: var(--maastricht-blue);
+    cursor: pointer;
 }
+
 
 /*Bottone*/
 .submit-assistenza{
@@ -217,12 +321,13 @@
     border-radius: 4px;
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
+    border: none
 }
 .submit-assistenza:hover{
     position: relative;
     background-color: var(--firefly);
     color: var(--maastricht-blue);
-    border: 1px solid var(--maastricht-blue);
+    border: 3px solid var(--maastricht-blue);
     border-radius: 4px;
     font-family: 'Poppins', sans-serif;
 }

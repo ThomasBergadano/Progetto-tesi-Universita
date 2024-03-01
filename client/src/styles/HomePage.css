@@ -6,13 +6,28 @@
     font-family: 'Poppins', sans-serif;
 }
 
-/*Hero image*/
+/* Hero image */
 #hero-image{
     width: 100%;
     height: 456px;
     background-color: var(--night);
     overflow: hidden;
     position: relative;
+}
+
+
+#hero-image img{
+    position: absolute;
+    width: 100%;
+    height: 700px;
+    top: -120px;
+    opacity: 0.4;
+    transform: scale(1.1);
+    transition: transform 6s ease;
+}
+#hero-image:hover img {
+    transform: scale(1); /* Torna alla dimensione originale al passaggio del mouse */
+    transition: transform 4s ease;
 }
 
 .hero-image-phrase1,
@@ -35,16 +50,6 @@
     top: 48%;
 }
 
-#hero-image img{
-    width: 100%;
-    height: 456px;
-    opacity: 0.4;
-    transform: scale(1.1);
-    transition: transform 10s ease; 
-}
-#hero-image:hover img {
-    transform: scale(1); /* Torna alla dimensione originale al passaggio del mouse */
-}
 
 .button-hero-image {
     position: absolute;
@@ -62,6 +67,7 @@
     cursor: pointer;
     border-radius: 4px;
     font-family: 'Poppins', sans-serif;
+    font-weight: bold;
 }
 .button-hero-image:hover {
     background-color: var(--maastricht-blue);
@@ -72,41 +78,195 @@
     font-family: 'Poppins', sans-serif;
 }
 
-/*Categorie prodotti*/
-#categorie-prodotti{
-    width: 100%;
-    height: 600px;
+/* Newsletter */
+#newsletter{
     display: flex;
-    justify-content: center;
+    margin-top: 80px;
+    width: 100%;
+    height: 400px;
+    background-color: var(--relaxing-gray);
+    box-shadow: 25px 0px 25px 0px rgba(0, 0, 0, 0.6);
+}
+
+.shoutout-newsletter{
+    width: 60%;
+    height: 100%;
+    padding-left: 200px;
+}
+.newsletter-title{
+    margin: 75px 0 20px 0;
+    font-size: 26px;
+    font-weight: bold;
+    letter-spacing: 1px;
     color: var(--white);
 }
-
-.categoria1{
-    width: 50%;
-    height: 100%;
-    text-align: center;
-    justify-content: center;
-    display: flex;
-    /*background-color: aqua;*/
+.newsletter-description{
+    color: var(--white);
+    font-size: 15px;
+    margin: 0 0 35px 0;
+    padding: 0;
 }
-.categoria2{
-    width: 50%;
-    height: 100%;
-    text-align: center;
-    justify-content: center;
-    display: flex;
-    /*background-color: blue;*/
+.newsletter-input-form{
+    width: 390px;
+    height: 45px;
+    padding: 10px;
+    border: 1px solid var(--maastricht-blue);
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 15px;
+}
+.newsletter-input-form:focus{
+    border: none;
+    outline: 3px solid var(--firefly);
 }
 
-.categoria{
-    width: 450px;
-    height: 400px;
-    margin-top: 130px;
-    background-color: white;
-    border: 2px solid var(--maastricht-blue);
+.newsletter-btn{
+    margin-left: 20px;
+    background-color: var(--firefly);
+    color: var(--maastricht-blue);
+    border: 1px solid var(--maastricht-blue);
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+}
+.newsletter-btn:hover {
+    background-color: var(--maastricht-blue);
+    border: 1px solid var(--firefly);
+    color: var(--firefly);
+}
+
+.image-newsletter{
     display: flex;
+    width: 40%;
+    height: 100%;
+    user-select: none;
+}
+.image-newsletter img{
+    margin-left: 70px;
+    height: 300px;
+    user-select: none;
+}
+
+
+
+
+
+/* Categorie dei prodotti */
+#presentazione-categorie{
+    width: 100%;
+    height: 700px;
+    margin-top: 80px;
+    margin-bottom: 80px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background-color: var(--maastricht-blue);
+    color: var(--white);
+    box-shadow: 25px 0px 25px 0px rgba(0, 0, 0, 0.6);
+}
+
+.presentazione-categorie-titolo{
+    display: flex;
+    width: 100%;
+    height: 100px;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+.presentazione-categorie-titolo p{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.presentazione-categorie-cards{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 550px;
+}
+
+.card-categoria{
     position: relative;
-    border-radius: 15px;
+    flex-direction: column;
+    width: 270px;
+    height: 200px;
+    margin: 30px 20px 0px 20px;
+    padding: 0px;
+    overflow: hidden;
+}
+
+.card-categoria-nome{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 30px;
+    margin: 0px;
+    padding: 0px;
+    background-color: var(--firefly);
+    color: var(--night);
+}
+.card-categoria-nome p{
+    margin: 0px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.categoria-img{
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    text-decoration: none;
+}
+.categoria-img img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: fill;
+    transition: filter 0.3s ease;
+
+}
+
+.cerca-categoria{
+    position: absolute;
+    opacity: 0;
+    top: 75%;
+    left: 43%;
+    width: 40px;
+    height: 40px;
+    padding-right: 10px;
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    background-color: var(--firefly);
+    color: var(--maastricht-blue);
+    place-content: center;
+    cursor: pointer;
+    outline: none;
+    transition: opacity 0.3s ease;
+}
+
+.cerca-categoria:hover{
+    background-color: var(--maastricht-blue);
+    color: var(--firefly);
+}
+
+.card-categoria:hover .cerca-categoria{
+    opacity: 1;
+}
+
+.card-categoria:hover .categoria-img img {
+    filter: brightness(0.5);
 }
 
 /*Advice-section*/
@@ -114,9 +274,11 @@
     position: relative;
     width: 100%;
     height: 400px;
+    margin-bottom: 100px;
     background-color: var(--night);
     font-family: 'Poppins', sans-serif;
     overflow: hidden;
+    box-shadow: 25px 0px 25px 0px rgba(0, 0, 0, 0.6);
 }
 
 #advice-section img{
@@ -126,7 +288,7 @@
     object-position: center 70%;
     opacity: 0.5;
     transform: scale(1.1);
-    transition: transform 10s ease;
+    transition: transform 6s ease;
 }
 #advice-section:hover img {
     transform: scale(1); /* Torna alla dimensione originale al passaggio del mouse */
@@ -168,6 +330,7 @@
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
     border-radius: 4px;
     font-family: 'Poppins', sans-serif;  

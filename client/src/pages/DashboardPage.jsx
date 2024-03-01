@@ -25,11 +25,15 @@ function Dashboard() {
     const [lunghezzaProdotto, setLunghezzaProdotto] = useState("");
     const [profonditaProdotto, setProfonditaProdotto] = useState("");
     const [coloreProdotto, setColoreProdotto] = useState("");
-    const inserimentoProdottoRef = useRef(null); /*Riferimento all'elemento nel DOM in modo da resettare gli input*/
+    const inserimentoProdottoRef = useRef(); /*Riferimento all'elemento nel DOM in modo da resettare gli input*/
 
 
     /*Gestione autorizzazone e permessi per accesso in /Dashboard*/
     useEffect(() => {
+
+        /*Teletrasporto l'utente all'inizio della pagina appena viene fatto il rendering*/
+        window.scrollTo(0, 0);
+
         onAuthStateChanged(auth, async (user) => {
             if(user) {
               const userUID = user.uid;
@@ -271,7 +275,7 @@ function Dashboard() {
                     <span className="titolo-form">Elimina prodotto</span>
                     <div className="email-aggiorna-ruolo">
                         <label className="label-dashpage">Scrivi l'email dell'utente: </label>
-                        <input type="email" className="jbjmhb" placeholder="Email" autoComplete="email" onChange={null}/>
+                        <input type="email" placeholder="Email" autoComplete="email" onChange={null}/>
                     </div>
                     <div className="ruolo-aggiorna-ruolo">
                         <label className="label-dashpage">Scegli il ruolo: </label>

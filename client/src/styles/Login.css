@@ -17,8 +17,10 @@
 #login{
     position: absolute;
     margin-top: 55px;
-    border: 6px solid var(--maastricht-blue);
-    background-color: var(--light-yellow);
+    border: 6px solid var(--night);
+    background-color: var(--maastricht-blue);
+    box-shadow: 8px 8px 12px 5px rgba(0, 0, 0, 0.6);
+    color: var(--white);
     width: 450px;
     height: 500px;
     border-radius: 20px;
@@ -28,12 +30,17 @@
 #login h2{
     font-size: 30px;
     margin-left: 30px;
+    color: var(--firefly);
+    letter-spacing: 1px;
 }
 
 .link-to-signup{
     font-size: 14px;
     margin-left: 30px;
     margin-top: -25px;
+}
+.link-to-signup span{
+    color: var(--firefly);
 }
 
 /* Form */
@@ -53,16 +60,21 @@
     margin-bottom: 10px;
 }
 
-
 .input-form{
     width: 390px;
     padding: 10px;
     margin-bottom: 10px;
-    border: 1px solid var(--maastricht-blue);
+    border: none;
+    outline: 3px solid var(--maastricht-blue);
     border-radius: 5px;
     box-sizing: border-box;
     font-size: 15px;
 }
+.input-form:focus{
+    border: none;
+    outline: 3px solid var(--firefly);
+}
+
 
 /*Checkbox*/
 #myCheckbox,
@@ -72,11 +84,6 @@
 
 .checkbox-label{
     font-size: 14px;
-}
-
-.password-dimenticata{
-    font-size: 14px;
-    margin-left: 135px;
 }
 
 .crea-account,
@@ -92,6 +99,12 @@
     text-decoration: underline;
 }
 
+.password-dimenticata{
+    font-size: 14px;
+    margin-left: 135px;
+    color: var(--firefly) !important;
+}
+
 
 /*Bottone di invio*/
 .button-login{
@@ -100,16 +113,19 @@
     height: 40px;
     margin-top: 15px;
     margin-bottom: 25px;
-    background-color: var(--maastricht-blue);
-    color: var(--white);
+    background-color: var(--firefly);
+    color: var(--maastricht-blue) !important;
     border-radius: 4px;
+    border: none;
     font-family: 'Poppins', sans-serif;
+    font-weight: bold;
     letter-spacing: 1px;
+    font-size: 16px;
 }
 .button-login:hover{
-    background-color: var(--firefly);
-    color: var(--maastricht-blue);
-    border: 2px solid var(--maastricht-blue);
+    background-color: var(--maastricht-blue);
+    color: var(--firefly) !important;
+    border: 2px solid var(--firefly);
     border-radius: 4px;
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
@@ -159,5 +175,9 @@
 
 .span-google-login span{
     margin-left: 80px;
-    margin-top: 6px;
+    margin-top: 7px;
+}
+.google-login-btn{
+    color: var(--maastricht-blue) !important;
+    font-weight: bold;
 }

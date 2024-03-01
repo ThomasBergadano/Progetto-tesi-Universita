@@ -182,7 +182,6 @@
     width: 1349px;
     height: auto;
     margin-bottom: 50px;
-
 }
     
 .zero-prodotti span{
@@ -230,7 +229,6 @@
     height: 50px;
     margin-top: 225px;
     margin-left: 160px;
-    /*background-color: var(--firefly);*/
 }
 .prodotto-in-wishlist{
     display: flex;
@@ -250,6 +248,9 @@
     color: var(--maastricht-blue);
     cursor: pointer;
 }
+.prodotto-in-wishlist.aggiunto{
+    background-color: #eb040c;
+}
 .prodotto-in-carrello{
     display: flex;
     align-items: center;
@@ -268,6 +269,10 @@
     background-color: var(--firefly);
     color: var(--maastricht-blue);
     cursor: pointer;
+}
+.prodotto-in-carrello.aggiunto{
+    /*background-color: #11ac03;*/
+    background-color: #eb040c;
 }
 
 .prodotto-info{
@@ -314,4 +319,12 @@
     color: var(--maastricht-blue);
     border: 2px solid var(--maastricht-blue);
 
+}
+
+.loading-gif{
+    width: 130px;
+    height: 130px;
+    margin-top: -5px;
+    margin-left: 600px;
+    user-select: none;
 }

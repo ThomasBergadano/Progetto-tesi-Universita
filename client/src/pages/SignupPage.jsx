@@ -2,10 +2,11 @@ import React, { useState, useEffect }  from "react"
 import { Link, useNavigate } from 'react-router-dom'
 import { auth } from "../database/firebase"
 import { createUserWithEmailAndPassword } from "firebase/auth"
-import { doc, setDoc, collection, getFirestore } from "firebase/firestore"
+import { doc, getDoc, getDocs, setDoc, collection, query, where, addDoc } from "firebase/firestore"
 import db from "../database/firebase"
 import HomeFloatingButton from "../components/HomeFloatingButton"
 import "../styles/Signup.css"
+import piantacadente from "../assets/images/pianta-cadente2.png"
 
 function Signup() {
     const [cognomeUtente, setCognome] = useState("");
@@ -19,13 +20,11 @@ function Signup() {
         e.preventDefault();
 
         /*Creo un utente in Firebase Authentication (solo email e password)*/
-        await createUserWithEmailAndPassword(auth, email, password)
-        .then((CredenzialiUtente) => {
-            console.log(CredenzialiUtente);
+        try{
+            const CredenzialiUtente = await createUserWithEmailAndPassword(auth, email, password);
 
             /*Creo ora un documento contenente le altre info sull'utente su Firestore Database*/
             const userUID = CredenzialiUtente.user.uid;
-            console.log(userUID);
             const nuovoDocumentoUtente = doc(db, 'Utenti', userUID); //nuovoDocumentoUtente = documento utente
             setDoc(nuovoDocumentoUtente, {
                 cognome: cognomeUtente,
@@ -33,17 +32,31 @@ function Signup() {
                 numeroTelefono: numeroTelefonoUtente,
                 ruolo: "Client",
             });
+
+            /*Creo poi un documento all'interno della raccolta wishlist per tale utente*/
+            const RiferimentoRaccoltaGestione = collection(db, "Gestione");
+            const queryGetWishlist = query(RiferimentoRaccoltaGestione, where("TipoGestione", "==", "Wishlist"));
+            const snapshotGestione = await getDocs(queryGetWishlist);
+
+            const gestioneDoc = snapshotGestione.docs[0]; //documento della gestione contenente la wishlist
+            const RiferimentoRaccoltaWishlist = collection(gestioneDoc.ref, "Wishlist");
+            const wishlistDoc = await addDoc(RiferimentoRaccoltaWishlist,{
+                ElencoProdotti: [],
+                IDUtente: userUID,
+            });
+
             navigate("/Login");
-        })
-        .catch((error) => {
+        }
+        catch(error){
             console.log(error);
-        })
+        }
 
     }
     
     return(
         <div id="full-page">
             <div id="signup">
+                <img src={piantacadente} alt="pianta-cadente"></img>
                 <h2>Crea un account</h2>
                 <p className="link-to-login">Hai già un account? <Link to="/Login"><span className="accedi">Accedi</span></Link></p>
                 <form className="signup-form">

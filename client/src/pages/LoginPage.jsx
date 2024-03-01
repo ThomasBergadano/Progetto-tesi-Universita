@@ -2,7 +2,7 @@ import React, { useState, useEffect }  from "react"
 import { Link, useNavigate } from 'react-router-dom'
 import { auth, googleAuthProvider } from "../database/firebase"
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth"
-import { doc, getDoc, setDoc, collection, getFirestore } from "firebase/firestore"
+import { doc, getDoc, getDocs, setDoc, collection, query, where, getFirestore, addDoc } from "firebase/firestore"
 import db from "../database/firebase"
 import google from '../assets/images/google.png'
 import HomeFloatingButton from "../components/HomeFloatingButton"
@@ -27,12 +27,7 @@ function Login() {
             const DocumentoUtente = await getDoc(RiferimentoDocumentoUtente);
 
             if(DocumentoUtente.exists()){
-                /*const ruoloUtente = DocumentoUtente.data().ruolo;
-                console.log("ruolo utente: ", ruoloUtente);*/
                 navigate("/");
-                /*Passo il ruolo all'header, in modo da cambiare la schermata in base al ruolo e trasferirmi nella home*/
-                //loginEseguito(navigate, ruoloUtente, setCurrentUserType);
-                //handleLogin(navigate, ruoloUtente);
             }
             else{
                 console.log("L'utente non esiste! Devi registrarti!");
@@ -52,13 +47,29 @@ function Login() {
             const RiferimentoDocumentoUtente = await doc(db, 'Utenti', userUID);
             const DocumentoUtente = await getDoc(RiferimentoDocumentoUtente);
             const [nomeUtente, cognomeUtente] = CredenzialiUtente.user.displayName.split(' '); //Recupero nome e cognome 
-
+            
+            /*Controllo se l'utente si sta registrando per la prima volta, altrimenti creo un nuovo documento Utente*/
             if(!DocumentoUtente.exists()){
                 await setDoc(RiferimentoDocumentoUtente, {cognome: cognomeUtente, nome: nomeUtente, ruolo: 'Client'});
+                
+                /*Creo poi un documento all'interno della raccolta wishlist per tale utente*/
+                const RiferimentoRaccoltaGestione = collection(db, "Gestione");
+                const queryGetWishlist = query(RiferimentoRaccoltaGestione, where("TipoGestione", "==", "Wishlist"));
+                const snapshotGestione = await getDocs(queryGetWishlist);
+
+                const gestioneDoc = snapshotGestione.docs[0]; //documento della gestione contenente la wishlist
+                const RiferimentoRaccoltaWishlist = collection(gestioneDoc.ref, "Wishlist");
+                const wishlistDoc = await addDoc(RiferimentoRaccoltaWishlist,{
+                    ElencoProdotti: [],
+                    IDUtente: userUID,
+                });
+                console.log("creato anche con google");
             }
+            console.log("login con google, prima del navigate");
             navigate("/");
         } catch(error){ /*Utente Google non ha mai fatto il primo accesso. Inseriamolo.*/
             console.log(error);
+            console.log("login con google, non creato");
         }
     }
 
@@ -82,14 +93,14 @@ function Login() {
                     <Link to="/Login"><span className="password-dimenticata">Password dimenticata?</span></Link>
                     <button className="button-login" onClick={(e) => Accedi(e)}><span>Login</span></button>
                     
-                    <span className="alternative">Oppure</span>
+                    <p className="alternative">Oppure</p>
 
                     <div className="google-login" onClick={(e) => AccediConGoogle(e)}>
                         <div className="logo-google-login">
                             <img className="logo-google" src={google}></img>
                         </div>
                         <div className="span-google-login">
-                            <span>Accedi con Google</span>
+                            <span className="google-login-btn">Accedi con Google</span>
                         </div>
                     </div>
                 </form>

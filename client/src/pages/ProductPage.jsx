@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { Link, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import soggiorno from '../assets/images/soggiorno.jpg'
 import { FaRegHeart } from "react-icons/fa6"
@@ -6,6 +6,11 @@ import "../styles/ProductPage.css"
 
 
 function Product(){
+
+    /*Teletrasporto l'utente all'inizio della pagina appena viene fatto il rendering*/
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [])
    
     return (
         <div id="pagina-prodotto">

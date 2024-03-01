@@ -17,6 +17,10 @@ function Carrello(){
 
     /*Gestione autorizzazone e permessi per accesso in /Dashboard*/
     useEffect(() => {
+
+        /*Teletrasporto l'utente all'inizio della pagina appena viene fatto il rendering*/
+        window.scrollTo(0, 0);
+    
         onAuthStateChanged(auth, async (user) => {
             if(user) {
               const userUID = user.uid;

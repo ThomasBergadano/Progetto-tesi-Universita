@@ -7,129 +7,112 @@
     font-family: 'Poppins', sans-serif;
 }
 
-/*Prima parte, riga 1, "Chi siamo?"*/
-.about-riga1{
-    width: 100%;
-    height: 350px;
-    margin-top: 30px;
-    align-items: center;
-    display: flex;
-}
-
+/* Chi siamo?*/
 .chi-siamo{
     display: flex;
     flex-direction: column;
-    width: 420px;
-    height: 300px;
-    margin: 0px 80px 0px 220px;
-    justify-content: center;
-    text-align: center;
-    letter-spacing: 1px;
+    width: 750px;
+    height: 400px;
+    background-color: var(--dark-gray);
+    margin: 30px 0 200px 170px;
+    box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.3);
+}
+.chi-siamo2{
+    position: absolute;
+    top: 300px;
+    right: 170px;
+    display: flex;
+    width: 400px;
+    height: 400px;
+    background-color: var(--maastricht-blue);
+    box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.3);
+    filter: brightness(90%);
+    background-image: url('../assets//images//about.png');
+    background-size: cover;
+    background-position: 85% center;
+}
+.chi-siamo2::before{
+    filter: brightness(70%);
 }
 
 .sottotitolo-chi-siamo{
-    font-size: 22px;
+    margin: 30px 0 0px 135px;
+    font-size: 32px;
+    color: var(--white); 
     font-weight: bold;
-    text-align: center;
+    letter-spacing: 2px; 
 }
-
-.about-logo{
-    display: flex;
-    width: 420px;
-    height: 300px;
-    background-color: var(--night);
-    margin: 0px 0px 0px 80px;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    border-radius: 10px;
-    overflow: hidden;
+.sottotitolo-chi-siamo span{
+    color: var(--firefly);
+    filter: brightness(100%);
+    letter-spacing: 4px;
+    font-size: 36px;
+    font-family:cursive;
 }
-.lumia-about{
-    width: 750px;
-    height: 750px;
-}
-
-/*Seconda riga, frase con font diverso*/
-.about-riga2{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 150px;
-    margin-top: 50px;
-    margin-bottom: 80px;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--maastricht-blue);
-}
-
-.about-riga2 p{
-    font-style: italic;
-    font-weight: 300;
-    font-size: 25px;
-    line-height: 2px;
-    letter-spacing: 1px;
+.chi-siamo p{
     color: var(--white);
+    text-align: center;
+    padding-left: 50px;
+    padding-right: 220px;
+    font-size: 17px;
+    filter: brightness(100%);
 }
 
-
-/*Terza riga*/
-.about-riga3{
-    /*align-items: center;*/
+/*Prima parte, riga 1, "Chi siamo?"*//*
+.about-intro{
+    position: relative;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
     width: 100%;
-    height: 550px;
-    margin-top: 40px;
-    /*background-color: rgb(23, 247, 228);*/
+    height: 260px;
+    margin: 60px 0 60px 0;
+    background-color: var(--maastricht-blue);
+    color: var(--white);
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.3);
 }
-
-.riga3-immagini{
-    display: flex;
-    flex-direction: column;
-    width: 50%;
+.about-intro::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 100%;
-    /*background-color: blueviolet;*/
-}
-.riga3-immagine1{
-    display: flex;
-    width: 500px;
-    height: 250px;
-    background-color: var(--night);
-    margin: 0px 0px 0px 80px;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    border-radius: 10px;
-}
-.riga3-immagine2{
-    display: flex;
-    width: 500px;
-    height: 250px;
-    background-color: var(--night);
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin: 30px 0px 0px 80px;
-    border-radius: 10px;
+    background-size: cover;
+    background-position: center;
+    filter: brightness(150%);
 }
 
-.box-obiettivo{
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    height: 100%;
-    /*background-color: blanchedalmond;*/
-    margin: 0px 80px 0px 220px;
-    text-align: center;
-    letter-spacing: 1px;
-}
-
-.sottotitolo-obiettivo{
-    font-size: 22px;
+.sottotitolo-chi-siamo{
+    margin-top: 8px;
+    margin-bottom: -5px;
+    font-size: 40px;
+    color: var(--white); 
     font-weight: bold;
     text-align: center;
+    letter-spacing: 2px;
+    filter: brightness(150%);
 }
+.sottotitolo-chi-siamo span{
+    color: var(--firefly);
+    filter: brightness(70%);
+    letter-spacing: 4px;
+    font-size: 43px;
+    font-family:cursive;
+}
+
+.about-intro p{
+    color: var(--white); 
+    padding-left: 300px;
+    padding-right: 300px;
+    font-size: 17px;
+    filter: brightness(150%);
+}*/
+
 
 /*Quarta riga*/
 .about-riga4{
@@ -137,9 +120,9 @@
     display: flex;
     width: 100%;
     height: 350px;
-    margin-top: 40px;
     background-color: var(--maastricht-blue);
     color: var(--white);
+    box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.3);
 }
 .responsabile{
     align-items: center;
@@ -162,6 +145,115 @@
     height: 240px;
 }
 
+
+/*Seconda riga, frase con font diverso*/
+.about-riga2{
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    height: 150px;
+    margin: 80px 0 80px 40px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--dark-gray);
+    box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.about-riga2 p{
+    font-style: italic;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 2px;
+    letter-spacing: 1px;
+    color: var(--white);
+}
+
+
+/*Terza riga*/
+.about-riga3{
+    display: flex;
+    width: 100%;
+    height: 600px;
+    margin-top: 40px;
+    background-color: var(--maastricht-blue);
+    box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.3);
+}
+
+.riga3-immagini{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+}
+.riga3-immagine1{
+    display: flex;
+    width: 500px;
+    height: 250px;
+    background-color: var(--night);
+    margin: 0px 0px 0px 80px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 10px;
+    margin-top: 35px;
+    overflow: hidden;
+}
+.riga3-immagine1 img{
+    object-fit:cover;
+    object-position: center;
+    max-height: 140%;
+    width: auto;
+}
+.riga3-immagine2{
+    display: flex;
+    width: 500px;
+    height: 250px;
+    background-color: var(--night);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 30px 0px 0px 80px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.riga3-immagine2 img{
+    object-fit: cover;
+    object-position: center 70%;
+    transition: transform 1s ease;
+}
+
+.box-obiettivo{
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height: auto;
+    margin: 50px 70px 0px 200px;
+    text-align: center;
+    letter-spacing: 1px;
+    border-radius: 20px;
+    background-color: var(--maastricht-blue);
+    color: var(--white);
+}
+.box-obiettivo span{
+    color: var(--firefly);
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 5px;
+}
+.box-obiettivo p{
+    font-size: 16px;
+}
+
+.sottotitolo-obiettivo{
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+}
+
+
 /*Quinta riga*/
 .about-riga5{
     display: inline-flex;
@@ -169,10 +261,11 @@
     text-align: center;
     justify-content: center;
     width: 100%;
-    height: 200px;
-    margin-top: 40px;
-    background-color: var(--night);
+    height: 160px;
+    margin-top: 100px;
+    background-color: var(--dark-gray);
     color: white;
+    box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.3);
 }
 .indirizzi{
     display: flex;
@@ -182,7 +275,6 @@
     justify-content: center;
     width: 50%;
     height: 100%;
-
 }
 .orari{
     display: flex;

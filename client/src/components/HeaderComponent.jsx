@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef }  from "react"
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { FaUserCircle } from "react-icons/fa"
 import { FaRegHeart } from "react-icons/fa6"
 import { FiShoppingCart } from "react-icons/fi"
@@ -23,6 +23,7 @@ const USER_TYPES = {
 
 function Header() {
     const location = useLocation();
+    const navigate = useNavigate();
     
     /*useEffect che viene aggiornato 1 volta appena auth cambia, ovvero appena l'utente fa il login firebase fa partire una sessione*/
     /*useEffect in realtà viene "runnato" appena il componente viene caricato nel DOM*/
@@ -80,7 +81,7 @@ function Header() {
     
     /*Effetto dei link per scollare in cima alla pagina*/
     const scrollToTop = () => {
-        const scrollDuration = 500; //ms
+        const scrollDuration = 300; //ms
         const scrollStep = -window.scrollY / (scrollDuration / 15);
         
         const scrollInterval = setInterval(() => {
@@ -206,14 +207,3 @@ function Header() {
 }
 
 export default Header;
-
-/*
-<div className="language-container">
-    <div className="dropdown-language">
-        <ul className="language-list">
-            <li className="language-option"><img src={it} alt="ITA" className="language-icon"/> IT</li>
-            <li className="language-option"><img src={en} alt="ENG" className="language-icon"/> EN</li>
-        </ul>
-    </div>
-</div>
-*/

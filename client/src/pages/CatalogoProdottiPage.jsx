@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from "react"
+import React, { useState, useEffect, useRef }  from "react"
 import { Link, useNavigate } from 'react-router-dom'
 import { doc, getDoc, getDocs, setDoc, collection, query, where, getFirestore, addDoc } from "firebase/firestore"
 import db from "../database/firebase"
@@ -7,10 +7,20 @@ import { FiShoppingCart } from "react-icons/fi"
 import FilterFloatingButton from "../components/FilterFloatingButton"
 import "../styles/CatalogoProdottiPage.css"
 import soggiorno from '../assets/images/soggiorno.jpg'
+import loading from "../assets/images/loading.gif"
+import suonoWishlist from "../assets/sounds/bubble.mp3"
+import suonoCarrello from "../assets/sounds/cash.mp3"
+
 
 function CatalogoProdotti() {
-    const navigate = useNavigate();
     
+    /*Attesa del rendering della pagina (loading). True= caricamento in corso, False= 0 risultati*/
+    const [caricamento, setCaricamento] = useState(true);
+
+    /*Caricamento dei parametri (se esistono)*/
+    const parametroUrl = new URLSearchParams(window.location.search);
+    const categoriaParametro = parametroUrl.get("categoria");
+
     /*Caricamento dei prodotti*/
     const [showButton, setShowButton] = useState(false); //useState(true);
     const [numeroProdotti, setNumeroProdotti] = useState(0);
@@ -27,7 +37,7 @@ function CatalogoProdotti() {
     /*Filtro dei prodotti*/
     const [filtro, setFiltro] = useState({
         nomeFiltrato: "",
-        categoriaFiltrata: "all",
+        categoriaFiltrata: parametroUrl.has('categoria') ? categoriaParametro : "all",
         sottoCategoriaFiltrata: "all",
         prezzoMinimo: "",
         prezzoMassimo: "",
@@ -40,31 +50,90 @@ function CatalogoProdotti() {
         larghezzaMassima: "",
     });
 
+    /*Status dei bottoni aggiungi in wishlist e carrello (selezionati e non selezionati)*/
+    const [statusWishlist, setStatusWishlist] = useState({});
+    const [statusCarrello, setStatusCarrello] = useState({});
+
+    /*Effetto audio*/
+    const audioWishlistRef = useRef();
+    const audioCarrelloRef = useRef();
+
+
 
     useEffect(() => {
+        /*Teletrasporto l'utente all'inizio della pagina appena viene fatto il rendering*/
+        window.scrollTo(0, 0);
+        
+        /*Status wishlist e carrello dal localstorage*/
+        const savedStatusWishlist = localStorage.getItem('statusWishlist');
+        if (savedStatusWishlist) {
+            setStatusWishlist(JSON.parse(savedStatusWishlist));
+        }
+    
+        const savedStatusCarrello = localStorage.getItem('statusCarrello');
+        if (savedStatusCarrello) {
+            setStatusCarrello(JSON.parse(savedStatusCarrello));
+        }
+
         /*Caricamento di tutti i prodotti durante il rendering di /CatalogoProdotti*/
         const uploadProducts = async() => {
             const prodottiArray = [];
-            /*Ottengo riferimento alla raccolta Categoria*/
-            const RiferimentoRaccoltaCategoria = collection(db, 'Categoria');
-            const snapshotCategorie = await getDocs(RiferimentoRaccoltaCategoria);
-            for(const categoriaDoc of snapshotCategorie.docs){
 
-                /*Ottengo riferimento alla raccolta Sottocategoria*/
-                const RiferimentoRaccoltaSottoCategoria = collection(categoriaDoc.ref, "SottoCategoria");
-                const snapshotSottoCategorie = await getDocs(RiferimentoRaccoltaSottoCategoria);
-                for(const sottocategoriaDoc of snapshotSottoCategorie.docs){
+            /*Se un parametro è presente, filtro i prodotti per quella categoria*/
+            if(categoriaParametro != null){
+                setFiltro({...filtro, categoriaFiltrata: categoriaParametro});
 
-                    /*Ottengo riferimento alla raccolta Prodotti e inserisco nell'array*/
-                    const RiferimentoRaccoltaProdotti = collection(sottocategoriaDoc.ref, "Prodotti");
-                    const snapshotProdotti = await getDocs(RiferimentoRaccoltaProdotti);
-                    if(snapshotProdotti.docs.length > 0){
-                        for (const prodottoDoc of snapshotProdotti.docs) {
+                /*Carico intanto l'array delle sottocategorie di quella categoria*/
+                const RiferimentoRaccoltaCategoria = collection(db, 'Categoria');
+                const queryGetCategorie = query(RiferimentoRaccoltaCategoria, where('NomeCategoria', '==', categoriaParametro));
+                const snapshotCategorie = await getDocs(queryGetCategorie);
+                const arraySottocategorie = [];
+        
+                for(const categoriaDoc of snapshotCategorie.docs){ /*Tanto ne esisterà soltanto 1*/
+                    const RiferimentoRaccoltaSottoCategoria = collection(categoriaDoc.ref, "SottoCategoria");
+                    const sottoCategoriaSnapshot = await getDocs(RiferimentoRaccoltaSottoCategoria);
+        
+                    for(const sottocategoriaDoc of sottoCategoriaSnapshot.docs){
+                        arraySottocategorie.push(sottocategoriaDoc.data().NomeSottoCategoria);
 
-                            /*Voglio inserire nell'array sia l'id del documento che i campi del prodotto*/
-                            const datiProdotto = prodottoDoc.data();
-                            const prodottoConId = { id: prodottoDoc.id, ...datiProdotto }
-                            prodottiArray.push(prodottoConId);
+                        /*Ottengo riferimento alla raccolta Prodotti e inserisco nell'array*/
+                        const RiferimentoRaccoltaProdotti = collection(sottocategoriaDoc.ref, "Prodotti");
+                        const snapshotProdotti = await getDocs(RiferimentoRaccoltaProdotti);
+                        if(snapshotProdotti.docs.length > 0){
+                            for (const prodottoDoc of snapshotProdotti.docs) {
+
+                                /*Voglio inserire nell'array sia l'id del documento che i campi del prodotto*/
+                                const datiProdotto = prodottoDoc.data();
+                                const prodottoConId = { id: prodottoDoc.id, ...datiProdotto }
+                                prodottiArray.push(prodottoConId);
+                            }
+                        }
+                    }
+                }
+                setSottoCategorie(arraySottocategorie);
+            }
+            else{
+                /*Ottengo riferimento alla raccolta Categoria*/
+                const RiferimentoRaccoltaCategoria = collection(db, 'Categoria');
+                const snapshotCategorie = await getDocs(RiferimentoRaccoltaCategoria);
+                for(const categoriaDoc of snapshotCategorie.docs){
+
+                    /*Ottengo riferimento alla raccolta Sottocategoria*/
+                    const RiferimentoRaccoltaSottoCategoria = collection(categoriaDoc.ref, "SottoCategoria");
+                    const snapshotSottoCategorie = await getDocs(RiferimentoRaccoltaSottoCategoria);
+                    for(const sottocategoriaDoc of snapshotSottoCategorie.docs){
+
+                        /*Ottengo riferimento alla raccolta Prodotti e inserisco nell'array*/
+                        const RiferimentoRaccoltaProdotti = collection(sottocategoriaDoc.ref, "Prodotti");
+                        const snapshotProdotti = await getDocs(RiferimentoRaccoltaProdotti);
+                        if(snapshotProdotti.docs.length > 0){
+                            for (const prodottoDoc of snapshotProdotti.docs) {
+
+                                /*Voglio inserire nell'array sia l'id del documento che i campi del prodotto*/
+                                const datiProdotto = prodottoDoc.data();
+                                const prodottoConId = { id: prodottoDoc.id, ...datiProdotto }
+                                prodottiArray.push(prodottoConId);
+                            }
                         }
                     }
                 }
@@ -72,7 +141,10 @@ function CatalogoProdotti() {
 
             setProdotti(prodottiArray);
             setNumeroProdotti(prodottiArray.length);
-            console.log(prodottiArray);
+            if(prodottiArray.length === 0){
+                setCaricamento(false);
+            }
+
         }
         uploadProducts();
 
@@ -95,13 +167,12 @@ function CatalogoProdotti() {
         /*Gestione per l'apparizione del floating button per il filtro*/
         const handleScroll = () => {
             const scrollPosition = window.scrollY;
-            /*const headerHeight = 0;*/
             const headerHeight = 151;
             const bottomThreshold = document.documentElement.scrollHeight - 300;
     
-            const footer = document.querySelector('footer'); /*ottengo l'elemento del 'footer' dal CSS*/
+            const footer = document.querySelector('footer');
             const footerTop = footer.getBoundingClientRect().top; /*ottengo altezza del borso superiore del footer*/
-            const distanceToFooter = footerTop - window.innerHeight; /*Calcolo distanza tra footer e bordo inferiore della finestra visualizzata*/
+            const distanceToFooter = footerTop - window.innerHeight;
 
             if (scrollPosition >= headerHeight && scrollPosition < bottomThreshold && distanceToFooter>0) {
                 setShowButton(true);
@@ -249,11 +320,9 @@ function CatalogoProdotti() {
             }
         }
         if(filtro.categoriaFiltrata !== "all"){ //Prendo solo la categoria selezionata
-            console.log("non all");
             queryGetCategorie = query(RiferimentoRaccoltaCategoria, where('NomeCategoria', '==', filtro.categoriaFiltrata));
             snapshotCategorie = await getDocs(queryGetCategorie);
             categoriaDoc = snapshotCategorie.docs[0];
-            console.log(categoriaDoc.data().NomeCategoria);
 
             /*Gestione delle sottocategorie*/
             if(filtro.sottoCategoriaFiltrata === "all"){
@@ -324,7 +393,53 @@ function CatalogoProdotti() {
 
         setProdotti(prodottiArray);
         setNumeroProdotti(prodottiArray.length);
+        if(prodottiArray.length === 0){
+            setCaricamento(false);
+        }
     }
+
+
+    /* ----- HANDLER PER AGGIUNTA DEI PRODOTTI NELLA WISHLIST E NEL CARRELLO ----- */
+    const handlerAggiuntaInWishlist = async (e, idProdotto) => {
+        e.preventDefault();
+        e.stopPropagation(); //Quando clicco sul cuore, non voglio ascoltare il link esterno per andare nella pagina del prodotto
+        
+        //Faccio cambiare il colore del cuore
+        const updatedStatusWishlist = {
+            ...statusWishlist,
+            [idProdotto]: !statusWishlist[idProdotto]
+        };
+        setStatusWishlist(updatedStatusWishlist);
+    
+        //Salvo lo stato nel localStorage
+        localStorage.setItem('statusWishlist', JSON.stringify(updatedStatusWishlist));
+
+        //suono
+        if(updatedStatusWishlist[idProdotto]){
+            audioWishlistRef.current.play();
+        }
+    }
+
+    const handlerAggiuntaInCarrello = async (e, idProdotto) => {
+        e.preventDefault();
+        e.stopPropagation(); //Quando clicco sul carrello, non voglio ascoltare il link esterno per andare nella pagina del prodotto
+        
+        //Faccio cambiare il colore del carrello
+        const updatedStatusCarrello = {
+            ...statusCarrello,
+            [idProdotto]: !statusCarrello[idProdotto]
+        };
+        setStatusCarrello(updatedStatusCarrello);
+        
+        //Salvo lo stato nel localStorage
+        localStorage.setItem('statusCarrello', JSON.stringify(updatedStatusCarrello));
+
+        //suono
+        if(updatedStatusCarrello[idProdotto]){
+            audioCarrelloRef.current.play();
+        }
+    }
+
 
 
     return(
@@ -338,7 +453,7 @@ function CatalogoProdotti() {
                         </div>
                         <div className="categoria-cercaprodotto">
                             <label className="label-filter">Categoria </label>
-                            <select name="categoria" onChange={(e) => handlerFiltroCategoria(e)}>
+                            <select name="categoria" onChange={(e) => handlerFiltroCategoria(e)} value={filtro.categoriaFiltrata}>
                                 <option value="all">Tutte le categorie</option>
                                 {categorie.map((categoria, index) => (
                                     <option key={index} value={categoria}>{categoria}</option>
@@ -427,7 +542,11 @@ function CatalogoProdotti() {
             <div className="cards-prodotti">
                 {numeroProdotti === 0 && 
                     <div className="zero-prodotti">
-                        <span>Nessun risultato ottenuto per i filtri che hai impostato </span>
+                        {caricamento === true ? (
+                            <img className="loading-gif" src={loading} alt="caricamento"></img>
+                        ) : (
+                            <span>Nessun risultato ottenuto per i filtri che hai impostato </span>
+                        )}
                     </div>
                 }
                 {numeroProdotti !== 0 && prodotti.slice(0, prodottiVisualizzati).map((prodotto, index) => (
@@ -437,16 +556,14 @@ function CatalogoProdotti() {
                                 <img src={soggiorno} alt="icona-prodotto"></img>
                                 <div className="interagisci-prodotto">
 
-                                    <Link to="/Wishlist">
-                                        <div className="prodotto-in-wishlist">
-                                            <FaRegHeart />
-                                        </div>
-                                    </Link>
-                                    <Link to="/Carrello">
-                                        <div className="prodotto-in-carrello">
-                                            <FiShoppingCart />
-                                        </div>
-                                    </Link>
+                                    <div className={`prodotto-in-wishlist ${statusWishlist[prodotto.id] ? 'aggiunto': ''}`} onClick={(e) => handlerAggiuntaInWishlist(e, prodotto.id)}>
+                                        <FaRegHeart />
+                                        <audio ref={audioWishlistRef} src={suonoWishlist}/>
+                                    </div>
+                                    <div className={`prodotto-in-carrello ${statusCarrello[prodotto.id] ? 'aggiunto': ''}`} onClick={(e) => handlerAggiuntaInCarrello(e, prodotto.id)}>
+                                        <FiShoppingCart />
+                                        <audio ref={audioCarrelloRef} src={suonoCarrello}/>
+                                    </div>
                                 </div>
                             </div>
                         </Link>
