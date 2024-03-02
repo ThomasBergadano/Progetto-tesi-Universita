@@ -247,7 +247,7 @@
     display: inline-block;
 }
 .assistenza-allegato:before {
-    content: 'Carica file'; /* Aggiungi il testo "Carica file" come contenuto prima dell'icona */
+    content: 'Carica file';
     display: inline-block;
     padding: 10px 15px;
     padding-right: 50px;
@@ -267,7 +267,7 @@
 }
 
 .assistenza-allegato-upload + FaUpload {
-    margin-left: 10px; /* Aggiungi un margine tra il testo e l'icona */
+    margin-left: 10px;
 }
 
 .assistenza-allegato-upload {

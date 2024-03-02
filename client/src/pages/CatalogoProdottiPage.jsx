@@ -91,9 +91,9 @@ function CatalogoProdotti() {
         
                 for(const categoriaDoc of snapshotCategorie.docs){ /*Tanto ne esisterà soltanto 1*/
                     const RiferimentoRaccoltaSottoCategoria = collection(categoriaDoc.ref, "SottoCategoria");
-                    const sottoCategoriaSnapshot = await getDocs(RiferimentoRaccoltaSottoCategoria);
+                    const snapshotSottoCategorie = await getDocs(RiferimentoRaccoltaSottoCategoria);
         
-                    for(const sottocategoriaDoc of sottoCategoriaSnapshot.docs){
+                    for(const sottocategoriaDoc of snapshotSottoCategorie.docs){
                         arraySottocategorie.push(sottocategoriaDoc.data().NomeSottoCategoria);
 
                         /*Ottengo riferimento alla raccolta Prodotti e inserisco nell'array*/

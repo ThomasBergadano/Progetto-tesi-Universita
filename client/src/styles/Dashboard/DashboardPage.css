@@ -1,27 +1,27 @@
 @import '../constants.css';
 
-#pagina-profilo{
+#dashboardpage{
     width: 100%;
     height: 100%;
     background-color: var(--light-yellow);
     font-family: 'Poppins', sans-serif;
     display: flex;
 }
-
 a{
     text-decoration: none;
 }
-/* Navbar laterale */
-.nav-profilo{
+
+/* --- Sidebar per la Dashboard --- */
+.nav-dashboard{
     display: flex;
     flex-direction: column;
     width: 250px;
-    height: 195px;
-    margin: 40px 0 0px 80px;
+    height: 155px;
+    margin: 40px 0 0px 60px;
     background-color: var(--white);
     border: 1px solid var(--maastricht-blue);
 }
-.nav-profilo-title{
+.nav-dashboard-title{
     justify-content: center;
     vertical-align: center;
     align-items: center;
@@ -30,7 +30,7 @@ a{
     margin: 10px 0px 15px 12px;
 }
 
-.link-nav-profilo{
+.link-nav-dashboard{
     display: flex;
     width: 90%;
     height: 40px;
@@ -43,11 +43,11 @@ a{
     align-items: center;
     font-size: 14px;
 }
-.link-nav-profilo p{
+.link-nav-dashboard p{
     margin-left: 12px;
 
 }
-.link-nav-profilo.active{
+.link-nav-dashboard.active{
     background-color: var(--maastricht-blue);
     color: var(--firefly);
     font-weight: bold;
@@ -56,29 +56,30 @@ a{
     text-underline-offset: 2px;
 }
 
-
-
-.profilo-click-icon{
+.dashboard-click-icon{
     margin: 10px 0 0 0;
     font-size: 35px;
 }
-.icon-informazionipersonali{
-    margin-left: 22px;
+.icon-gestioneutenti{
+    margin-left: 68px;
 }
-.icon-cambiopassword{
-    margin-left: 48px;
-}
-.icon-cronologiaordini{
-    margin-left: 56px;  
+.icon-gestioneprodotti{
+    margin-left: 54px;
 }
 
 
-/* Body della pagina profilo */
-.profilo-container{
-    width: 830px;
+/* Body della pagina dashboard */
+.dashboard-container{
+    width: 870px;
     height: auto;
     background-color: white;
-    margin: 40px 0 150px 100px;
+    margin: 40px 0 170px 80px;
     border: 1px solid var(--maastricht-blue);
     padding: 0;
+}
+
+/*Classi condivise*/
+.label-dashpage{
+    display: block;
+    margin-top: 15px;
 }

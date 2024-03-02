@@ -1,0 +1,106 @@
+@import '../constants.css';
+
+#pagina-gestione-utenti{
+    width: 100%;
+    height: 100%;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    background-color: var(--maastricht-blue);
+    color: var(--white);
+}
+
+.gestione-utenti-title-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    height: 80px;
+    border-bottom: 2px solid var(--white);
+}
+.gestione-utenti-title{
+    font-size: 22px;
+    font-weight: bold;
+    color: var(--firefly);
+}
+
+.container-gestione{
+    width: 780px;
+    height: auto;
+    margin: 20px 0 30px 20px;
+}
+
+
+
+/* ---------- Gestione utenti ---------- */
+.form-gestione-utenti{
+    margin: 20px 0 20px 40px;
+    width: 95%;
+    height: 250px;
+    border: 5px solid var(--night);
+    border-radius: 15px;
+}
+
+form .titolo-form{
+    margin-left: 50px;
+    font-size: 20px;
+    background-color: var(--maastricht-blue);
+    top: -18px;
+    padding: 3px 10px;
+    position: relative;
+    font-weight: bold;
+}
+
+.dashboard-input-form{
+    width: 390px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid var(--maastricht-blue);
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 15px;
+}
+
+.email-aggiorna-ruolo,
+.ruolo-aggiorna-ruolo{
+    margin-left: 50px;
+    margin-top: 20px;
+}
+
+.divisore-aggiorna-ruolo{
+    display: flex;
+    height: 230px;
+    width: 3px;
+    background-color: var(--night);
+    margin-left: 75%;
+    margin-top: -183px;
+}
+
+.submit-gestione-utenti{
+    position: relative;
+    display: flex;
+    background-color: var(--firefly);
+    color: var(--maastricht-blue);
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    bottom: 55%;
+    left: 77.5%;
+}
+.submit-gestione-utenti:hover{
+    background-color: var(--maastricht-blue);
+    color: var(--firefly);
+    border: 1px solid var(--firefly);
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+}

@@ -12,6 +12,7 @@ footer{
     width: 100%;
     background-color: var(--maastricht-blue);
     font-family: 'Poppins', sans-serif;
+    user-select: none;
 }
 
 /*Parte di sopra - struttura*/

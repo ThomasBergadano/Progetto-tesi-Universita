@@ -5,9 +5,11 @@ import Footer from '../components/FooterComponent'
 import Home from '../pages/HomePage.jsx'
 import About from '../pages/AboutPage.jsx'
 import CatalogoProdotti from '../pages/CatalogoProdottiPage.jsx'
-import IdeeSpunti from '../pages/IdeeSpuntiPage.jsx'
+import EsploraTrend from '../pages/EsploraTrend.jsx'
 import AssistenzaClienti from '../pages/AssistenzaClientiPage.jsx'
-import Dashboard from '../pages/DashboardPage.jsx'
+import Dashboard from '../pages/Dashboard/DashboardPage.jsx'
+import GestioneProdotti from '../pages/Dashboard/GestioneProdotti.jsx'
+import GestioneUtenti from '../pages/Dashboard/GestioneUtenti.jsx'
 import Login from '../pages/LoginPage.jsx'
 import Signup from '../pages/SignupPage.jsx'
 import Profilo from '../pages/Profilo/ProfilePage.jsx'
@@ -31,9 +33,13 @@ function RoutingComponents(){
         <Route path="/ChiSiamo" element={<About/>}/>
         <Route path="/CatalogoProdotti" element={<CatalogoProdotti/>}/>
         <Route path="/CatalogoProdotti/:id" element={<Product/>}/>
-        <Route path="/Idee" element={<IdeeSpunti/>}/>
+        <Route path="/EsploraTrend" element={<EsploraTrend/>}/>
         <Route path="/AssistenzaClienti" element={<AssistenzaClienti/>}/>
-        <Route path="/Dashboard" element={<Dashboard/>}/>
+        <Route path="/Dashboard" element={<Dashboard/>}>
+          <Route index element={<Navigate to="GestioneUtenti"/>}/>
+          <Route path="GestioneUtenti" element={<GestioneUtenti/>}/>
+          <Route path="GestioneProdotti" element={<GestioneProdotti/>}/>
+        </Route>
         <Route path="/Login" element={<Login/>}/>
         <Route path="/Signup" element={<Signup/>}/>
         <Route path="/Profilo" element={<Profilo/>}>

@@ -121,7 +121,7 @@ function Header() {
                     <img id="logo" src={lumialogo} alt="Logo"></img>
                     <SearchBar/>
                     <ul id="user-tools">
-                        { (currentUserType !== USER_TYPES.User) && (<li className={`user-tool-content profile ${location.pathname === "/Profilo" ? "active" : ""}`}>
+                        { (currentUserType !== USER_TYPES.User) && (<li className={`user-tool-content profile ${location.pathname.startsWith("/Profilo") ? "active" : ""}`}>
                                 <div className="link" ref={dropdownRef} onClick={handleDropdownProfilo}>
                                     <div className="icon-user-tool">
                                         <FaUserCircle />
@@ -166,8 +166,8 @@ function Header() {
                 <nav className="bottom-header">
                     <ul id="navbar">
                         <li className={`navbar-link ${location.pathname === "/" ? "active" : ""}`}><Link to="/" onClick={scrollToTop}>Home</Link></li>
-                        <li className={`navbar-link ${location.pathname === "/CatalogoProdotti" ? "active" : ""}`}><Link to="/CatalogoProdotti" onClick={scrollToTop}>Catalogo prodotti</Link></li>
-                        <li className={`navbar-link ${location.pathname === "/Idee" ? "active" : ""}`}><Link to="/Idee" onClick={scrollToTop}>Idee e spunti</Link></li>
+                        <li className={`navbar-link ${location.pathname.startsWith("/CatalogoProdotti") ? "active" : ""}`}><Link to="/CatalogoProdotti" onClick={scrollToTop}>Catalogo prodotti</Link></li>
+                        <li className={`navbar-link ${location.pathname === "/EsploraTrend" ? "active" : ""}`}><Link to="/EsploraTrend" onClick={scrollToTop}>Esplora i trend</Link></li>
                         <li className={`navbar-link ${location.pathname === "/ChiSiamo" ? "active" : ""}`}><Link to="/ChiSiamo" onClick={scrollToTop}>Chi siamo</Link></li>
                         <li className={`navbar-link ${location.pathname === "/AssistenzaClienti" ? "active" : ""}`}><Link to="/AssistenzaClienti" onClick={scrollToTop}>Assistenza clienti</Link></li>
                         { ((currentUserType === USER_TYPES.Admin) || (currentUserType === USER_TYPES.Employee)) && <li className={`navbar-link dashboard ${location.pathname === "/Dashboard" ? "active" : ""}`}><Link to="/Dashboard" onClick={scrollToTop}>Dashboard</Link></li> }
@@ -191,8 +191,8 @@ function Header() {
                             <img id="logo-scroll-navbar" src={lumialogo} alt="Logo"></img>
                             <ul>
                                 <li className={`navbar-link ${location.pathname === "/" ? "active" : ""}`}><Link to="/" onClick={scrollToTop}>Home</Link></li>
-                                <li className={`navbar-link ${location.pathname === "/CatalogoProdotti" ? "active" : ""}`}><Link to="/CatalogoProdotti" onClick={scrollToTop}>Catalogo prodotti</Link></li>
-                                <li className={`navbar-link ${location.pathname === "/Idee" ? "active" : ""}`}><Link to="/Idee" onClick={scrollToTop}>Idee e spunti</Link></li>
+                                <li className={`navbar-link ${location.pathname.startsWith("/CatalogoProdotti") ? "active" : ""}`}><Link to="/CatalogoProdotti" onClick={scrollToTop}>Catalogo prodotti</Link></li>
+                                <li className={`navbar-link ${location.pathname === "/EsploraTrend" ? "active" : ""}`}><Link to="/EsploraTrend" onClick={scrollToTop}>Esplora i trend</Link></li>
                                 <li className={`navbar-link ${location.pathname === "/ChiSiamo" ? "active" : ""}`}><Link to="/ChiSiamo" onClick={scrollToTop}>Chi siamo</Link></li>
                                 <li className={`navbar-link ${location.pathname === "/AssistenzaClienti" ? "active" : ""}`}><Link to="/AssistenzaClienti" onClick={scrollToTop}>Assistenza clienti</Link></li>
                                 { ((currentUserType === USER_TYPES.Admin) || (currentUserType === USER_TYPES.Employee)) && <li className={`navbar-link scroll-dashboard ${location.pathname === "/Dashboard" ? "active" : ""}`}><Link to="/Dashboard" onClick={scrollToTop}>Dashboard</Link></li> }
