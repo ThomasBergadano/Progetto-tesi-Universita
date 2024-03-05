@@ -66,8 +66,8 @@ function About(){
             <div className="about-riga5">
                 <div className="indirizzi">
                     <span className="span-indirizzi">Indirizzi e recapiti</span>
-                    <span>Via XXXXX N°31, Torino</span>
-                    <span>+39 XXX XXX XXXX</span>
+                    <span>Via Andrea Cesalpino, 55, Torino</span>
+                    <span>+39 922 143 2397</span>
                     <span>lumiaarredamenti@lumiarr.com</span>
                 </div>
                 <div className="orari">

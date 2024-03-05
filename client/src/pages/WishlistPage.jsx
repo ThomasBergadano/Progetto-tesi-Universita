@@ -1,27 +1,46 @@
-import React, { useEffect } from "react"
-import { useNavigate, Link } from 'react-router-dom'
+import React, { useState, useEffect, useRef }  from "react"
+import { Link, useNavigate } from 'react-router-dom'
+import { doc, getDoc, getDocs, setDoc, collection, query, where, getFirestore, addDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore"
 import { auth } from "../database/firebase"
-import { doc, getDoc } from "firebase/firestore"
 import { onAuthStateChanged, signOut } from "firebase/auth"
 import db from "../database/firebase"
 import "../styles/WishlistPage.css"
 import soggiorno from '../assets/images/soggiorno.jpg'
 import { FaTrashAlt } from "react-icons/fa"
 import emptywishlist from "../assets/images/empty-wishlist.png"
+import loading from "../assets/images/loading.gif"
 
 function Wishlist(){
     const navigate = useNavigate();
+    /*Stato per ""forzare"" il refresh*/
+    const [refresh, setRefresh] = useState(false);
+
+    /*Stato dell'utente*/
+    const [userId, setUserId] = useState(null);
+
+    /*Status dei bottoni aggiungi in wishlist e carrello (selezionati e non selezionati)*/
+    const [statusWishlist, setStatusWishlist] = useState({});
+
+    /*Caricamento dei prodotti presenti nella wishlist*/
+    const [prodottiInWishlist, setProdottiInWishlist] = useState([]);
+    const [caricamentoArray, setCaricamentoArray] = useState(true);
 
     useEffect(() => {
-        
         /*Teletrasporto l'utente all'inizio della pagina appena viene fatto il rendering*/
         window.scrollTo(0, 0);
+
+        /*Status wishlist dal localstorage*/
+        const savedStatusWishlist = localStorage.getItem('statusWishlist');
+        if (savedStatusWishlist) {
+            setStatusWishlist(JSON.parse(savedStatusWishlist));
+        }
 
         onAuthStateChanged(auth, async (user) => {
             if(user) {
               const userUID = user.uid;
               const RiferimentoDocumentoUtente = await doc(db, 'Utenti', userUID);
               const DocumentoUtente = await getDoc(RiferimentoDocumentoUtente);
+              setUserId(userUID);
 
               if(DocumentoUtente.exists()){
                 const ruoloUtente = DocumentoUtente.data().ruolo;
@@ -33,6 +52,7 @@ function Wishlist(){
                 console.log("L'utente che prova ad accedere in Profile non esiste");
                 navigate("/Login");
               }
+              uploadProductsFromWishlist(userUID);
             }
             else {
                 /*Quando l'utente fa logout da questa pagina, lo porto nella home anzichè nel login*/
@@ -40,21 +60,111 @@ function Wishlist(){
                 navigate("/");
             }
         });
+
+        /*Caricamento dei prodotti presenti nella wishlist*/
+        const uploadProductsFromWishlist = async(idUtente) => {
+            const prodottiArrayID = [];
+            const prodottiArrayDati = [];
+            //const idUtente = userId;
+            console.log("1");
+            const RiferimentoRaccoltaGestione = collection(db, 'Gestione');
+            const queryGetGestione = query(RiferimentoRaccoltaGestione, where('TipoGestione', '==', 'Wishlist'));
+            const shapshotGestione = await getDocs(queryGetGestione);
+            console.log("2");
+            for(const gestioneDoc of shapshotGestione.docs){
+                const RiferimentoRaccoltaWishlist = collection(gestioneDoc.ref, "Wishlist");
+                const queryGetUserWishlist = query(RiferimentoRaccoltaWishlist, where('IDUtente', '==', idUtente));
+                const shapshotWishlist = await getDocs(queryGetUserWishlist);
+                console.log("3");
+                console.log(idUtente);
+                for(const wishlistDoc of shapshotWishlist.docs){
+                    console.log("4");
+                    const ElencoProdottiDB = wishlistDoc.data().ElencoProdotti;
+                    console.log("ID wishlist: ", wishlistDoc.id);
+                    console.log("5");
+                    console.log(ElencoProdottiDB);
+                    prodottiArrayID.push(...ElencoProdottiDB);
+                    console.log("Elenco dei prodotti (ID only) dentro: ", prodottiArrayID);
+                }
+                console.log("Elenco dei prodotti (ID only): ", prodottiArrayID);
+            }
+
+            /*Array con gli ID interessati ottenuti. Ora prendo i loro dati dentro catalogo prodotti*/
+            const RiferimentoRaccoltaCategoria = collection(db, 'Categoria');
+            const snapshotCategorie = await getDocs(RiferimentoRaccoltaCategoria);
+            for(const categoriaDoc of snapshotCategorie.docs){
+
+                /*Ottengo riferimento alla raccolta Sottocategoria*/
+                const RiferimentoRaccoltaSottoCategoria = collection(categoriaDoc.ref, "SottoCategoria");
+                const snapshotSottoCategorie = await getDocs(RiferimentoRaccoltaSottoCategoria);
+                for(const sottocategoriaDoc of snapshotSottoCategorie.docs){
+
+                    /*Ottengo riferimento alla raccolta Prodotti e inserisco nell'array*/
+                    const RiferimentoRaccoltaProdotti = collection(sottocategoriaDoc.ref, "Prodotti");
+                    const snapshotProdotti = await getDocs(RiferimentoRaccoltaProdotti);
+                    if(snapshotProdotti.docs.length > 0){
+                        for (const prodottoDoc of snapshotProdotti.docs) {
+
+                            /*Se prodotto ID è dentro i preferiti, allora lo aggiungo nel nuovo array con tt i dati*/
+                            if(prodottiArrayID.includes(prodottoDoc.id)){
+                                const datiProdotto = prodottoDoc.data();
+                                const prodottoConId = { id: prodottoDoc.id, ...datiProdotto }
+                                prodottiArrayDati.push(prodottoConId);
+                            }
+                        }
+                    }
+                }
+            }
+            setProdottiInWishlist(prodottiArrayDati);
+            setCaricamentoArray(false);
+        }
+        //uploadProductsFromWishlist();
     }, []);
 
+    /*Forzo il refresh*/
+    const forceRefresh = () => setRefresh(prev => !prev);
+
+    const handlerRimozioneDaWishlist = async (e, idProdotto) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const idUtente = auth.currentUser.uid;
+        const RiferimentoRaccoltaGestione = collection(db, 'Gestione');
+        const queryGetGestione = query(RiferimentoRaccoltaGestione, where('TipoGestione', '==', 'Wishlist'));
+        const shapshotGestione = await getDocs(queryGetGestione);
+
+        for(const gestioneDoc of shapshotGestione.docs){
+            const RiferimentoRaccoltaWishlist = collection(gestioneDoc.ref, "Wishlist");
+            const queryGetUserWishlist = query(RiferimentoRaccoltaWishlist, where('IDUtente', '==', idUtente));
+            const shapshotWishlist = await getDocs(queryGetUserWishlist);
+            
+            for(const wishlistDoc of shapshotWishlist.docs){
+                await updateDoc(wishlistDoc.ref,{
+                    ElencoProdotti: arrayRemove(idProdotto)
+                });
+                console.log("prodotto rimosso:", idProdotto);
+                setProdottiInWishlist(prevState => prevState.filter(prodotto => prodotto.id !== idProdotto));
+
+                const updatedStatusWishlist = {
+                    ...statusWishlist,
+                    [idProdotto]: !statusWishlist[idProdotto]
+                };
+                setStatusWishlist(updatedStatusWishlist);
+                
+                //const isProdottoInWishlist = statusWishlist[idProdotto];
+                /*Salvo lo stato nel localStorage*/
+                localStorage.setItem('statusWishlist', JSON.stringify(updatedStatusWishlist));
+
+                /*const savedStatusWishlist = localStorage.getItem('statusWishlist');
+                const updatedStatusWishlist = savedStatusWishlist.filter(item => item.id !== idProdotto);
+                localStorage.setItem('statusWishlist', JSON.stringify(updatedStatusWishlist));*/
+            }
+        }
+    }
 
     return(
         <div id="wishlist">
-            {false && (
-                <div className="emptycart">
-                    <img src={emptywishlist}></img>
-                    <p>La tua wishlist è vuota</p>
-                    <Link to="/CatalogoProdotti">
-                        <button className="emptycart-button"><span>Vai a catalogo prodotti</span></button>
-                    </Link>
-                </div>
-            )}
-            {true && (<div className="wishlist-not-empty">
+            <div className="wishlist-not-empty">
                 <p className="wishlist-titolo">La mia lista dei desideri</p>
                 
                 <div className="divisore-wishlist"/>
@@ -69,28 +179,46 @@ function Wishlist(){
                             <option value="prezzo decrescente">Prezzo decrescente</option>
                         </select>
                     </div>
-                    <span className="numero-prodotti-disponibili">Hai 3 prodotti nella wishlist!</span>
+                    <span className="numero-prodotti-disponibili">Hai {prodottiInWishlist.length} prodotti nella wishlist!</span>
                 </div>
                 <div className="divisore-wishlist"/>
                 
-                <div className="card-prodotto wishlist-product">
-                    <div className="prodotto-img">
-                        <img src={soggiorno} alt="icona-prodotto"></img>
-                        <div className="rimuovi-da-wishlist">
-                            <FaTrashAlt />
+                <div className="mylist-wishlist">
+                    {prodottiInWishlist.length === 0 && 
+                        <div className="zero-prodottiwishlist">
+                            {caricamentoArray === true ? (
+                                <img className="loading-gif" src={loading} alt="caricamento"></img>
+                            ) : (
+                                <div className="emptywishlist">
+                                    <img src={emptywishlist}></img>
+                                    <p>La tua wishlist è vuota</p>
+                                    <Link to="/CatalogoProdotti">
+                                        <button className="emptywishlist-button"><span>Vai a catalogo prodotti</span></button>
+                                    </Link>
+                                </div>
+                            )}
                         </div>
-                        <div className="interagisci-prodotto-wishlist">
-                            <button className="addtocart"><span>Aggiungi al carrello</span></button>
+                    }
+                    {prodottiInWishlist.length !== 0 && prodottiInWishlist.map((prodotto, index) => (
+                        <div className="card-prodotto wishlist-product" key={index}>
+                            <div className="prodotto-img">
+                                <img src={prodotto.Immagine} alt="icona-prodotto"></img>
+                                <div className="rimuovi-da-wishlist" onClick={(e) => handlerRimozioneDaWishlist(e,prodotto.id)}>
+                                    <FaTrashAlt />
+                                </div>
+                                <div className="interagisci-prodotto-wishlist">
+                                    <button className="addtocart"><span>Aggiungi al carrello</span></button>
+                                </div>
+                            </div>
+                            <div className="prodotto-info">
+                                <p className="info1">{String(prodotto.NomeProdotto)}</p>
+                                <p className="info2">Set: {String(prodotto.NomeSet)}</p>
+                                <p className="info3">{String(prodotto.Prezzo)}€</p>
+                            </div>
                         </div>
-                    </div>
-                    <div className="prodotto-info">
-                        <p className="info1">nome prodotto</p>
-                        <p className="info2">Set: nome set</p>
-                        <p className="info3">xxx €</p>
-                    </div>
+                    ))}
                 </div>
             </div>
-            )}
         </div>
     )
 }

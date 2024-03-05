@@ -51,6 +51,10 @@ header{
   align-items: center;
   margin-left: 32%; /* Aggiunto per spostare .search a destra */
 }
+#searchbar:focus-within{
+  border: none;
+  outline: 3px solid var(--firefly);
+}
 
 .search_input,
 .search_button{
@@ -101,7 +105,7 @@ li a:hover{
 
 /*Elementi per i non Users (profilo, wishlist, carrello)*/
 .user-tool-content{
-  display: inline-block; /*!!!!!ERA INLINE-FLEX!!!*/
+  display: inline-block;
   margin-left: 35px;
   align-items: center;
   position: relative;
@@ -342,7 +346,7 @@ li.scroll-dashboard a{
 }
 
 /*Search Bar component dentro la scroll header*/
-.scroll-navbar #searchbar {
+.scroll-navbar #searchbar{
   position: absolute;
   width: 200px;
   height: 40px;
@@ -356,6 +360,10 @@ li.scroll-dashboard a{
   align-items: center;
   margin-left: 83%;
   cursor: pointer;
+}
+.scroll-navbar #searchbar:focus-within{
+  border: none;
+  outline: 3px solid var(--firefly);
 }
 
 .scroll-navbar .search_input{
@@ -373,7 +381,10 @@ li.scroll-dashboard a{
   display: grid;
   place-content: center;
 }
-
+.scroll-navbar .search_button:hover{
+  background-color: var(--maastricht-blue);
+  color: var(--firefly);
+}
 
 /* Dropdown language */
 .language-container {

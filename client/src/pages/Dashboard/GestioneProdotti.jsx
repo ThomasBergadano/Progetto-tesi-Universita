@@ -121,7 +121,7 @@ function GestioneProdotti(){
             Lunghezza: parseFloat(lunghezzaProdotto),
             Profondita: parseFloat(profonditaProdotto),
             Colore: coloreProdotto,
-            Immagine: "www",
+            Immagine: "https://firebasestorage.googleapis.com/v0/b/lumia-arredamenti.appspot.com/o/ImmaginiProdotti%2Fsoggiorno.jpg?alt=media&token=cb742ae8-1ae7-40a5-87b4-64e96872d62b",
         });
         
         setNomeProdotto("");

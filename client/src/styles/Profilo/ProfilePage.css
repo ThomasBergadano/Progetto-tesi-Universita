@@ -20,6 +20,7 @@ a{
     margin: 40px 0 0px 80px;
     background-color: var(--white);
     border: 1px solid var(--maastricht-blue);
+    box-shadow: 0px 0px 8px 8px rgba(0, 0, 0, 0.3);
 }
 .nav-profilo-title{
     justify-content: center;
@@ -81,4 +82,5 @@ a{
     margin: 40px 0 150px 100px;
     border: 1px solid var(--maastricht-blue);
     padding: 0;
+    box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.3);
 }

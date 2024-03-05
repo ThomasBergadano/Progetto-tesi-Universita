@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useNavigate } from 'react-router-dom'
 import { auth } from "../../database/firebase"
 import { doc, getDoc } from "firebase/firestore"
@@ -7,7 +7,33 @@ import { onAuthStateChanged, signOut } from "firebase/auth"
 import "../../styles/Profilo/InformazioniPersonali.css"
 
 function InformazioniPersonali(){
+    /*Informazioni dell'utente*/
+    const [oggettoUtente, setOggettoUtente] = useState("");
+    const [emailUtente, setEmailUtente] = useState("");
 
+    useEffect(() => {
+        /*Recupero informazioni sull'utente*/
+        onAuthStateChanged(auth, async (user) => {
+            if(user) {
+              const userUID = user.uid;
+              setEmailUtente(user.email);
+              const RiferimentoDocumentoUtente = await doc(db, 'Utenti', userUID);
+              const DocumentoUtente = await getDoc(RiferimentoDocumentoUtente);
+
+              if(DocumentoUtente.exists()){
+                setOggettoUtente(DocumentoUtente.data());
+              }
+              else{
+                navigate("/Login");
+              }
+            }
+            else {
+                navigate("/Login");
+            }
+        });
+    })
+
+    
     return(
         <div id="pagina-informazioni-personali">
             <p className="page-info-title">INFORMAZIONI PERSONALI</p>
@@ -18,7 +44,7 @@ function InformazioniPersonali(){
                             <p>Nome:</p>
                         </div>
                         <div className="informazione-contenuto">
-                            <p>Thomas Bergadano</p>
+                            <p>{oggettoUtente.nome} {oggettoUtente.cognome}</p>
                         </div>
                     </div>
                     <div className="informazione-personale">
@@ -26,7 +52,7 @@ function InformazioniPersonali(){
                             <p>Email:</p>
                         </div>
                         <div className="informazione-contenuto">
-                            <p>bthomasb2001@gmail.com</p>
+                            <p>{emailUtente}</p>
                         </div>
                     </div>
                     <div className="informazione-personale">
@@ -34,7 +60,7 @@ function InformazioniPersonali(){
                             <p>Telefono:</p>
                         </div>
                         <div className="informazione-contenuto">
-                            <p>022 222 1111</p>
+                            <p>+39 {oggettoUtente.numeroTelefono}</p>
                         </div>
                     </div>
                 </div>

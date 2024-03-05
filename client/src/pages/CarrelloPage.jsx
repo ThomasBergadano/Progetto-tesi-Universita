@@ -45,10 +45,10 @@ function Carrello(){
             }
         });
     }, []);
+
+
     
     return(
-        
-
         <div id="carrello">
             {false && (
                 <div className="emptycart">

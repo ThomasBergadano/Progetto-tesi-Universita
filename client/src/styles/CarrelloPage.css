@@ -58,13 +58,15 @@
     flex-direction: column;
     width: 60%;
     height: auto;
-    border: 2px solid var(--maastricht-blue);
+    background-color: var(--dark-gray);
+    border: 3px solid var(--maastricht-blue);
     margin: 60px 100px 200px 60px;
+    box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.3);
 }
 
 .carrello-titolo{
     font-size: 35px;
-    color: var(--maastricht-blue);
+    color: var(--white);
     font-weight: bold;
     margin: 15px 0px 0px 4%;
 }
@@ -72,7 +74,7 @@
 .divisore-acquisto{
     width: 92%;
     height: 2px;
-    background-color: var(--maastricht-blue);
+    background-color: var(--white);
     margin: 10px 0px 20px 4%;
 }
 
@@ -104,15 +106,17 @@
     margin-top: 0px;
     margin-bottom: 8px;
     margin-left: 10px;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 .info-nome{
     font-weight: bold;
     color: var(--maastricht-blue);
 }
-.info-carr{
+.info-prodotti-carrello-left p.info-carr{
     margin-top: 0px;
+    font-size: 14px;
+    color: black;
 }
 
 .info-prodotti-carrello-right{
@@ -201,14 +205,17 @@
     flex-direction: column;
     width: 30%;
     height: 210px;
-    border: 2px solid var(--maastricht-blue);
-    margin: 60px 50px 0px 0px;
+    border: 3px solid var(--maastricht-blue);
+    background-color: var(--dark-gray);
+    margin: 60px 49px 0px 0px;
+    color: var(--white);
+    box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.3);
 }
 
 .sommario-subtitle{
     font-size: 18px;
     font-weight: bold;
-    color: var(--maastricht-blue);
+    color: var(--white);
     margin: 5px 0px 0px 4%;
     font-size: 20px;
 }
@@ -229,16 +236,16 @@
 .divisore-sommario{
     width: 92%;
     height: 2px;
-    background-color: var(--maastricht-blue);
+    background-color: var(--white);
     margin: 35px 0px 16px 4%;
 }
 
 .notemptycart-button{
     width: 92%;
     margin: 0px 0px 0px 4%;
-    background-color: var(--maastricht-blue);
-    color: var(--firefly);
-    border: 2px solid var(--firefly);
+    background-color: var(--firefly);
+    border: 3px solid var(--maastricht-blue);
+    color: var(--maastricht-blue);
     font-size: 18px;
     padding: 10px 20px;
     text-align: center;
@@ -248,10 +255,11 @@
     border-radius: 4px;
     font-family: 'Poppins', sans-serif;
     user-select: none;
+    font-weight: bold;
 }
 .notemptycart-button:hover{
-    background-color: var(--firefly);
-    border: 2px solid var(--maastricht-blue);
-    color: var(--maastricht-blue);
+    background-color: var(--maastricht-blue);
+    border: 2px solid var(--firefly);
+    color: var(--firefly);
     font-weight: bold;
 }

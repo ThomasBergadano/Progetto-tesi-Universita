@@ -20,6 +20,7 @@
     flex-direction: column;
     width: 60%;
     height: auto;
+    background-color: var(--light-yellow);
     margin: 60px 100px 200px 60px;
 }
 
@@ -28,12 +29,15 @@
     display: flex;
     width: 100%;
     height: 200px;
-    border: 2px solid var(--maastricht-blue);
+    border: 3px solid var(--maastricht-blue);
+    background-color: var(--dark-gray);
+    color: white;
+    box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.3);
 }
 
 .checkout-titolo{
     font-size: 20px;
-    color: var(--maastricht-blue);
+    color: var(--firefly);
     font-weight: bold;
     margin: 15px 0px 10px 30px;
 }
@@ -91,8 +95,11 @@
     flex-direction: column;
     width: 100%;
     height: 250px;
-    border: 2px solid var(--maastricht-blue);
+    border: 3px solid var(--maastricht-blue);
+    background-color: var(--dark-gray);
+    color: white;
     margin: 20px 0 0 0;
+    box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.3);
 }
 
 .metodo-pagamento-select {
@@ -120,7 +127,7 @@
 }
 .payment-item input:checked + span{
     font-weight: bold;
-    color: var(--maastricht-blue);
+    color: var(--white);
 }
 
 .payment-img{
@@ -151,14 +158,16 @@
     flex-direction: column;
     width: 30%;
     height: 280px;
-    border: 2px solid var(--maastricht-blue);
+    border: 3px solid var(--maastricht-blue);
     margin: 60px 50px 0px 0px;
+    box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.3);
+    background-color: var(--dark-gray);
 }
 
 .riepilogo-subtitle{
     font-size: 18px;
     font-weight: bold;
-    color: var(--maastricht-blue);
+    color: var(--white);
     margin: 5px 0px 0px 4%;
     font-size: 20px;
 }
@@ -167,12 +176,14 @@
     display: flex;
     margin: 0px 0px -20px 4%;
     font-size: 16px;
+    color: white;
 }
 .somma-totale{
     display: flex;
     margin: 30px 0px -20px 4%;
     font-size: 16px; 
-    font-weight: bold;  
+    font-weight: bold; 
+    color: white; 
 }
 
 .riepilogo-costo-totale{
@@ -198,16 +209,16 @@
 .divisore-riepilogo{
     width: 92%;
     height: 2px;
-    background-color: var(--maastricht-blue);
+    background-color: var(--white);
     margin: 20px 0px 16px 4%;
 }
 
 .ordina-button{
     width: 92%;
     margin: 0px 0px 0px 4%;
-    background-color: var(--maastricht-blue);
-    color: var(--firefly);
-    border: 2px solid var(--firefly);
+    background-color: var(--firefly);
+    color: var(--maastricht-blue);
+    border: 2px solid var(--maastricht-blue);
     font-size: 20px;
     padding: 10px 20px;
     text-align: center;
@@ -217,10 +228,11 @@
     border-radius: 4px;
     font-family: 'Poppins', sans-serif;
     user-select: none;
+    font-weight: bold;
 }
 .ordina-button:hover{
-    background-color: var(--firefly);
-    border: 2px solid var(--maastricht-blue);
-    color: var(--maastricht-blue);
+    background-color: var(--maastricht-blue);
+    border: 2px solid var(--firefly);
+    color: var(--firefly);
     font-weight: bold;
 }

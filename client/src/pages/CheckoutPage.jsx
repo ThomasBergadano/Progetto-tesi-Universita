@@ -87,7 +87,7 @@ function Checkout() {
                         <p className="riepilogo-somma-totale">39,00€</p>
                     </div>
                     <div className="divisore-riepilogo"/>
-                    <button className="ordina-button"><span>ORDINA</span></button>
+                    <button className="ordina-button"><span>Ordina</span></button>
                 </div>
             </div>
         </div>

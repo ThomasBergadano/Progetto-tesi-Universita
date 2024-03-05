@@ -1,22 +1,28 @@
-import React from "react"
+import React, { useState, useEffect, useRef }  from "react"
+import { Link, useNavigate } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons"
 
-const SearchBar = ({ posts, setSearchResults }) => {
-    const handleSubmit = (e) => e.preventDefault()
+const SearchBar = () => {
+    const navigate = useNavigate();
 
-    const handleSearchChange = (e) => {
-        /*if (!e.target.value) return setSearchResults(posts)
+    /*Costanti per il contenuto della barra di ricerca*/
+    const [parolaDiRicerca, setParolaDiRicerca] = useState("");
 
-        const resultsArray = posts.filter(post => post.title.includes(e.target.value) || post.body.includes(e.target.value))
+    const handlerRicerca = (e) => {
+        e.preventDefault();
+        navigate(`/CatalogoProdotti?ricercaNome=${encodeURIComponent(parolaDiRicerca)}`);
+        setParolaDiRicerca("");
+    }
 
-        setSearchResults(resultsArray)*/
+    const handlerCambiaRicerca = (e) => {
+        setParolaDiRicerca(e.target.value);
     }
 
     return (
-        <form id="searchbar" onSubmit={handleSubmit}>
-            <input type="text" id="search" className="search_input" onChange={handleSearchChange} placeholder="Cerca"/>
-            <button className="search_button" onClick={handleSearchChange}>
+        <form id="searchbar" onSubmit={handlerRicerca}>
+            <input type="text" id="search" className="search_input" onChange={handlerCambiaRicerca} value={parolaDiRicerca} placeholder="Cerca"/>
+            <button type="submit" className="search_button">
                 <FontAwesomeIcon icon={faMagnifyingGlass}/>
             </button>
         </form>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef }  from "react"
 import { Link, useNavigate } from 'react-router-dom'
-import { doc, getDoc, getDocs, setDoc, collection, query, where, getFirestore, addDoc } from "firebase/firestore"
+import { doc, getDoc, getDocs, setDoc, collection, query, where, getFirestore, addDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore"
+import { auth } from "../database/firebase"
 import db from "../database/firebase"
 import { FaRegHeart } from "react-icons/fa6"
 import { FiShoppingCart } from "react-icons/fi"
@@ -20,6 +21,7 @@ function CatalogoProdotti() {
     /*Caricamento dei parametri (se esistono)*/
     const parametroUrl = new URLSearchParams(window.location.search);
     const categoriaParametro = parametroUrl.get("categoria");
+    const nomeParametro = parametroUrl.get("ricercaNome");
 
     /*Caricamento dei prodotti*/
     const [showButton, setShowButton] = useState(false); //useState(true);
@@ -36,7 +38,7 @@ function CatalogoProdotti() {
 
     /*Filtro dei prodotti*/
     const [filtro, setFiltro] = useState({
-        nomeFiltrato: "",
+        nomeFiltrato: parametroUrl.has('ricercaNome') ? nomeParametro : "",
         categoriaFiltrata: parametroUrl.has('categoria') ? categoriaParametro : "all",
         sottoCategoriaFiltrata: "all",
         prezzoMinimo: "",
@@ -77,9 +79,9 @@ function CatalogoProdotti() {
 
         /*Caricamento di tutti i prodotti durante il rendering di /CatalogoProdotti*/
         const uploadProducts = async() => {
-            const prodottiArray = [];
+            let prodottiArray = [];
 
-            /*Se un parametro è presente, filtro i prodotti per quella categoria*/
+            /*Se un parametro categoria è presente, filtro i prodotti per quella categoria*/
             if(categoriaParametro != null){
                 setFiltro({...filtro, categoriaFiltrata: categoriaParametro});
 
@@ -111,6 +113,32 @@ function CatalogoProdotti() {
                     }
                 }
                 setSottoCategorie(arraySottocategorie);
+            }
+            /*Se un parametro nome è presente, filtro i prodotti per quel nome cercato*/
+            else if(nomeParametro !== null){
+                setFiltro({...filtro, nomeFiltrato: nomeParametro});
+
+                const RiferimentoRaccoltaCategoria = collection(db, 'Categoria');
+                const snapshotCategorie = await getDocs(RiferimentoRaccoltaCategoria);
+                for(const categoriaDoc of snapshotCategorie.docs){
+
+                    /*Ottengo riferimento ad ogni raccolta Sottocategoria*/
+                    const RiferimentoRaccoltaSottoCategoria = collection(categoriaDoc.ref, "SottoCategoria");
+                    const snapshotSottoCategorie = await getDocs(RiferimentoRaccoltaSottoCategoria);
+                    for(const sottocategoriaDoc of snapshotSottoCategorie.docs){
+    
+                        /*Ottengo riferimento alla raccolta Prodotti e inserisco nell'array*/
+                        const RiferimentoRaccoltaProdotti = collection(sottocategoriaDoc.ref, "Prodotti");
+                        const snapshotProdotti = await getDocs(RiferimentoRaccoltaProdotti);
+                        if (snapshotProdotti.docs.length > 0) {
+                            for (const prodottoDoc of snapshotProdotti.docs) {
+                                prodottiArray.push(prodottoDoc.data());
+                            }
+                        }
+                    }
+                }
+                prodottiArray = prodottiArray.filter((prodotto) => prodotto.NomeProdotto.toLowerCase().includes(filtro.nomeFiltrato));
+                console.log("Nome cercato: ", filtro.nomeFiltrato);
             }
             else{
                 /*Ottengo riferimento alla raccolta Categoria*/
@@ -403,20 +431,69 @@ function CatalogoProdotti() {
     const handlerAggiuntaInWishlist = async (e, idProdotto) => {
         e.preventDefault();
         e.stopPropagation(); //Quando clicco sul cuore, non voglio ascoltare il link esterno per andare nella pagina del prodotto
-        
-        //Faccio cambiare il colore del cuore
+
+        /*Faccio cambiare il colore del cuore*/
         const updatedStatusWishlist = {
             ...statusWishlist,
             [idProdotto]: !statusWishlist[idProdotto]
         };
         setStatusWishlist(updatedStatusWishlist);
-    
-        //Salvo lo stato nel localStorage
+        
+        const isProdottoInWishlist = statusWishlist[idProdotto];
+        /*Salvo lo stato nel localStorage*/
         localStorage.setItem('statusWishlist', JSON.stringify(updatedStatusWishlist));
+
+        /*Aggiunta o rimozione del Prodotto dal database (Wishlist)*/
+        if(!isProdottoInWishlist){
+            await aggiuntaProdottoInWishlist(idProdotto);
+        }
+        else{
+            await rimozioneProdottoDaWishlist(idProdotto);
+        }
 
         //suono
         if(updatedStatusWishlist[idProdotto]){
             audioWishlistRef.current.play();
+        }
+    }
+
+    const aggiuntaProdottoInWishlist = async(idProdotto) => {
+        const idUtente = auth.currentUser.uid;
+        const RiferimentoRaccoltaGestione = collection(db, 'Gestione');
+        const queryGetGestione = query(RiferimentoRaccoltaGestione, where('TipoGestione', '==', 'Wishlist'));
+        const shapshotGestione = await getDocs(queryGetGestione);
+
+        for(const gestioneDoc of shapshotGestione.docs){
+            const RiferimentoRaccoltaWishlist = collection(gestioneDoc.ref, "Wishlist");
+            const queryGetUserWishlist = query(RiferimentoRaccoltaWishlist, where('IDUtente', '==', idUtente));
+            const shapshotWishlist = await getDocs(queryGetUserWishlist);
+
+            for(const wishlistDoc of shapshotWishlist.docs){
+                console.log("ID documenti wishlist: ",wishlistDoc.id);
+                console.log("prodotto aggiunto:", idProdotto);
+                await updateDoc(wishlistDoc.ref,{
+                    ElencoProdotti: arrayUnion(idProdotto)
+                });
+            }
+        }
+    }
+    const rimozioneProdottoDaWishlist = async(idProdotto) => {
+        const idUtente = auth.currentUser.uid;
+        const RiferimentoRaccoltaGestione = collection(db, 'Gestione');
+        const queryGetGestione = query(RiferimentoRaccoltaGestione, where('TipoGestione', '==', 'Wishlist'));
+        const shapshotGestione = await getDocs(queryGetGestione);
+
+        for(const gestioneDoc of shapshotGestione.docs){
+            const RiferimentoRaccoltaWishlist = collection(gestioneDoc.ref, "Wishlist");
+            const queryGetUserWishlist = query(RiferimentoRaccoltaWishlist, where('IDUtente', '==', idUtente));
+            const shapshotWishlist = await getDocs(queryGetUserWishlist);
+            
+            for(const wishlistDoc of shapshotWishlist.docs){
+                await updateDoc(wishlistDoc.ref,{
+                    ElencoProdotti: arrayRemove(idProdotto)
+                });
+                console.log("prodotto rimosso:", idProdotto);
+            }
         }
     }
 
@@ -449,7 +526,7 @@ function CatalogoProdotti() {
                     <div className="filtro-superiore">
                         <div className="nomeprodotto-cercaprodotto">
                             <label className="label-filter">Nome prodotto </label>
-                            <input type="text" placeholder="Nome prodotto" autoComplete="Nome" onChange={(e) => handlerFiltroNome(e)}/>
+                            <input type="text" placeholder="Nome prodotto" autoComplete="Nome" onChange={(e) => handlerFiltroNome(e)} value={filtro.nomeFiltrato}/>
                         </div>
                         <div className="categoria-cercaprodotto">
                             <label className="label-filter">Categoria </label>
@@ -553,9 +630,8 @@ function CatalogoProdotti() {
                     <div className="card-prodotto" key={index}>
                         <Link to={`/CatalogoProdotti/id:${prodotto.id}`}>
                             <div className="prodotto-img">
-                                <img src={soggiorno} alt="icona-prodotto"></img>
+                                <img src={prodotto.Immagine} alt="icona-prodotto"></img>
                                 <div className="interagisci-prodotto">
-
                                     <div className={`prodotto-in-wishlist ${statusWishlist[prodotto.id] ? 'aggiunto': ''}`} onClick={(e) => handlerAggiuntaInWishlist(e, prodotto.id)}>
                                         <FaRegHeart />
                                         <audio ref={audioWishlistRef} src={suonoWishlist}/>
