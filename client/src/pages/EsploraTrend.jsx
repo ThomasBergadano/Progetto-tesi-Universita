@@ -10,6 +10,8 @@ import loading from "../assets/images/loading.gif"
 import '../styles/EsploraTrend.css'
 
 function EsploraTrend() {
+    const navigate = useNavigate();
+    
     /*Stato e riferimenti per il carosello delle Sottocategorie*/
     const [posizioneCaroselloSottocategorie, setPosizioneCaroselloSottocategorie] = useState(0);
     const caroselloSottocategorieRef = useRef(null);
@@ -127,6 +129,11 @@ function EsploraTrend() {
         }       
     }
 
+    /* Ricerca dell'utente di una particolare sottocategoria di prodotti */
+    const handlerCercaSottoCategoria = (NomeSottocategoria) => {
+        //encoreURIComponent converte una stringa in un formato url ('Mobili e arredo per ufficio' -> "Mobili%20e%20arredo%20per%20ufficio")
+        navigate(`/CatalogoProdotti?sottocategoria=${encodeURIComponent(NomeSottocategoria)}`);
+    }
 
 
 
@@ -153,7 +160,7 @@ function EsploraTrend() {
                             </div>
                         }
                         {sottocategorie.length !== 0 && sottocategorie.map((sottocategoria,index) => (
-                                <div className="esplora-slot" key={index}>
+                                <div className="esplora-slot" key={index} onClick={() => handlerCercaSottoCategoria(sottocategoria.NomeSottoCategoria)}>
                                     <img src={sottocategoria.ImmagineUrl} alt="icona-sottocategoria"></img>
                                     <div className="slot-container">
                                         <p className={`nomeSlot`}>{sottocategoria.NomeSottoCategoria}</p>
@@ -181,15 +188,17 @@ function EsploraTrend() {
                             </div>
                         }
                         {prodottiPiuEconomici.length !== 0 && prodottiPiuEconomici.map((prodotto,index) => (
-                            <div className="esplora-slot" key={index}>
-                                <img src={prodotto.Immagine} alt="icona-prodotto"></img>
-                                <div className="slot-prezzo">
-                                    <p>{prodotto.Prezzo}€</p>
-                                </div> 
-                                <div className="slot-container">
-                                    <p className={`nomeSlot`}>{prodotto.NomeProdotto}</p>
+                            <Link to={`/CatalogoProdotti/id:${prodotto.id}`}>
+                                <div className="esplora-slot" key={index}>
+                                    <img src={prodotto.Immagine} alt="icona-prodotto"></img>
+                                    <div className="slot-prezzo">
+                                        <p>{prodotto.Prezzo}€</p>
+                                    </div> 
+                                    <div className="slot-container">
+                                        <p className={`nomeSlot`}>{prodotto.NomeProdotto}</p>
+                                    </div>
                                 </div>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                     <div className={`freccia-sinistra sotto ${posizioneCaroselloProdEco <= 0 ? "frecciaDisabilitata" : ""}`} onClick={() => spostaCaroselloProdEco("sinistra")}>
@@ -212,12 +221,14 @@ function EsploraTrend() {
                             </div>
                         }
                         {prodottiPiuRecenti.length !== 0 && prodottiPiuRecenti.map((prodotto,index) => (
-                            <div className="esplora-slot" key={index}>
-                                <img src={prodotto.Immagine} alt="icona-prodotto"></img>
-                                <div className="slot-container">
-                                    <p className={`nomeSlot`}>{prodotto.NomeProdotto}</p>
+                            <Link to={`/CatalogoProdotti/id:${prodotto.id}`}>
+                                <div className="esplora-slot" key={index}>
+                                    <img src={prodotto.Immagine} alt="icona-prodotto"></img>
+                                    <div className="slot-container">
+                                        <p className={`nomeSlot`}>{prodotto.NomeProdotto}</p>
+                                    </div>
                                 </div>
-                            </div>
+                            </Link>
                         ))} 
                     </div>
                     <div className={`freccia-sinistra sotto ${posizioneCaroselloProdRec <= 0 ? "frecciaDisabilitata" : ""}`} onClick={() => spostaCaroselloProdRec("sinistra")}>
@@ -233,12 +244,3 @@ function EsploraTrend() {
 }
 
 export default EsploraTrend;
-
-/*Slot di default:
-    <div className="esplora-slot">
-        <img src={soggiorno} alt="icona-prodotto"></img>
-        <div className="slot-container">
-            <p className="nomeSlot">ssssssssssssssssssssssssssssssssssssssssssssssssss</p>
-        </div>
-    </div> 
-*/

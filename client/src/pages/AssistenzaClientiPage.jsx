@@ -1,19 +1,60 @@
-import React, { useEffect, useState } from "react"
-import "../styles/assistenzaclientipage.css"
+import React, { useState, useEffect, useRef }  from "react"
+import { Link, useNavigate } from 'react-router-dom'
 import { FaUpload } from "react-icons/fa6";
 import { FaChevronUp } from "react-icons/fa";
 import { FaChevronDown } from "react-icons/fa";
 import faqimage from "../assets/images/faq2.png"
 import email from "../assets/images/email.png"
+import error from "../assets/images/error.webp"
+import spuntaverde from "../assets/images/spuntaverde.png"
+import "../styles/assistenzaclientipage.css"
+
+
 
 function AssistenzaClienti() {
+    /*Costanti per le domande-risposte a tendina*/
     const [rispostaAperta, setRispostaAperta] = useState(false);
+
+    /*Input per il form*/
+    const contattaciForm = useRef();
+    const [nome_assistenza, setNome_assistenza] = useState("");
+    const [cognome_assistenza, setCognome_assistenza] = useState("");
+    const [email_assistenza, setEmail_assistenza] = useState("");
+    const [numero_assistenza, setNumero_assistenza] = useState("");
+    const [citta_assistenza, setCitta_assistenza] = useState("");
+    const [messaggio_assistenza, setMessaggio_assistenza] = useState("");
+    const [allegato_assistenza, setAllegato_assistenza] = useState(null);
+
+
+    /*Costanti per la gestione del popup*/
+    const [popupActivated, setPopupActivated] = useState(false);
+    const [tipoPopup, setTipoPopup] = useState(""); //tipoPopup = successo/errore
+    const [messaggiErrore, setMessaggiErrore] = useState([]);
+
+
 
     /*Teletrasporto l'utente all'inizio della pagina appena viene fatto il rendering*/
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [])
 
+    /*Quando il popup è attivo, io non voglio che l'utente possa scrollare*/
+    useEffect(() => {
+        if (popupActivated) {
+            document.body.style.overflow = 'hidden';
+            document.getElementById('assistenzaclientipage').style.overflow = 'hidden';
+
+        } else {
+            document.body.style.overflow = 'auto';
+            document.getElementById('assistenzaclientipage').style.overflow = 'auto';
+        }
+
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, [popupActivated]);
+
+    /*Funzione per l'apertura o chiusura delle tendine per la FAQ*/
     const apriRisposta = (domanda) => {
         if(rispostaAperta === domanda){ /*Voglio permettere alla domanda ritirare la risposta, cliccando 2 volte*/
             setRispostaAperta(null);
@@ -22,6 +63,59 @@ function AssistenzaClienti() {
             setRispostaAperta(domanda);
         }
     }
+
+    /*Funzione per il controllo degli errori*/
+    const controlloCampiForm = (e) => {
+        const aggiungiMessaggiErrore = [];
+        const pattern=/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+        const onlyLetters = /^[a-zA-Z]+$/;
+        setTipoPopup("successo");
+
+        if(nome_assistenza === "" || cognome_assistenza === "" || email_assistenza === "" || numero_assistenza === "" || citta_assistenza === "" || messaggio_assistenza === ""){
+            aggiungiMessaggiErrore.push("Alcuni campi sono stati lasciati vuoti");
+            setTipoPopup("errore");
+        }
+        else{
+            if(nome_assistenza.length < 3 || !nome_assistenza.match(onlyLetters)){
+                aggiungiMessaggiErrore.push("Il nome inserito non è valido");
+                setTipoPopup("errore");
+            }
+            if(cognome_assistenza.length < 3 || !cognome_assistenza.match(onlyLetters)){
+                aggiungiMessaggiErrore.push("Il cognome inserito non è valido");
+                setTipoPopup("errore");     
+            }
+            if(!email_assistenza.match(pattern)){
+                aggiungiMessaggiErrore.push("Formato dell'email errato");
+                setTipoPopup("errore");
+            }
+            if(isNaN(numero_assistenza) || numero_assistenza.length < 10){
+                aggiungiMessaggiErrore.push("Il numero di telefono deve contenere solo numeri ed avere 10 cifre");
+                setTipoPopup("errore");
+            }
+        }
+        setMessaggiErrore([...messaggiErrore, ...aggiungiMessaggiErrore]);
+        setPopupActivated(true);
+    }
+
+    /*Funzione per chiusura del popup in caso di errore*/
+    const continuaPopup = (e) => {
+        setTipoPopup("");
+        setMessaggiErrore([]);
+        setPopupActivated(false);
+
+        setNome_assistenza("");
+        setCognome_assistenza("");
+        setEmail_assistenza("");
+        setNumero_assistenza("");
+        setCitta_assistenza("");
+        setMessaggio_assistenza("");
+        setAllegato_assistenza("");
+        contattaciForm.current.reset();
+    }
+
+    
+
+
 
     return(
         <div id="assistenzaclientipage">
@@ -69,7 +163,7 @@ function AssistenzaClienti() {
                     <div className="contattaci-section">
                         <div className="contattaci-contatti">
                             <span className="contattaci-titoletto">Recapiti</span>
-                            <p>Numero telefono: +39 922 143 2397</p>
+                            <p>Numero telefono: +39 333 333 3333</p>
                             <p>Email: lumiaarredamenti@lumiarr.com</p>
                         </div>
                         <div className="contattaci-dovesiamo">
@@ -81,22 +175,57 @@ function AssistenzaClienti() {
                     </div>
 
                     <div className="assistenza-form-container">
-                        <form className="assistenza-form">
-                            <input type="name" className="assistenza-input" placeholder="Nome" autoComplete="nome" onChange={null}/>
-                            <input type="surname" className="assistenza-input" placeholder="Cognome" autoComplete="cognome" onChange={null}/>
-                            <input type="email" className="assistenza-input" placeholder="Email" autoComplete="email" onChange={null}/>
-                            <input type="phone" className="assistenza-input" placeholder="Numero" autoComplete="phone" onChange={null}/>
-                            <input type="city" className="assistenza-input" placeholder="Città" autoComplete="city" onChange={null}/>
-                            <textarea className="assistenza-textarea" placeholder="Inserisci il tuo messaggio qui"></textarea>
+                        <form className="assistenza-form" method="POST" ref={contattaciForm}>
+                            <input type="name" className="assistenza-input" placeholder="Nome" autoComplete="nome" onChange={(e) => setNome_assistenza(e.target.value)}/>
+                            <input type="surname" className="assistenza-input" placeholder="Cognome" autoComplete="cognome" onChange={(e) => setCognome_assistenza(e.target.value)}/>
+                            <input type="email" className="assistenza-input" placeholder="Email" autoComplete="email" onChange={(e) => setEmail_assistenza(e.target.value)}/>
+                            <input type="phone" className="assistenza-input" placeholder="Numero" autoComplete="phone" onChange={(e) => setNumero_assistenza(e.target.value)}/>
+                            <input type="city" className="assistenza-input" placeholder="Città" autoComplete="city" onChange={(e) => setCitta_assistenza(e.target.value)}/>
+                            <textarea className="assistenza-textarea" placeholder="Inserisci il tuo messaggio qui" onChange={(e) => setMessaggio_assistenza(e.target.value)}/>
                             <label className="assistenza-allegato">
-                                <input className="assistenza-allegato-upload" type="file"/>
+                                <input className="assistenza-allegato-upload" type="file" onChange={(e) => setAllegato_assistenza(e.target.value)}/>
                                 <FaUpload className="upload-icon"/>
                             </label>
-                            <button className="submit-assistenza">Invia messaggio</button>
                         </form>
+                        <button className="submit-assistenza" onClick={(e) => controlloCampiForm(e)}>Invia messaggio</button>
                     </div>
                 </div>
             </div>
+
+
+            {/*Messaggio popup*/}
+            { popupActivated && 
+                <>
+                {
+                    (tipoPopup === "successo") && 
+                    <>
+                        <div className="popup popupsignuppage">
+                            <h2>Ti ringraziamo per aver contattato l'assistenza.</h2>
+                            <p>Ti risponderemo via email il prima possibile!</p>
+                            <img className="popup-signup-img" src={spuntaverde} alt="conferma invio assistenza"/>
+                            <button className="popup-signup-btn" type="button" onClick={(e) => continuaPopup(e)}>Ok</button>
+                        </div>
+                        <div id="overlay"></div>
+                    </>
+                }
+                {
+                    (tipoPopup === "errore") && 
+                    <>
+                        <div className="popup popupsignuppage-error">
+                            <h2>Errore in "Contattaci":</h2>
+                            <img className="popup-croce-negativa" src={error} alt="conferma login"/>
+                            <ul>
+                                {messaggiErrore.map((messaggio, index) => (
+                                    <li key={index}>{messaggio}</li>
+                                ))}
+                            </ul>
+                            <button className="modifica-signup-btn" type="button" onClick={(e) => continuaPopup(e)}>Modifica</button>
+                        </div>
+                        <div id="overlay"></div>
+                    </>
+                }
+                </>
+            }
         </div>
     )
 }

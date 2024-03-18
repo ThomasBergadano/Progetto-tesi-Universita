@@ -187,19 +187,25 @@
 }
 
 .riepilogo-costo-totale{
-    margin-left: 170px;
+    width: 64%;
+    height: 100%;
+    margin-right: 15px;
     justify-content: right;
     align-items: right;
     text-align: right;
 }
 .riepilogo-spese-trasporto{
-    margin-left: 143px;
+    width: 55%;
+    height: 100%;
+    margin-right: 15px;
     justify-content: right;
     align-items: right;
     text-align: right;
 }
 .riepilogo-somma-totale{
-    margin-left: 170px;
+    width: 64%;
+    height: 100%;
+    margin-right: 15px;
     justify-content: right;
     align-items: right;
     text-align: right;
@@ -235,4 +241,53 @@
     border: 2px solid var(--firefly);
     color: var(--firefly);
     font-weight: bold;
+}
+
+.popupcheckout-home{
+    width: 200px;
+    height: 50px;
+    margin: 20px 0px 0px 5%;
+    background-color: var(--firefly);
+    border: 3px solid var(--maastricht-blue);
+    color: var(--maastricht-blue);
+    font-size: 18px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    user-select: none;
+    font-weight: bold;
+    font-size: 16px;
+}
+.popupcheckout-home:hover{
+    background-color: var(--maastricht-blue);
+    color: var(--firefly);
+    border: 3px solid var(--firefly);
+}
+
+.popupcheckout-cronologia{
+    width: 200px;
+    height: 50px;
+    margin: 0px 0px 0px 8%;
+    background-color: var(--firefly);
+    border: 3px solid var(--maastricht-blue);
+    color: var(--maastricht-blue);
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    user-select: none;
+    font-weight: bold;
+    font-size: 16px;
+}
+.popupcheckout-cronologia:hover{
+    background-color: var(--maastricht-blue);
+    color: var(--firefly);
+    border: 3px solid var(--firefly);
 }

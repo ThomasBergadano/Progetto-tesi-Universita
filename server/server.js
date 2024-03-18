@@ -6,7 +6,7 @@ const PORT = 3000;
 const login = require("../server/routes/login");
 
 app.use(cors()); //Abilitiamo il CORS
-app.use(express.json()); //Converte i json riceventi in oggetti
+app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 

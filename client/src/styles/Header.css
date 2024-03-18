@@ -149,6 +149,8 @@ li a:hover{
 }
 .dropdown-profilo ul {
   padding: 0;
+  font-weight: bold;
+  font-size: 15px;
 }
 
 .dropdown-profilo hr {
@@ -157,21 +159,14 @@ li a:hover{
   border-bottom: 1px solid var(--maastricht-blue); /* Colore della riga */
 }
 
-.dropdown-profilo li,
-.dropdown-profilo li a{
+.dropdown-profilo li{
   height: 25px;
   background-color: var(--firefly);
   color: var(--maastricht-blue);
 }
 
-.dropdown-profilo li a:hover {
-  display: block;
-  background-color: var(--light-yellow);
-  color: var(--night);
-  cursor: pointer;
-  outline: 1px solid var(--maastricht-blue);
-}
-.dropdown-profilo .li-logout:hover{
+.dropdown-profilo .li-logout:hover,
+.dropdown-profilo .exclude-from-color:hover{
   display: block;
   background-color: var(--light-yellow);
   color: var(--night);

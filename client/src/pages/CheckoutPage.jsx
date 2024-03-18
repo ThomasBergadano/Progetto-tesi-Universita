@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react"
-import { useNavigate, Link } from 'react-router-dom'
+import React, { useState, useEffect, useRef }  from "react"
+import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { doc, getDoc, getDocs, setDoc, collection, query, where, getFirestore, addDoc, updateDoc, deleteDoc, arrayUnion, arrayRemove } from "firebase/firestore"
 import { auth } from "../database/firebase"
 import db from "../database/firebase"
-import { doc, getDoc } from "firebase/firestore"
 import { onAuthStateChanged } from "firebase/auth"
-import "../styles/CheckoutPage.css"
-
 import emptycart from "../assets/images/empty-cart.svg"
 import { FaPlus } from "react-icons/fa"
 import { FaMinus } from "react-icons/fa"
@@ -17,15 +15,145 @@ import PayPal from "../assets/images/metodi-pagamento/PayPal.png"
 import visa from "../assets/images/metodi-pagamento/VISA.png"
 import postepay from "../assets/images/metodi-pagamento/postepay.png"
 import pp from "../assets/images/metodi-pagamento/pp.jpg"
-
+import spuntaverde from "../assets/images/spuntaverde.png"
+import "../styles/CheckoutPage.css"
 
 
 function Checkout() {
+    const navigate = useNavigate();
+
+    /*Costanti per l'ottenimento della data e dell'orario attuale.*/
+    const dataAttuale = new Date();
+    const day = String(dataAttuale.getDate()).padStart(2,'0');
+    const month = String(dataAttuale.getMonth()+1).padStart(2,'0');
+    const year = String(dataAttuale.getFullYear()).slice(2);
+    const dataFormattata = `${day}/${month}/${year}`;
+
+    const ora = String(dataAttuale.getHours()).padStart(2, '0');
+    const minuti = String(dataAttuale.getMinutes()).padStart(2, '0');
+    const oraFormattata = `${ora}:${minuti}`;
+
+    /*Ottengo le props (costo totale)*/
+    const location = useLocation();
+    const prezzoTotale = location.state.prezzoTotale;
+
+    /*Informazioni dell'utente*/
+    const [oggettoUtente, setOggettoUtente] = useState("");
+
+    /*Costanti per la gestione del popup*/
+    const [popupActivated, setPopupActivated] = useState(false);
+    const [tipoPopup, setTipoPopup] = useState(""); //tipoPopup = datiMancanti/richiestaConferma/AcquistoCompletato
+
+    /* Costanti vari su prodotti e acquisti */
+    const [spedizioneFissa, setSpedizioneFissa] = useState("15.00");
+    const [costoTotale, setCostoTotale] = useState(0.00);
+    const [quantitaTotale, setQuantitaTotale] = useState(0);
     const [metodoPagamento, setMetodoPagamento] = useState("carta_di_credito");
+
+
+
+    useEffect(() => {
+        /*Recupero informazioni sull'utente*/
+        onAuthStateChanged(auth, async (user) => {
+            if(user) {
+                const userUID = user.uid;
+                const RiferimentoDocumentoUtente = await doc(db, 'Utenti', userUID);
+                const DocumentoUtente = await getDoc(RiferimentoDocumentoUtente);
+
+                if(DocumentoUtente.exists()){
+                    setOggettoUtente(DocumentoUtente.data());
+                }
+                else{
+                    navigate("/Login");
+                }
+            }
+            else {
+                navigate("/Login");
+            }
+        });
+    })
+
+    useEffect(() => {
+        /*Calcolo il costo totale dei prodotti*/
+        const totale = parseFloat(prezzoTotale) + parseFloat(spedizioneFissa);
+        setCostoTotale(totale);
+    }, [prezzoTotale, spedizioneFissa]);
 
     const handlerMetodoPagamento = (e) => {
         setMetodoPagamento(e.target.value);
     };
+
+
+    /*Gestisco l'evento del click sul bottone "Acquista"*/
+    const Acquista = async(e) => {
+        e.preventDefault();
+
+        /*Controllo se i dati dell'utente sono tutti compilati*/
+        if(oggettoUtente.numeroTelefono === "0000000000" || oggettoUtente.CAP === "" || oggettoUtente.Comune === "" || oggettoUtente.NumeroCivico === "" || oggettoUtente.IndirizzoDestinazione === "" || oggettoUtente.Nazione === "" || oggettoUtente.Provincia === ""){
+            //gestisco popup dei dati mancanti
+            setTipoPopup("datiMancanti");
+        }
+        else{
+            //gestisco popup per la richiesta di conferma
+            setTipoPopup("richiestaConferma");
+        }
+
+        setPopupActivated(true);
+
+        /*Creo un documento all'interno della cartella "Acquisti"*/
+        const RiferimentoRaccoltaGestione = collection(db, "Gestione");
+        const queryGetWishlist = query(RiferimentoRaccoltaGestione, where("TipoGestione", "==", "Acquisti"));
+        let snapshotGestione = await getDocs(queryGetWishlist);
+
+        let gestioneDoc = snapshotGestione.docs[0];
+        const RiferimentoRaccoltaAcquisti = collection(gestioneDoc.ref, "Acquisti");
+        const acquistoDoc = await addDoc(RiferimentoRaccoltaAcquisti,{
+            //ContoUtilizzato: "non gestito",
+            DataOrdine: dataFormattata,
+            OrarioOrdine: oraFormattata,
+            IDUtente: auth.currentUser.uid,
+            IndirizzoDestinazione: oggettoUtente.IndirizzoResidenza,
+            NumeroCivicoDestinazione: oggettoUtente.NumeroCivico,
+            MetodoSpedizione: metodoPagamento,
+            StatusOrdine: "Consegnato",
+        });
+
+        const RiferimentoRaccoltaProdottiAcquistati = collection(acquistoDoc, "ElencoProdottiAcquistati");
+        const prodottiAcquisatiDoc = await addDoc(RiferimentoRaccoltaProdottiAcquistati,{
+            IDProdotto: "",
+            QuantitaAcquistata: 0,
+        })
+
+
+        /*Svuoto il carrello nel database per tale utente*/
+
+        /*Svuoto il localStorage del carrello per tale utente*/
+
+    }
+
+    const confermaAcquisto = async(e) => {
+        setTipoPopup("AcquistoCompletato");
+    }
+
+    /*Gestisco la chiusura del popup*/
+    const chiudiPopup = async(e, scelta) => {
+        e.preventDefault();
+
+        if(scelta === "home"){
+            setPopupActivated(false);
+            navigate("/");
+        }
+        else if(scelta === "cronologia"){
+            setPopupActivated(false);
+            navigate("/Profilo/CronologiaOrdini");
+        }
+        else if(scelta === "Profilo/InformazioniPersonali"){
+            setPopupActivated(false);
+            navigate("/Profilo/InformazioniPersonali");
+        }
+    }
+
+
 
     return(
         <div id="checkout">
@@ -34,10 +162,16 @@ function Checkout() {
                     <div className="checkout-spedizione">
                         <div className="spedizione-sx">
                             <p className="checkout-titolo">Indirizzo di spedizione ed info</p>
-                            <p className="checkout-info b">Nome e Cognome: <span>Nome Cognome</span></p>
-                            <p className="checkout-info">Numero di telefono: <span>3867256819</span></p>
-                            <p className="checkout-info">Città e provincia: <span>Roma, Italy, 00048</span></p>
-                            <p className="checkout-info">Indirizzo: <span>Via Longhena 34</span></p>
+                            <p className="checkout-info b">Nome e Cognome: <span>{oggettoUtente.nome} {oggettoUtente.cognome}</span></p>
+                            <p className="checkout-info">Numero di telefono: <span>{oggettoUtente.numeroTelefono}</span></p>
+                            { 
+                                (oggettoUtente.Nazione !== "" && oggettoUtente.Comune !== "" && oggettoUtente.CAP !== "") ? (
+                                    <p className="checkout-info">Nazione e Comune: <span>{oggettoUtente.Nazione}, {oggettoUtente.Comune} ({oggettoUtente.CAP})</span></p>
+                                ) : (
+                                    <p className="checkout-info">Nazione e Comune: <span></span></p>
+                                )
+                            }
+                            <p className="checkout-info">Indirizzo: <span>{oggettoUtente.IndirizzoResidenza} {oggettoUtente.NumeroCivico}</span></p>    
                         </div>
                         <div className="spedizione-dx">
                             <button className="modifica-dati-check"><span>Modifica dati</span></button>
@@ -76,35 +210,71 @@ function Checkout() {
                     <p className="riepilogo-subtitle">Riepilogo dell'ordine</p>
                     <div className="costo-totale-checkout">
                         <p>Costo prodotti</p>
-                        <p className="riepilogo-costo-totale">24,00€</p>
+                        <p className="riepilogo-costo-totale">{parseFloat(prezzoTotale).toFixed(2)} €</p>
                     </div>
                     <div className="costo-totale-checkout">
                         <p>Spese di trasporto</p>
-                        <p className="riepilogo-spese-trasporto">15,00€</p>
+                        <p className="riepilogo-spese-trasporto">{spedizioneFissa} €</p>
                     </div>
                     <div className="somma-totale">
                         <p>Somma totale</p>
-                        <p className="riepilogo-somma-totale">39,00€</p>
+                        <p className="riepilogo-somma-totale">{parseFloat(costoTotale).toFixed(2)} €</p>
                     </div>
                     <div className="divisore-riepilogo"/>
-                    <button className="ordina-button"><span>Ordina</span></button>
+                    <button className="ordina-button" onClick={(e) => Acquista(e)}><span>Ordina</span></button>
                 </div>
             </div>
+
+            {/*Messaggio popup*/}
+            { popupActivated &&
+                <>
+                {
+                    (tipoPopup === "datiMancanti") &&
+                    <>
+                        <div className="popup popupsignuppage">
+                            <h2>Attenzione!</h2>
+                            <p>Prima di procedere è necessario che tu compili tutti i dati personali</p>
+                            <div className="btn">
+                                <button className="popupcheckout-home" onClick={(e) => chiudiPopup(e, "Profilo/InformazioniPersonali")}>Vai alla Home</button>
+                            </div>
+                        </div>
+                        <div id="overlay"/>
+                    </>
+                }
+                {
+                    (tipoPopup === "richiestaConferma") &&
+                    <>
+                        <div className="popup popupsignuppage">
+                            <h2>Acquisto quasi completato!</h2>
+                            <p>Confermi il tuo indirizzo? {oggettoUtente.IndirizzoResidenza} {oggettoUtente.NumeroCivico} {oggettoUtente.Comune}</p>
+                            <img className="popup-signup-img" src={spuntaverde} alt="conferma login"/>
+                            <div className="btn">
+                                <button className="popupcheckout-home" onClick={(e) => chiudiPopup(e, "home")}>Modifica i tuoi dati</button>
+                                <button className="popupcheckout-cronologia" onClick={(e) => chiudiPopup(e, "cronologia")}>Cronologia acquisti</button>
+                            </div>
+                        </div>
+                        <div id="overlay"/>
+                    </>
+                }
+                {
+                    (tipoPopup === "AcquistoCompletato") &&
+                    <>
+                        <div className="popup popupsignuppage">
+                            <h2>Complimenti, <span className="popup-nomeutente">{oggettoUtente.nome}</span>!</h2>
+                            <p>L'acquisto è andato a buon fine!</p>
+                            <img className="popup-signup-img" src={spuntaverde} alt="conferma login"/>
+                            <div className="btn">
+                                <button className="popupcheckout-home" onClick={(e) => chiudiPopup(e, "home")}>Modifica i tuoi dati</button>
+                                <button className="popupcheckout-cronologia" onClick={(e) => chiudiPopup(e, "cronologia")}>Cronologia acquisti</button>
+                            </div>
+                        </div>
+                        <div id="overlay"/>
+                    </>
+                }
+                </>
+            }
         </div>
     )
 }
 
 export default Checkout;
-
-/*
-                        <select className="metodo-pagamentt">
-                            <option value="cartaCredito">Carta di Credito/Debito</option>
-                            <option value="paypal">PayPal</option>
-                            <option value="googlePay">Google Pay</option>
-                        </select>
-                        <div className="pagamenti-icon">
-                            <img src={visa} alt="Carta di Credito/Debito" />
-                            <img src={PayPal} alt="PayPal" />
-                            <img src={GooglePay} alt="Google Pay" />
-                        </div>
-                        */

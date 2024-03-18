@@ -1,0 +1,494 @@
+@import './constants.css';
+
+/* Tutti i popup, generale */
+.popup{
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    font-family: 'Poppins', serif;
+    transition: 200ms ease-in-out;
+    z-index: 10;
+    transform: scale(1);
+}
+#overlay{
+    position: fixed;
+    opacity: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .7);
+    pointer-events: auto;
+    transition: 200ms ease-in-out;
+    z-index: 9;
+}
+
+body.popup-active {
+    overflow: hidden;
+}
+
+/* --- Popup, LoginPage --- */
+.popuploginpage{
+    display: flex;
+    top: 166px;
+    left: 418px;
+    width: 480px;
+    max-width: 90%;
+    height: 250px;
+    padding: 0 20px 30px;
+    border: 4px solid var(--firefly);
+    color: white;
+    background-color: var(--maastricht-blue);
+}
+.popup-nomeutente{
+    font-size: 34px;
+    color: var(--firefly);
+}
+.popuploginpage h2{
+    margin-top: 30px;
+    font-size: 30px;
+    display: flex;   
+}
+.popuploginpage span{
+    margin: -3px 0px 0px 10px;
+}
+.popuploginpage p{
+    margin-top: 0px;
+    margin-bottom: 40px;
+    font-size: 18px;
+    line-height: 1.9;
+}
+
+.chiudi_popup{
+    width: 250px;
+    height: 45px;
+    padding: 0px 20px;
+    margin-left: 110px;
+    margin-top: -15px;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--firefly);
+    border: 2px solid var(--firefly);
+    color: var(--maastricht-blue);
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+.chiudi_popup:hover{
+    background-color: var(--maastricht-blue);
+    color: var(--firefly);
+    border: 2px solid var(--firefly);
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.popup-spunta-positiva{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    margin-top: 24px;
+    right: 20px;
+}
+
+.popuploginpage-error{
+    display: flex;
+    top: 166px;
+    left: 418px;
+    width: 480px;
+    height: 230px;
+    padding: 0 20px 0px 20px;
+    border: 4px solid rgb(165, 12, 12);
+    color: white;
+    background-color: rgb(53, 37, 37);
+    pointer-events: auto;
+}
+.popup-croce-negativa{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    margin-top: 10px;
+    right: 10px;
+}
+.popuploginpage-error li{
+    margin-top: -4px;
+}
+.modifica-login-btn{
+    position: relative;
+    width: 150px;
+    height: 45px;
+    padding: 0px 20px;
+    margin-top: 0px;
+    margin-left: 160px;
+    margin-bottom: 15px;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--firefly);
+    border: 2px solid var(--firefly);
+    color: var(--maastricht-blue);
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.modifica-login-btn:hover{
+    background-color: var(--maastricht-blue);
+    color: var(--firefly);
+    border: 2px solid var(--firefly);
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+
+
+/* --- Popup, HeaderComponent, LOGOUT --- */
+.popuplogout{
+    position: fixed;
+    top: 50%;
+    left: 30%;
+    transform: translate(-61%, -5%);
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    top: 180px;
+    margin-left: 310px;
+    width: 450px;
+    max-width: 90%;
+    height: auto;
+    padding: 0 25px 30px;
+    border: 4px solid var(--firefly);
+    color: white;
+    background-color: var(--maastricht-blue);
+}
+.popuplogout .popup-nomeutente{
+    font-size: 30px;
+}
+.popuplogout .btn{
+    display: flex;
+}
+.popuplogout-rimani{
+    width: 110px;
+    height: 45px;
+    padding: 0px 0px;
+    margin-top: 10px;
+    margin-left: 10%;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--firefly);
+    border: 2px solid var(--firefly);
+    color: var(--maastricht-blue);
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+.popuplogout-rimani:hover{
+    background-color: var(--maastricht-blue);
+    color: var(--firefly);
+    border: 2px solid var(--firefly);
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+}
+.chiudi_popup:hover{
+    background-color: var(--maastricht-blue);
+    color: var(--firefly);
+    border: 2px solid var(--firefly);
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+}
+.popuplogout-esci{
+    width: 110px;
+    height: 45px;
+    padding: 0px 0px;
+    margin-top: 10px;
+    margin-left: 75px;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--firefly);
+    border: 2px solid var(--firefly);
+    color: var(--maastricht-blue);
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+.popuplogout-esci:hover{
+    background-color: var(--maastricht-blue);
+    color: var(--firefly);
+    border: 2px solid var(--firefly);
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+/* --- Popup, SignupPage --- */
+.popupsignuppage{
+    display: flex;
+    top: 166px;
+    left: 418px;
+    width: 480px;
+    max-width: 90%;
+    height: 230px;
+    padding: 0 20px 30px;
+    border: 4px solid var(--firefly);
+    color: white;
+    background-color: var(--maastricht-blue);
+}
+.popup-nomeutente{
+    font-size: 34px;
+    color: var(--firefly);
+}
+
+.popupsignuppage p{
+    margin-top: 3px;
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+.popup-signup-btn{
+    width: 150px;
+    height: 45px;
+    padding: 0px 20px;
+    margin-top: 5px;
+    margin-left: 163px;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--firefly);
+    border: 2px solid var(--firefly);
+    color: var(--maastricht-blue);
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+.popup-signup-btn:hover{
+    background-color: var(--maastricht-blue);
+    color: var(--firefly);
+    border: 2px solid var(--firefly);
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.popup-signup-img{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    margin-top: 12px;
+    right: 10px;
+}
+
+.popupsignuppage-error{
+    display: flex;
+    top: 166px;
+    left: 418px;
+    width: 480px;
+    height: auto;
+    padding: 0 20px 0px 20px;
+    border: 4px solid rgb(165, 12, 12);
+    color: white;
+    background-color: rgb(53, 37, 37);
+    pointer-events: auto;  
+}
+.modifica-signup-btn{
+    position: relative;
+    width: 150px;
+    height: 45px;
+    padding: 0px 20px;
+    margin-top: 0px;
+    margin-left: 160px;
+    margin-bottom: 15px;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--firefly);
+    border: 2px solid var(--firefly);
+    color: var(--maastricht-blue);
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+.modifica-signup-btn:hover{
+    background-color: var(--maastricht-blue);
+    color: var(--firefly);
+    border: 2px solid var(--firefly);
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+
+
+/* --- Popup, HomePage, per la Newsletter! --- */
+.popuphomepage-negato{
+    justify-content: center;
+    text-align: center;
+    display: flex;
+    top: 166px;
+    left: 436px;
+    width: 400px;
+    max-width: 90%;
+    height: 180px;
+    padding: 0 20px 30px;
+    border: 4px solid rgb(165, 12, 12);
+    color: white;
+    background-color: rgb(155, 69, 69);
+    pointer-events: auto;
+}
+.popuphomepage-negato-title{
+    font-size: 22px;
+    margin-top: 20px;
+    margin-bottom: 12px;
+}
+.popuphomepage-negato p{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    line-height: 1.8;
+}
+.popuphomepage-negato-btn{
+    width: 150px;
+    height: 150px;
+    padding: 0px 20px;
+    margin-top: 18px;
+    margin-left: 130px;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--firefly);
+    border: 2px solid var(--firefly);
+    color: var(--maastricht-blue);
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+.popuphomepage-negato-btn:hover{
+    background-color: var(--maastricht-blue);
+    color: var(--firefly);
+    border: 2px solid var(--firefly);
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+.popuphomepage-giaregistrato{
+    display: flex;
+    top: 166px;
+    left: 418px;
+    width: 480px;
+    max-width: 90%;
+    height: 100px;
+    padding: 0 20px 20px;
+    border: 4px solid var(--firefly);
+    color: white;
+    background-color: var(--maastricht-blue);
+}
+.popuphomepage-giaregistrato p{
+    align-items: center;
+    text-align: center;
+    margin-top: 18px;
+    margin-bottom: 0px;
+    font-size: 18px;
+    line-height: 1.9;
+}
+
+.popuphomepage-successo{
+    display: flex;
+    top: 166px;
+    left: 418px;
+    width: 440px;
+    max-width: 90%;
+    height: 150px;
+    padding: 0 40px 30px;
+    border: 4px solid var(--firefly);
+    color: white;
+    background-color: var(--maastricht-blue);
+}
+.popuphomepage-successo p{
+    margin-top: 40px;
+    font-size: 20px;
+    line-height: 1.9;
+}
+.popuphomepage-successo-btn{
+    width: 150px;
+    height: 160px;
+    padding: 0px 20px;
+    margin-top: 0px;
+    margin-left: 130px;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--firefly);
+    border: 2px solid var(--firefly);
+    color: var(--maastricht-blue);
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+.popuphomepage-successo-btn:hover{
+    background-color: var(--maastricht-blue);
+    color: var(--firefly);
+    border: 2px solid var(--firefly);
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.popuphomepage-campovuoto{
+    display: flex;
+    top: 166px;
+    left: 436px;
+    width: 417px;
+    max-width: 90%;
+    height: 130px;
+    padding: 0 20px 20px;
+    border: 4px solid rgb(165, 12, 12);
+    color: white;
+    background-color: rgb(155, 69, 69);
+    pointer-events: auto;
+}
+.popuphomepage-campovuoto-btn{
+    width: 150px;
+    height: 50px;
+    padding: 0px 20px;
+    margin-top: 18px;
+    margin-left: 130px;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--firefly);
+    border: 2px solid var(--firefly);
+    color: var(--maastricht-blue);
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+.popuphomepage-campovuoto-btn:hover{
+    background-color: var(--maastricht-blue);
+    color: var(--firefly);
+    border: 2px solid var(--firefly);
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+}
+
+/*Form contattaci di "Assistenza Clienti"*/
+ /*Non ho messo nulla, tutto copia-inc*/

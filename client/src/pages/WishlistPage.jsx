@@ -12,11 +12,6 @@ import loading from "../assets/images/loading.gif"
 
 function Wishlist(){
     const navigate = useNavigate();
-    /*Stato per ""forzare"" il refresh*/
-    const [refresh, setRefresh] = useState(false);
-
-    /*Stato dell'utente*/
-    const [userId, setUserId] = useState(null);
 
     /*Status dei bottoni aggiungi in wishlist e carrello (selezionati e non selezionati)*/
     const [statusWishlist, setStatusWishlist] = useState({});
@@ -25,27 +20,36 @@ function Wishlist(){
     const [prodottiInWishlist, setProdottiInWishlist] = useState([]);
     const [caricamentoArray, setCaricamentoArray] = useState(true);
 
+    /*Ordinamento dei prodotti*/
+    const [opzioneOrdinamento, setOpzioneOrdinamento] = useState("default");
+
+
+
     useEffect(() => {
         /*Teletrasporto l'utente all'inizio della pagina appena viene fatto il rendering*/
         window.scrollTo(0, 0);
 
-        /*Status wishlist dal localstorage*/
-        const savedStatusWishlist = localStorage.getItem('statusWishlist');
-        if (savedStatusWishlist) {
-            setStatusWishlist(JSON.parse(savedStatusWishlist));
-        }
-
+        /*Gestione permessi tramite l'autenticazione*/
         onAuthStateChanged(auth, async (user) => {
             if(user) {
               const userUID = user.uid;
               const RiferimentoDocumentoUtente = await doc(db, 'Utenti', userUID);
               const DocumentoUtente = await getDoc(RiferimentoDocumentoUtente);
-              setUserId(userUID);
 
               if(DocumentoUtente.exists()){
                 const ruoloUtente = DocumentoUtente.data().ruolo;
                 if(ruoloUtente==="User"){
                     navigate("/Login");
+                }
+                else{
+                    /*Recupero la wishlist dell'utente dal localstorage*/
+                    const savedStatusWishlist = localStorage.getItem(`${auth.currentUser.uid}_statusWishlist`);
+                    if (savedStatusWishlist) {
+                        setStatusWishlist(JSON.parse(savedStatusWishlist));
+                    }
+                    else{
+                        setStatusWishlist({});
+                    }
                 }
               }
               else{
@@ -65,26 +69,19 @@ function Wishlist(){
         const uploadProductsFromWishlist = async(idUtente) => {
             const prodottiArrayID = [];
             const prodottiArrayDati = [];
-            //const idUtente = userId;
-            console.log("1");
+
             const RiferimentoRaccoltaGestione = collection(db, 'Gestione');
             const queryGetGestione = query(RiferimentoRaccoltaGestione, where('TipoGestione', '==', 'Wishlist'));
             const shapshotGestione = await getDocs(queryGetGestione);
-            console.log("2");
+
             for(const gestioneDoc of shapshotGestione.docs){
                 const RiferimentoRaccoltaWishlist = collection(gestioneDoc.ref, "Wishlist");
                 const queryGetUserWishlist = query(RiferimentoRaccoltaWishlist, where('IDUtente', '==', idUtente));
                 const shapshotWishlist = await getDocs(queryGetUserWishlist);
-                console.log("3");
-                console.log(idUtente);
+
                 for(const wishlistDoc of shapshotWishlist.docs){
-                    console.log("4");
                     const ElencoProdottiDB = wishlistDoc.data().ElencoProdotti;
-                    console.log("ID wishlist: ", wishlistDoc.id);
-                    console.log("5");
-                    console.log(ElencoProdottiDB);
                     prodottiArrayID.push(...ElencoProdottiDB);
-                    console.log("Elenco dei prodotti (ID only) dentro: ", prodottiArrayID);
                 }
                 console.log("Elenco dei prodotti (ID only): ", prodottiArrayID);
             }
@@ -121,8 +118,6 @@ function Wishlist(){
         //uploadProductsFromWishlist();
     }, []);
 
-    /*Forzo il refresh*/
-    const forceRefresh = () => setRefresh(prev => !prev);
 
     const handlerRimozioneDaWishlist = async (e, idProdotto) => {
         e.preventDefault();
@@ -151,16 +146,35 @@ function Wishlist(){
                 };
                 setStatusWishlist(updatedStatusWishlist);
                 
-                //const isProdottoInWishlist = statusWishlist[idProdotto];
                 /*Salvo lo stato nel localStorage*/
-                localStorage.setItem('statusWishlist', JSON.stringify(updatedStatusWishlist));
-
-                /*const savedStatusWishlist = localStorage.getItem('statusWishlist');
-                const updatedStatusWishlist = savedStatusWishlist.filter(item => item.id !== idProdotto);
-                localStorage.setItem('statusWishlist', JSON.stringify(updatedStatusWishlist));*/
+                localStorage.setItem(`${auth.currentUser.uid}_statusWishlist`, JSON.stringify(updatedStatusWishlist));
             }
         }
     }
+
+    /* ----- ORDINAMENTO PRODOTTI ----- */
+    const handlerOrdinamentoProdotti = async (e) => {
+        setOpzioneOrdinamento(e.target.value);
+
+        const prodottiOrdinati = [...prodottiInWishlist]; /*Ordinamento su un array di copia*/
+
+        if(e.target.value === "nome crescente"){
+            prodottiOrdinati.sort((a,b) => a.NomeProdotto.localeCompare(b.NomeProdotto));
+        }
+        else if(e.target.value === "nome decrescente"){
+            prodottiOrdinati.sort((b,a) => a.NomeProdotto.localeCompare(b.NomeProdotto)); /*b>a*/
+        }
+        else if(e.target.value === "prezzo crescente"){
+            prodottiOrdinati.sort((a, b) => a.Prezzo - b.Prezzo);
+        }
+        else if(e.target.value === "prezzo decrescente"){
+            prodottiOrdinati.sort((a,b) => b.Prezzo - a.Prezzo);
+        }
+        setProdottiInWishlist(prodottiOrdinati);
+    }
+
+
+
 
     return(
         <div id="wishlist">
@@ -171,7 +185,7 @@ function Wishlist(){
                 <div id="visualizzazione-prodotti">
                     <div className="ordina-prodotti">
                         <label className="label-sort">Ordina per</label>
-                        <select name="ordina prodotti">
+                        <select name="ordina prodotti" value={opzioneOrdinamento} onChange={(e) => handlerOrdinamentoProdotti(e)}>
                             <option value="default">Seleziona ordinamento</option>
                             <option value="nome crescente">Nome (A-Z)</option>
                             <option value="nome decrescente">Nome (Z-A)</option>

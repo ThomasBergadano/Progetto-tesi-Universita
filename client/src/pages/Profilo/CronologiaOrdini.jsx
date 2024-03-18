@@ -1,16 +1,16 @@
-import React, { useEffect } from "react"
-import { useNavigate } from 'react-router-dom'
+import React, { useState, useEffect, useRef }  from "react"
+import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { doc, getDoc, getDocs, setDoc, collection, query, where, getFirestore, addDoc, updateDoc, deleteDoc, arrayUnion, arrayRemove } from "firebase/firestore"
 import { auth } from "../../database/firebase"
-import { doc, getDoc } from "firebase/firestore"
 import db from "../../database/firebase"
 import { onAuthStateChanged, signOut } from "firebase/auth"
 import soggiorno from '../../assets/images/soggiorno.jpg'
-import "../../styles/Profilo/CronologiaOrdini.css"
 import emptyhistory from "../../assets/images/empty-history.png"
+import "../../styles/Profilo/CronologiaOrdini.css"
+
 
 
 function CronologiaOrdini(){
-
     return(
         <div id="pagina-cronologia-ordini">
             <p className="page-info-title">CRONOLOGIA ORDINI</p>

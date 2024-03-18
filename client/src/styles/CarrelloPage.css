@@ -25,7 +25,7 @@
     right: 80px;
     background-color: var(--maastricht-blue);
     color: var(--firefly);
-    border: 1px solid var(--firefly);
+    border: 3px solid var(--night);
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
@@ -34,10 +34,11 @@
     cursor: pointer;
     border-radius: 4px;
     font-family: 'Poppins', sans-serif;
+    font-weight: bold;
 }
 .emptycart-button:hover{
     background-color: var(--firefly);
-    border: 1px solid var(--maastricht-blue);
+    border: 3px solid var(--maastricht-blue);
     color: var(--maastricht-blue);
     border-radius: 4px;
     margin-left: -2px;
@@ -62,6 +63,19 @@
     border: 3px solid var(--maastricht-blue);
     margin: 60px 100px 200px 60px;
     box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.3);
+}
+.il-tuo-carrello-loading{
+    display: flex;
+    flex-direction: column;
+    width: 54%;
+    height: auto;
+    background-color: var(--dark-gray);
+    border: 3px solid var(--maastricht-blue);
+    margin: 60px 100px 200px 60px;
+    box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.3);  
+}
+.il-tuo-carrello-loading .loading-gif{
+    margin-right: 160px;
 }
 
 .carrello-titolo{
@@ -97,7 +111,7 @@
 }
 
 .info-prodotti-carrello-left{
-    width: 350px;
+    width: 400px;
     height: 160px;
     margin-top: 10px;
 }
@@ -122,7 +136,7 @@
 .info-prodotti-carrello-right{
     display: flex;
     flex-direction: column;
-    width: 155px;
+    width: 122px;
     height: 160px;
     margin-top: 10px;
 }
@@ -131,17 +145,28 @@
     display: flex;
     width: 100%;
     height: 100%;
-    margin: -20px 0px 0px 120px;
+    margin: -20px 0px 0px 0px;
     font-size: 20px;
     font-weight: bold;
     color: var(--maastricht-blue);
 }
+.prezzo-singolo{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    margin-right: 10px;
+    padding: 0;
+
+}
 .rimuovi-prodotto-carrello{
     display: flex;
-    width: 47%;
+    width: 100%;
     height: 20px;
     margin-top: 88px;
-    margin-left: 85px;
+    margin-left: 40px;
     cursor: pointer;
     user-select: none;
 }
@@ -196,7 +221,18 @@
     color: var(--firefly);
 }
 
-
+.caricamento-carrello-list{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+.caricamento-carrello-list .loading-gif{
+    margin-right: 570px;
+    margin-bottom: 10px;
+}
 
 
     /* Sommario dell'ordine (colonna di destra) */
@@ -211,6 +247,29 @@
     color: var(--white);
     box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.3);
 }
+.sommario-ordine-loading{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    height: 210px;
+    border: 3px solid var(--maastricht-blue);
+    background-color: var(--dark-gray);
+    margin: 60px 49px 0px 0px;
+    color: var(--white);
+    box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.3);
+}
+.caricamento-carrello-sum{
+    display: flex;
+    width: 90%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.caricamento-carrello-sum .loading-gif{
+    margin-right: 560px;
+}
+
 
 .sommario-subtitle{
     font-size: 18px;
@@ -227,7 +286,9 @@
 }
 
 .sommario-costo-totale{
-    margin-left: 260px;
+    width: 100%;
+    height: 100%;
+    margin-right: 15px;
     justify-content: right;
     align-items: right;
     text-align: right;
@@ -239,6 +300,7 @@
     background-color: var(--white);
     margin: 35px 0px 16px 4%;
 }
+
 
 .notemptycart-button{
     width: 92%;

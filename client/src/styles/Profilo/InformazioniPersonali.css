@@ -100,3 +100,122 @@
     border-radius: 4px;
     font-family: 'Poppins', sans-serif;
 }
+
+
+/* Form per l'aggiornamento dei dati personali*/
+.form-profilo-modifica-dati{
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+.form-profilo-modifica-dati label{
+    color: var(--firefly);
+}
+
+.profilo-modifica-nome{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 80px;
+}
+.profilo-email-input{
+    margin-top: 20px;
+}
+.profilo-indirizzo-input1{
+    display: flex;
+    margin-top: 20px;
+    gap: 80px;
+}
+.profilo-indirizzo-input2{
+    display: flex;
+    margin-top: 20px;
+    gap: 80px;
+}
+.profilo-indirizzo-input3{
+    display: flex;
+    margin-top: 20px;
+    gap: 80px;
+}
+.profilo-modifica-numero{
+    gap: 80px; 
+}
+.mostra-informazioni-personali{
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    gap: 50px;
+}
+
+.profilo-half-form{
+    width: 210px;
+    padding: 10px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 15px;
+    border: none;
+    outline: 3px solid var(--maastricht-blue);
+}
+.profilo-half-form:focus{
+    outline: 3px solid var(--firefly);
+}
+.profilo-full-form{
+    width: 500px;
+    padding: 10px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 15px;
+    border: none;
+    outline: 3px solid var(--maastricht-blue);
+}
+.profilo-full-form:focus{
+    outline: 3px solid var(--firefly);
+}
+
+.prf-modifica-cognome{
+    display: flex;
+    flex-direction: column;
+}
+.prf-modifica-provincia{
+    display: flex;
+    flex-direction: column;
+}
+.prf-modifica-CAP{
+    display: flex;
+    flex-direction: column;
+}
+.prf-modifica-numcivico{
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.btn-mostra-informazioni-personali{
+    display: block;
+    width: 150px;
+    height: 40px;
+    background-color: var(--firefly);
+    color: var(--maastricht-blue) !important;
+    border-radius: 4px;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    letter-spacing: 1px;
+    font-size: 16px;
+}
+.btn-mostra-informazioni-personali:hover{
+    background-color: var(--maastricht-blue);
+    color: var(--firefly) !important;
+    border: 2px solid var(--firefly);
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+}

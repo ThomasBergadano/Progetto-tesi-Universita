@@ -6,6 +6,10 @@
     font-family: 'Poppins', sans-serif;
 }
 
+body.popup-active {
+    overflow: hidden;
+}
+
 /* Hero image */
 #hero-image{
     width: 100%;

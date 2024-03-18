@@ -20,6 +20,7 @@ a{
     margin: 40px 0 0px 60px;
     background-color: var(--white);
     border: 1px solid var(--maastricht-blue);
+    box-shadow: 0px 0px 8px 8px rgba(0, 0, 0, 0.3);
 }
 .nav-dashboard-title{
     justify-content: center;
@@ -76,6 +77,7 @@ a{
     margin: 40px 0 170px 80px;
     border: 1px solid var(--maastricht-blue);
     padding: 0;
+    box-shadow: 0px 0px 8px 8px rgba(0, 0, 0, 0.3);
 }
 
 /*Classi condivise*/

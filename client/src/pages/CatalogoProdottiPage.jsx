@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef }  from "react"
 import { Link, useNavigate } from 'react-router-dom'
-import { doc, getDoc, getDocs, setDoc, collection, query, where, getFirestore, addDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore"
+import { doc, getDoc, getDocs, setDoc, collection, query, where, getFirestore, addDoc, updateDoc, deleteDoc, arrayUnion, arrayRemove } from "firebase/firestore"
 import { auth } from "../database/firebase"
 import db from "../database/firebase"
 import { FaRegHeart } from "react-icons/fa6"
@@ -14,13 +14,15 @@ import suonoCarrello from "../assets/sounds/cash.mp3"
 
 
 function CatalogoProdotti() {
-    
+    const navigate = useNavigate();
+
     /*Attesa del rendering della pagina (loading). True= caricamento in corso, False= 0 risultati*/
     const [caricamento, setCaricamento] = useState(true);
 
     /*Caricamento dei parametri (se esistono)*/
     const parametroUrl = new URLSearchParams(window.location.search);
     const categoriaParametro = parametroUrl.get("categoria");
+    const sottocategoriaParametro = parametroUrl.get("sottocategoria");
     const nomeParametro = parametroUrl.get("ricercaNome");
 
     /*Caricamento dei prodotti*/
@@ -40,7 +42,7 @@ function CatalogoProdotti() {
     const [filtro, setFiltro] = useState({
         nomeFiltrato: parametroUrl.has('ricercaNome') ? nomeParametro : "",
         categoriaFiltrata: parametroUrl.has('categoria') ? categoriaParametro : "all",
-        sottoCategoriaFiltrata: "all",
+        sottoCategoriaFiltrata: parametroUrl.has('sottocategoria') ? sottocategoriaParametro : "all",
         prezzoMinimo: "",
         prezzoMassimo: "",
         colore: "all",
@@ -66,24 +68,32 @@ function CatalogoProdotti() {
         /*Teletrasporto l'utente all'inizio della pagina appena viene fatto il rendering*/
         window.scrollTo(0, 0);
         
-        /*Status wishlist e carrello dal localstorage*/
-        const savedStatusWishlist = localStorage.getItem('statusWishlist');
-        if (savedStatusWishlist) {
+
+        /*Ottengo la wishlist dell'utente dal localstorage*/
+        const savedStatusWishlist = localStorage.getItem(`${auth.currentUser.uid}_statusWishlist`);
+        if(savedStatusWishlist){
             setStatusWishlist(JSON.parse(savedStatusWishlist));
         }
-    
-        const savedStatusCarrello = localStorage.getItem('statusCarrello');
-        if (savedStatusCarrello) {
+        else{
+            setStatusWishlist({});
+        }
+
+        /*Ottengo il carrello dell'utente dal localstorage*/
+        const savedStatusCarrello = localStorage.getItem(`${auth.currentUser.uid}_statusCarrello`);
+        if(savedStatusCarrello){
             setStatusCarrello(JSON.parse(savedStatusCarrello));
         }
+        else{
+            setStatusCarrello({});
+        }
+
 
         /*Caricamento di tutti i prodotti durante il rendering di /CatalogoProdotti*/
         const uploadProducts = async() => {
             let prodottiArray = [];
 
             /*Se un parametro categoria è presente, filtro i prodotti per quella categoria*/
-            if(categoriaParametro != null){
-                setFiltro({...filtro, categoriaFiltrata: categoriaParametro});
+            if(categoriaParametro !== null){
 
                 /*Carico intanto l'array delle sottocategorie di quella categoria*/
                 const RiferimentoRaccoltaCategoria = collection(db, 'Categoria');
@@ -108,6 +118,54 @@ function CatalogoProdotti() {
                                 const datiProdotto = prodottoDoc.data();
                                 const prodottoConId = { id: prodottoDoc.id, ...datiProdotto }
                                 prodottiArray.push(prodottoConId);
+                            }
+                        }
+                    }
+                }
+                setSottoCategorie(arraySottocategorie);
+            }
+            else if(sottocategoriaParametro !== null){
+                const RiferimentoRaccoltaCategoria = collection(db, 'Categoria');
+                let snapshotCategorie = await getDocs(RiferimentoRaccoltaCategoria);
+                let categoriaDellaSottocategoriaSelezionata = "";
+                const arraySottocategorie = [];
+                
+                /*STEP 1: trovare la sottocategoria desiderata e identificare la categoria di appartenenza*/
+                for(const categoriaDoc of snapshotCategorie.docs){
+                    const RiferimentoRaccoltaSottoCategoria = collection(categoriaDoc.ref, "SottoCategoria");
+                    const snapshotSottoCategorie = await getDocs(RiferimentoRaccoltaSottoCategoria);
+                    for(const sottocategoriaDoc of snapshotSottoCategorie.docs){
+                        if(sottocategoriaDoc.data().NomeSottoCategoria === sottocategoriaParametro){                            
+                            categoriaDellaSottocategoriaSelezionata = categoriaDoc.data().NomeCategoria;
+                        }
+                    }
+                }
+                setFiltro({
+                    ...filtro,
+                    categoriaFiltrata: categoriaDellaSottocategoriaSelezionata,
+                    sottoCategoriaFiltrata: sottocategoriaParametro,
+                })
+
+                /*STEP 2: Caricare le sottocategorie sorelle, e tutti i prodotti nella categoria cercata*/
+                const queryGetCategorie = query(RiferimentoRaccoltaCategoria, where('NomeCategoria', '==', categoriaDellaSottocategoriaSelezionata));
+                snapshotCategorie = await getDocs(queryGetCategorie);
+
+                for(const categoriaDoc of snapshotCategorie.docs){
+                    const RiferimentoRaccoltaSottoCategoria = collection(categoriaDoc.ref, "SottoCategoria");
+                    const snapshotSottoCategorie = await getDocs(RiferimentoRaccoltaSottoCategoria);
+                    for(const sottocategoriaDoc of snapshotSottoCategorie.docs) {
+                        arraySottocategorie.push(sottocategoriaDoc.data().NomeSottoCategoria);
+
+                        if(sottocategoriaDoc.data().NomeSottoCategoria === sottocategoriaParametro){   
+                            /*Ottengo riferimento alla raccolta Prodotti e inserisco nell'array*/                         
+                            const RiferimentoRaccoltaProdotti = collection(sottocategoriaDoc.ref, "Prodotti");
+                            const snapshotProdotti = await getDocs(RiferimentoRaccoltaProdotti);
+                            if (snapshotProdotti.docs.length > 0) {
+                                for (const prodottoDoc of snapshotProdotti.docs) {
+                                    const datiProdotto = prodottoDoc.data();
+                                    const prodottoConId = { id: prodottoDoc.id, ...datiProdotto }
+                                    prodottiArray.push(prodottoConId);
+                                }
                             }
                         }
                     }
@@ -144,6 +202,7 @@ function CatalogoProdotti() {
                 /*Ottengo riferimento alla raccolta Categoria*/
                 const RiferimentoRaccoltaCategoria = collection(db, 'Categoria');
                 const snapshotCategorie = await getDocs(RiferimentoRaccoltaCategoria);
+                
                 for(const categoriaDoc of snapshotCategorie.docs){
 
                     /*Ottengo riferimento alla raccolta Sottocategoria*/
@@ -155,7 +214,7 @@ function CatalogoProdotti() {
                         const RiferimentoRaccoltaProdotti = collection(sottocategoriaDoc.ref, "Prodotti");
                         const snapshotProdotti = await getDocs(RiferimentoRaccoltaProdotti);
                         if(snapshotProdotti.docs.length > 0){
-                            for (const prodottoDoc of snapshotProdotti.docs) {
+                            for(const prodottoDoc of snapshotProdotti.docs) {
 
                                 /*Voglio inserire nell'array sia l'id del documento che i campi del prodotto*/
                                 const datiProdotto = prodottoDoc.data();
@@ -427,34 +486,45 @@ function CatalogoProdotti() {
     }
 
 
-    /* ----- HANDLER PER AGGIUNTA DEI PRODOTTI NELLA WISHLIST E NEL CARRELLO ----- */
+
+
+    /* -------------------------------------------------------------------------------------------------------*/
+    /* ------------------- HANDLER PER AGGIUNTA DEI PRODOTTI NELLA WISHLIST E NEL CARRELLO ------------------ */
+    /* -------------------------------------------------------------------------------------------------------*/
+
+    /* GESTIONE WISHLIST*/
     const handlerAggiuntaInWishlist = async (e, idProdotto) => {
         e.preventDefault();
         e.stopPropagation(); //Quando clicco sul cuore, non voglio ascoltare il link esterno per andare nella pagina del prodotto
-
-        /*Faccio cambiare il colore del cuore*/
-        const updatedStatusWishlist = {
-            ...statusWishlist,
-            [idProdotto]: !statusWishlist[idProdotto]
-        };
-        setStatusWishlist(updatedStatusWishlist);
         
-        const isProdottoInWishlist = statusWishlist[idProdotto];
-        /*Salvo lo stato nel localStorage*/
-        localStorage.setItem('statusWishlist', JSON.stringify(updatedStatusWishlist));
+        try{
+            if(auth.currentUser.email !== null){
+                /*Faccio che cambiare il colore*/
+                const updatedStatusWishlist = {
+                    ...statusWishlist,
+                    [idProdotto]: !statusWishlist[idProdotto]
+                };
+                setStatusWishlist(updatedStatusWishlist);
+                const isProdottoInWishlist = statusWishlist[idProdotto];
 
-        /*Aggiunta o rimozione del Prodotto dal database (Wishlist)*/
-        if(!isProdottoInWishlist){
-            await aggiuntaProdottoInWishlist(idProdotto);
-        }
-        else{
-            await rimozioneProdottoDaWishlist(idProdotto);
-        }
+                /*Salvo lo stato nel localStorage*/
+                localStorage.setItem(`${auth.currentUser.uid}_statusWishlist`, JSON.stringify(updatedStatusWishlist));
+                
+                /*Aggiunta o rimozione del Prodotto dal database (Wishlist)*/
+                if(!isProdottoInWishlist){
+                    audioWishlistRef.current.play(); //Attivo suono!
+                    await aggiuntaProdottoInWishlist(idProdotto);
+                }
+                else{
+                    await rimozioneProdottoDaWishlist(idProdotto);
+                }
+            }
 
-        //suono
-        if(updatedStatusWishlist[idProdotto]){
-            audioWishlistRef.current.play();
         }
+        catch(error){ /*Entro qui se non sono loggato e sto provando a mettere qualcosa tra i preferiti*/
+            navigate("/Login");
+        }
+    
     }
 
     const aggiuntaProdottoInWishlist = async(idProdotto) => {
@@ -497,23 +567,86 @@ function CatalogoProdotti() {
         }
     }
 
+
+    /*GESTIONE CARRELLO*/
     const handlerAggiuntaInCarrello = async (e, idProdotto) => {
         e.preventDefault();
         e.stopPropagation(); //Quando clicco sul carrello, non voglio ascoltare il link esterno per andare nella pagina del prodotto
         
-        //Faccio cambiare il colore del carrello
-        const updatedStatusCarrello = {
-            ...statusCarrello,
-            [idProdotto]: !statusCarrello[idProdotto]
-        };
-        setStatusCarrello(updatedStatusCarrello);
-        
-        //Salvo lo stato nel localStorage
-        localStorage.setItem('statusCarrello', JSON.stringify(updatedStatusCarrello));
+        try{
+            if(auth.currentUser.email !== null){
+                /*Faccio che cambiare il colore*/
+                const updatedStatusCarrello = {
+                    ...statusCarrello,
+                    [idProdotto]: !statusCarrello[idProdotto]
+                };
+                setStatusCarrello(updatedStatusCarrello);
+                const isProdottoInCarrello = statusCarrello[idProdotto];
+                
+                /*Salvo lo stato nel localStorage*/
+                localStorage.setItem(`${auth.currentUser.uid}_statusCarrello`, JSON.stringify(updatedStatusCarrello));
 
-        //suono
-        if(updatedStatusCarrello[idProdotto]){
-            audioCarrelloRef.current.play();
+                /*Aggiunta o rimozione del Prodotto dal database (Carrello)*/
+                if(!isProdottoInCarrello){
+                    audioCarrelloRef.current.play(); //Attivo suono!
+                    await aggiuntaProdottoInCarrello(idProdotto);
+                }
+                else{
+                    await rimozioneProdottoDaCarrello(idProdotto);
+                }
+            }
+        }
+        catch(error){
+            navigate("/Login");
+        }
+    }
+
+    const aggiuntaProdottoInCarrello = async(idProdotto) => {
+        const idUtente = auth.currentUser.uid;
+
+        const RiferimentoRaccoltaGestione = collection(db, 'Gestione');
+        const queryGetGestione = query(RiferimentoRaccoltaGestione, where('TipoGestione', '==', 'Carrello'));
+        const shapshotGestione = await getDocs(queryGetGestione);
+
+        for(const gestioneDoc of shapshotGestione.docs){
+            const RiferimentoRaccoltaCarrello = collection(gestioneDoc.ref, "Carrello");
+            const queryGetUserCarrello = query(RiferimentoRaccoltaCarrello, where('IDUtente', '==', idUtente));
+            const shapshotCarrello = await getDocs(queryGetUserCarrello);
+            
+            for(const carrelloDoc of shapshotCarrello.docs){
+                const RiferimentoRaccoltaCarrelloProdotti = collection(carrelloDoc.ref, "CarrelloElencoProdotti");
+                
+                const carrelloProdottoDoc = await addDoc(RiferimentoRaccoltaCarrelloProdotti,{
+                    IDProdotto: idProdotto,
+                    Quantita: 1,
+                });
+
+            }
+        }
+
+
+    }
+    const rimozioneProdottoDaCarrello = async(idProdotto) => {
+        const idUtente = auth.currentUser.uid;
+
+        const RiferimentoRaccoltaGestione = collection(db, 'Gestione');
+        const queryGetGestione = query(RiferimentoRaccoltaGestione, where('TipoGestione', '==', 'Carrello'));
+        const shapshotGestione = await getDocs(queryGetGestione);
+
+        for(const gestioneDoc of shapshotGestione.docs){
+            const RiferimentoRaccoltaCarrello = collection(gestioneDoc.ref, "Carrello");
+            const queryGetUserCarrello = query(RiferimentoRaccoltaCarrello, where('IDUtente', '==', idUtente));
+            const shapshotCarrello = await getDocs(queryGetUserCarrello);
+
+            for(const carrelloDoc of shapshotCarrello.docs){
+                const RiferimentoRaccoltaCarrelloProdotti = collection(carrelloDoc.ref, "CarrelloElencoProdotti");
+                const queryGetCarrelloElencoProdotti = query(RiferimentoRaccoltaCarrelloProdotti, where('IDProdotto', '==', idProdotto));
+                const snapshotCarrelloElencoProdotti = await getDocs(queryGetCarrelloElencoProdotti);
+
+                for(const carrelloElencoProdottiDoc of snapshotCarrelloElencoProdotti.docs){
+                    await deleteDoc(carrelloElencoProdottiDoc.ref);
+                }
+            }
         }
     }
 
@@ -539,7 +672,7 @@ function CatalogoProdotti() {
                         </div>
                         <div className="sottocategoria-cercaprodotto">
                             <label className="label-filter">Sottocategoria</label>
-                            <select name="sottocategoria" onChange={(e) => handlerFiltroSottoCategoria(e)}>
+                            <select name="sottocategoria" onChange={(e) => handlerFiltroSottoCategoria(e)} value={filtro.sottoCategoriaFiltrata}>
                                 <option value="all">Tutte le sottocategorie</option>
                                 {sottocategorie.map((sottocategoria, index) => (
                                     <option key={index} value={sottocategoria}>{sottocategoria}</option>

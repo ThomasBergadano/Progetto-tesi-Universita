@@ -7,6 +7,7 @@ import { doc, getDoc, getDocs, setDoc, collection, query, where, getFirestore, a
 import furniture from  '../assets/images/furniture.png'
 import aesthetic2 from  '../assets/images/aesthetic2.png'
 import newsletter from "../assets/images/newsletter.png"
+import spuntaverde from "../assets/images/spuntaverde.png"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons"
 import '../styles/HomePage.css'
@@ -27,7 +28,10 @@ function Home() {
     const [categorie, setCategorie] = useState([]);
     const [sottocategorie, setSottoCategorie] = useState([]);
 
-
+    /*Costanti per la gestione del popup*/
+    const [popupActivated, setPopupActivated] = useState(false);
+    const [tipoPopup, setTipoPopup] = useState(""); //tipoPoup = PermessoNegato/GiaRegistrato/Successo/CampoVuoto
+    
     useEffect(() => {
         /*Teletrasporto l'utente all'inizio della pagina appena viene fatto il rendering*/
         window.scrollTo(0, 0);
@@ -58,6 +62,22 @@ function Home() {
         fetchCategorie();
     }, [])
 
+    /*Quando il popup è attivo, io non voglio che l'utente possa scrollare*/
+    useEffect(() => {
+        if (popupActivated) {
+            document.body.style.overflow = 'hidden';
+            document.getElementById('homepage').style.overflow = 'hidden';
+
+        } else {
+            document.body.style.overflow = 'auto';
+            document.getElementById('homepage').style.overflow = 'auto';
+        }
+
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, [popupActivated]);
+
 
     /*Inserimento dello user nella newsletter*/ 
     const handlerNewsletter = async(e) => {
@@ -71,41 +91,45 @@ function Home() {
 
         /*Controllo se l'utente ha inserito l'email*/
         if(!emailNewsletter){
-            alert("Inserisci un indirizzo email valido");
-            return;
+            setTipoPopup("CampoVuoto");
+            setPopupActivated(true);
         }
         
         /*Controllo se l'email inserita è uguale a quella dell'utente. 
         Non c'è bisogno di controllare in fb authentication se la mail esista o meno, perchè se l'utente è 
         loggato significa che la mail sarà registrata di sicuro*/
-        if(auth.currentUser.email !== emailNewsletter){
-            alert("Hai inserito una mail non tua!");
-            setEmailNewsletter("");
-            newsLetterForm.current.reset();
-            return;
+        else if(auth.currentUser.email !== emailNewsletter){
+            setTipoPopup("PermessoNegato");
+            setPopupActivated(true);
         }
-        
-        /*Inserimento utente nella raccolta "Newsletter" di firebase, controllando che l'utente non si sia già registrato*/
-        const riferimentoRaccoltaNewsletter = collection(db, "Newsletter");
-        
-        const queryIfUtenteRegistrato = query(riferimentoRaccoltaNewsletter, where('UserID', '==', auth.currentUser.uid))
-        const UtenteEsistenteSnapshot = await getDocs(queryIfUtenteRegistrato);
-        if(!UtenteEsistenteSnapshot.empty){
-            alert("Ti sei già registrato!");
-            setEmailNewsletter("");
-            newsLetterForm.current.reset();
-            return;
+        else{
+            /*Inserimento utente nella raccolta "Newsletter" di firebase, controllando che l'utente non si sia già registrato*/
+            const riferimentoRaccoltaNewsletter = collection(db, "Newsletter");
+            
+            const queryIfUtenteRegistrato = query(riferimentoRaccoltaNewsletter, where('UserID', '==', auth.currentUser.uid))
+            const UtenteEsistenteSnapshot = await getDocs(queryIfUtenteRegistrato);
+            if(!UtenteEsistenteSnapshot.empty){
+                setTipoPopup("GiaRegistrato");
+                setPopupActivated(true);
+            }
+            else{
+                const NewsletterUserDocument = await addDoc(riferimentoRaccoltaNewsletter, {
+                    UserID: auth.currentUser.uid,
+                    dataRegistrazione: dataFormattata,
+                });
+    
+                setTipoPopup("Successo");
+                setPopupActivated(true);
+            }
         }
-        
-        const NewsletterUserDocument = await addDoc(riferimentoRaccoltaNewsletter, {
-            UserID: auth.currentUser.uid,
-            dataRegistrazione: dataFormattata,
-        });
-        alert("Ben fatto, ti sei registrato alla newsletter");
+    }
 
-        
+    /*Funzione per chiusura del popup*/
+    const chiudiPopup = (e) => {
         setEmailNewsletter("");
         newsLetterForm.current.reset();
+        setPopupActivated(false);
+        setTipoPopup("");
     }
 
     /* Ricerca dell'utente di una particolare categoria di prodotti */
@@ -169,6 +193,56 @@ function Home() {
                     <button className="button-advice-section">Scopri chi siamo</button>
                 </Link>
             </div>
+
+            {/*Messaggio popup*/}
+            { popupActivated && 
+                <>
+                    {
+                        (tipoPopup === "PermessoNegato") && 
+                            <>
+                            <div className="popup popuphomepage-negato">
+                                <span className="popuphomepage-negato-title">La mail inserita non corrisponde con la mail del tuo profilo!</span>
+                                <p>Riprova e inserisci quella inserita da te!</p>
+                                <button className="popuphomepage-negato-btn" type="button" aria-expanded="false" onClick={(e) => chiudiPopup(e)}>Riprova</button>
+                            </div>
+                            <div id="overlay"></div>
+                            </>
+                    }
+                    {
+                        (tipoPopup === "GiaRegistrato") &&
+                            <>
+                            <div className="popup popuphomepage-giaregistrato">
+                                <p>La tua e-mail è già stata registrata nella newsletter!</p>
+                                <button className="popup-signup-btn" type="button" aria-expanded="false" onClick={(e) => chiudiPopup(e)}>Ok</button>
+                            </div>
+                            <div id="overlay"></div>
+                            </>
+                    }
+                    {
+                        (tipoPopup === "Successo") && 
+                            <>
+                            <div className="popup popuphomepage-successo">
+                                <p>Complimenti! La tua mail è stata correttamente registrata nella newsletter.</p>
+                                <img className="popup-signup-img" src={spuntaverde} alt="conferma login"/>
+                                <button className="popuphomepage-successo-btn" type="button" aria-expanded="false" onClick={(e) => chiudiPopup(e)}>Ok</button>
+                            </div>
+                            <div id="overlay"></div>
+                            </>
+                    }
+                    {
+                        (tipoPopup === "CampoVuoto") && 
+                            <>
+                            <div className="popup popuphomepage-campovuoto">
+                                <span className="popuphomepage-negato-title">Il campo è vuoto! Inserisci la tua mail!</span>
+                                <button className="popuphomepage-campovuoto-btn" type="button" aria-expanded="false" onClick={(e) => chiudiPopup(e)}>Riprova</button>
+                            </div>
+                            <div id="overlay"></div>
+                            </>
+                    }
+                </>
+            }
+            
+
         </div>
     )
 }

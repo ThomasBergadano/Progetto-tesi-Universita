@@ -16,7 +16,7 @@ function About(){
         <div id="aboutpage">
             <div className="chi-siamo">
                 <h2 className="sottotitolo-chi-siamo"><span>LUMIA</span>, cosa sei?</h2>
-                <p>Benvenuti in Lumia, un e-commerce nato e sviluppato tra la fine del 2023 ed inizio 2024, in particolare siamo un sito di rivendita online di mobili ed arredamento, sia per interni che per giardino.  Crediamo fermamente che la tua casa dovrebbe essere più di un semplice luogo dove vivere: dovrebbe essere una rappresentazione di te stesso, della tua creatività e della tua salute. Siamo qui per trasformare le tue visioni in realtà. <br/>Benvenuti in Lumia, dove il tuo sogno di arredare diventa realtà.</p>
+                <p>Benvenuti in Lumia, un e-commerce nato e sviluppato tra la fine del 2023 ed inizio 2024, in particolare siamo un sito di rivendita online di mobili ed arredamento, sia per interni che per giardino.  Crediamo fermamente che la tua casa dovrebbe essere più di un semplice luogo dove vivere: dovrebbe essere una rappresentazione di te stesso, della tua creatività e della tua salute. Siamo qui per trasformare le tue visioni e i tuoi sogni. <br/>Benvenuti in Lumia, dove il tuo sogno di arredare diventa realtà.</p>
             </div>
             <div className="chi-siamo2"/>
             <div className="about-riga4">
@@ -82,10 +82,3 @@ function About(){
 }
 
 export default About;
-
-/*
-            <div className="about-intro">
-                <h2 className="sottotitolo-chi-siamo"><span>LUMIA</span>, cosa sei?</h2>
-                <p>Benvenuti in Lumia, un e-commerce nato e sviluppato tra la fine del 2023 ed inizio 2024, in particolare siamo un sito di rivendita online di mobili ed arredamento, sia per interni che per giardino.  Crediamo fermamente che la tua casa dovrebbe essere più di un semplice luogo dove vivere: dovrebbe essere una rappresentazione di te stesso, della tua creatività e della tua salute. Siamo qui per trasformare le tue visioni in realtà. <br/>Benvenuti in Lumia, dove il tuo sogno di arredare diventa realtà.</p>
-            </div>
-            */
