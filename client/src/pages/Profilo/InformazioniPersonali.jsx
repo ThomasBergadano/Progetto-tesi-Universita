@@ -30,6 +30,7 @@ function InformazioniPersonali(){
 
 
     useEffect(() => {
+        /*Recupero informazioni sull'utente*/
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (user) {
                 const userUID = user.uid;
@@ -47,7 +48,6 @@ function InformazioniPersonali(){
             }
         });
     
-        // Ritorna una funzione di cleanup per disiscriversi quando il componente si smonta
         return () => unsubscribe();
     }, []);
 
@@ -146,14 +146,7 @@ function InformazioniPersonali(){
                                     <p>CAP:</p>
                                 </div>
                                 <div className="informazione-contenuto">
-                                    {
-                                        (oggettoUtente.CAP !== "") ? (
-                                            <p>{oggettoUtente.CAP ? oggettoUtente.CAP : CAPUtente}</p>
-                                        ) : (
-                                            <p></p>
-                                        )
-
-                                    }
+                                    <p>{oggettoUtente.CAP ? oggettoUtente.CAP : CAPUtente}</p>
                                 </div>
                             </div>
                             <div className="informazione-personale">

@@ -66,7 +66,7 @@
     width: 150px;
     height: 40px;
     margin: 88px 0px 0px 80px;
-    background-color: var(--night);
+    background-color: var(--maastricht-blue);
     color: var(--white);
     border: 1px solid var(--white);
     padding: 10px 20px;
@@ -225,8 +225,8 @@
     background-color: var(--firefly);
     color: var(--maastricht-blue);
     border: 2px solid var(--maastricht-blue);
-    font-size: 20px;
-    padding: 10px 20px;
+    font-size: 21px;
+    padding: 8px 20px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -235,59 +235,11 @@
     font-family: 'Poppins', sans-serif;
     user-select: none;
     font-weight: bold;
+    letter-spacing: 1px;
 }
 .ordina-button:hover{
     background-color: var(--maastricht-blue);
     border: 2px solid var(--firefly);
     color: var(--firefly);
     font-weight: bold;
-}
-
-.popupcheckout-home{
-    width: 200px;
-    height: 50px;
-    margin: 20px 0px 0px 5%;
-    background-color: var(--firefly);
-    border: 3px solid var(--maastricht-blue);
-    color: var(--maastricht-blue);
-    font-size: 18px;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    cursor: pointer;
-    border-radius: 4px;
-    font-family: 'Poppins', sans-serif;
-    user-select: none;
-    font-weight: bold;
-    font-size: 16px;
-}
-.popupcheckout-home:hover{
-    background-color: var(--maastricht-blue);
-    color: var(--firefly);
-    border: 3px solid var(--firefly);
-}
-
-.popupcheckout-cronologia{
-    width: 200px;
-    height: 50px;
-    margin: 0px 0px 0px 8%;
-    background-color: var(--firefly);
-    border: 3px solid var(--maastricht-blue);
-    color: var(--maastricht-blue);
-    padding: 10px 10px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    cursor: pointer;
-    border-radius: 4px;
-    font-family: 'Poppins', sans-serif;
-    user-select: none;
-    font-weight: bold;
-    font-size: 16px;
-}
-.popupcheckout-cronologia:hover{
-    background-color: var(--maastricht-blue);
-    color: var(--firefly);
-    border: 3px solid var(--firefly);
 }

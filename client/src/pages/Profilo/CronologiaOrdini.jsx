@@ -9,21 +9,75 @@ import emptyhistory from "../../assets/images/empty-history.png"
 import "../../styles/Profilo/CronologiaOrdini.css"
 
 
-
 function CronologiaOrdini(){
+    const navigate = useNavigate();
+    
+    /*Informazioni dell'utente*/
+    const [oggettoUtente, setOggettoUtente] = useState("");
+    const [emailDB, setEmailUtente] = useState("");
+
+    /*Array di oggetti con gli acquisti dell'utente*/
+    const [arrayAcquisti, setArrayAcquisti] = useState([]);
+
+    useEffect(() => {
+        /*Recupero informazioni sull'utente*/
+        onAuthStateChanged(auth, async (user) => {
+            if(user){
+                const userUID = user.uid;
+                const RiferimentoDocumentoUtente = doc(db, 'Utenti', userUID);
+                const DocumentoUtente = await getDoc(RiferimentoDocumentoUtente);
+    
+                if(DocumentoUtente.exists()){
+                    setOggettoUtente(DocumentoUtente.data());
+                }
+                else{
+                    navigate("/Login");
+                }
+                uploadAcquisti(userUID);
+            } else {
+                navigate("/Login");
+            }
+        });
+
+
+        /*Caricamento degli acquisti dal db*/
+        const uploadAcquisti = async(idUtente) => {
+            const arrayAcquisti = [];
+
+            const RiferimentoRaccoltaGestione = collection(db, 'Gestione');
+            const queryGetGestione = query(RiferimentoRaccoltaGestione, where('TipoGestione', '==', 'Acquisti'));
+            const shapshotGestione = await getDocs(queryGetGestione);
+
+            for(const gestioneDoc of shapshotGestione.docs){
+                const RiferimentoRaccoltaAcquisti = collection(gestioneDoc.ref, "Acquisti");
+                const queryGetUserAcquisti = query(RiferimentoRaccoltaAcquisti, where('IDUtente', '==', idUtente));
+                const shapshotAcquisti = await getDocs(queryGetUserAcquisti);
+
+                for(const acquistoDoc of shapshotAcquisti.docs){
+                    const datiAcquisto = acquistoDoc.data();
+                    const acquistoConId = { id: acquistoDoc.id, ...datiAcquisto}
+                    arrayAcquisti.push(acquistoConId);
+                }
+            }
+            setArrayAcquisti(arrayAcquisti);
+        }
+
+    }, []);
+
+
     return(
         <div id="pagina-cronologia-ordini">
             <p className="page-info-title">CRONOLOGIA ORDINI</p>
-            {false && (
+            {arrayAcquisti.length === 0 && (
                 <div className="emptyhistory">
                     <img src={emptyhistory}></img>
                     <p>La tua cronologia degli ordini è vuota!</p>
                     <button className="btn-emptyhistory">Inizia con gli acquisti</button>
                 </div>
             )}
-            {true && (
+            {arrayAcquisti.length !== 0 && arrayAcquisti.map((acquisto, index) => (
                 <div className="notemptyhistory">
-                    <div className="singolo-acquisto">
+                    <div className="singolo-acquisto" key={index}>
                         <div className="immagine-prodotto-history">
                             <img src={soggiorno} alt="icona-prodotto"></img>
                         </div>
@@ -31,37 +85,13 @@ function CronologiaOrdini(){
                         <div className="history">
                             <div className="history-informazione">
                                 <div className="dataid-history">
-                                    <p>Data ordine: 24/02/24</p>
-                                    <p>Orario: 13:33</p>
-                                    <p>ID ordine: Iv4DKmN3DSJN9</p>
+                                    <p>Data ordine: {acquisto.DataOrdine}</p>
+                                    <p>Orario: {acquisto.OrarioOrdine}</p>
+                                    <p>ID ordine: {acquisto.id}</p>
                                 </div>
                                 <div className="prezzostatus-history">
-                                    <p>Numero prodotti: </p>
-                                    <p>Totale: 15€</p>
-                                    <p>Status: Consegnato</p>
-                                </div>
-                            </div>
-                            <div className="history-ricevuta">
-                                <button className="btn-history-ricevuta">Stampa la ricevuta in PDF</button>
-                                <button className="btn-history-feedback">Scrivici un feedback</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="singolo-acquisto">
-                        <div className="immagine-prodotto-history">
-                            <img src={soggiorno} alt="icona-prodotto"></img>
-                        </div>
-                        <div className="barra-verticale-history"/>
-                        <div className="history">
-                            <div className="history-informazione">
-                                <div className="dataid-history">
-                                    <p>Data ordine: 24/02/24</p>
-                                    <p>Orario: 13:33</p>
-                                    <p>ID ordine: Iv4DKmN3DSJN9</p>
-                                </div>
-                                <div className="prezzostatus-history">
-                                    <p>Numero prodotti: </p>
-                                    <p>Totale: 15€</p>
+                                    <p>Indirizzo: {acquisto.IndirizzoDestinazione} {acquisto.NumeroCivicoDestinazione}</p>
+                                    <p>Totale: {acquisto.Totale}€</p>
                                     <p>Status: Consegnato</p>
                                 </div>
                             </div>
@@ -72,7 +102,7 @@ function CronologiaOrdini(){
                         </div>
                     </div>
                 </div>
-            )}
+            ))}
         </div>
     )
 }

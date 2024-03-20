@@ -144,9 +144,9 @@ function AssistenzaClienti() {
                     {rispostaAperta === "Domanda 4" && <div className="answer">Sì, offriamo assistenza per l'assemblaggio dei mobili acquistati da noi. Ogni articolo viene fornito con istruzioni dettagliate per l'assemblaggio, ma se hai bisogno di assistenza aggiuntiva, non esitare a contattarci. Possiamo metterti in contatto con professionisti dell'assemblaggio nella tua zona o fornirti assistenza telefonica.</div>}
                 </div>
                 <div className="FAQ-item">
-                    <div className="question" onClick = {() => apriRisposta("Domanda 5")}>Quali sono i tempi di spedizione?</div>
+                    <div className="question" onClick = {() => apriRisposta("Domanda 5")}>Quali sono i tempi di consegna?</div>
                     {rispostaAperta === "Domanda 5" ? <FaChevronUp className="icon-question-up" /> : <FaChevronDown className="icon-question-down"/>}
-                    {rispostaAperta === "Domanda 5" && <div className="answer">I tempi di spedizione vanno in media dai 10 ai 40 giorni lavorativi. Al cliente vorremmo offrire la massima qualità possibile e nel miglior modo possibile. Inoltre, più si è distanti da Torino, ad esempio se si è in un alto Paese o in una regione fuoi dal Piemonte, più vorrebbe richiederci tempo.</div>}
+                    {rispostaAperta === "Domanda 5" && <div className="answer">I tempi di consegna vanno in media dai 10 ai 40 giorni lavorativi. Al cliente vorremmo offrire la massima qualità possibile e nel miglior modo possibile. Inoltre, più si è distanti da Torino, ad esempio se si è in un alto Paese o in una regione fuoi dal Piemonte, più vorrebbe richiederci tempo.</div>}
                 </div>
                 <div className="FAQ-item">
                     <div className="question" onClick = {() => apriRisposta("Domanda 6")}>Quali sono le politiche di privacy e sicurezza del vostro sito?</div>

@@ -490,5 +490,137 @@ body.popup-active {
     font-family: 'Poppins', sans-serif;
 }
 
-/*Form contattaci di "Assistenza Clienti"*/
- /*Non ho messo nulla, tutto copia-inc*/
+ /*Checkout Page*/
+ .popupcheckout-datimancanti{
+    width: 200px;
+    height: 50px;
+    margin: 20px 0px 0px 5%;
+    background-color: var(--firefly);
+    border: 3px solid var(--maastricht-blue);
+    color: var(--maastricht-blue);
+    font-size: 18px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    user-select: none;
+    font-weight: bold;
+    font-size: 16px;
+}
+.popupcheckout-datimancanti:hover{
+    background-color: var(--maastricht-blue);
+    color: var(--firefly);
+    border: 3px solid var(--firefly);
+}
+
+ .popupcheckout-home{
+    width: 200px;
+    height: 50px;
+    margin: 20px 30px 0px 0;
+    background-color: var(--firefly);
+    border: 2px solid var(--firefly);
+    color: var(--maastricht-blue);
+    font-size: 18px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    user-select: none;
+    font-weight: bold;
+    font-size: 16px;
+}
+.popupcheckout-home:hover{
+    background-color: var(--maastricht-blue);
+    color: var(--firefly);
+    border: 2px solid var(--firefly);
+}
+
+.popupcheckout-cronologia{
+    width: 200px;
+    height: 50px;
+    margin: 0px 0px 0px 0px;
+    background-color: var(--dark-gray);
+    border: 2px solid var(--firefly);
+    color: var(--firefly);
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    user-select: none;
+    font-weight: bold;
+    font-size: 16px;
+}
+.popupcheckout-cronologia:hover{
+    background-color: var(--maastricht-blue);
+    color: var(--firefly);
+    border: 2px solid var(--firefly);
+}
+
+.checkup-btn{
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.popup-datimancanti{
+    border: 4px solid rgb(165, 12, 12);
+    color: white;
+    background-color: rgb(155, 69, 69);
+}
+.popup-datimancanti h2{
+    font-size: 24px;
+    margin: 20px 0 10px 0px;
+}
+
+.popuprichiesta-conferma{
+    width: 200px;
+    height: 50px;
+    margin: 0px 0px 0px 0px;
+    background-color: var(--firefly);
+    border: 3px solid var(--maastricht-blue);
+    color: var(--maastricht-blue);
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    user-select: none;
+    font-weight: bold;
+    font-size: 16px;
+}
+.popuprichiesta-conferma:hover{
+    background-color: var(--maastricht-blue);
+    color: var(--firefly);
+    border: 3px solid var(--firefly);
+}
+
+.checkup-btn-richiesta-conferma{
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+.modifica-indirizzo{
+    margin-top: 10px !important;
+    font-size: 14px !important;
+    color: var(--firefly) !important;
+    text-decoration: underline;
+}
+.modifica-indirizzo:hover{
+    color: var(--white) !important;
+}

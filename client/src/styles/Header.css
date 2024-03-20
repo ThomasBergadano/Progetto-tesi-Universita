@@ -121,6 +121,7 @@ li a:hover{
 .icon-user-tool{
   margin-right: 5px;
   margin-top: 1px;
+  font-size: 19px;
 }
 
 /*Dropdown menu profilo*/
@@ -408,4 +409,26 @@ li.scroll-dashboard a{
 
 .language:focus {
   outline: none;
+}
+
+/*Counter del numero di prodotti nella wishlist e nel carrello*/
+.numero-prodotti-carrello,
+.numero-prodotti-wishlist{
+  position: absolute;
+  margin-left: 12px;
+  margin-top: -3px;
+  display: flex;
+  width: 14px;
+  height: 14px;
+  background-color: var(--firefly);
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  border-radius: 50px;
+}
+.numero-prodotti-carrello p,
+.numero-prodotti-wishlist p{
+  font-size: 11px;
+  color: var(--dark-gray);
+  font-weight: bold;
 }

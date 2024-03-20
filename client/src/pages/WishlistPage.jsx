@@ -12,9 +12,10 @@ import loading from "../assets/images/loading.gif"
 
 function Wishlist(){
     const navigate = useNavigate();
-
-    /*Status dei bottoni aggiungi in wishlist e carrello (selezionati e non selezionati)*/
+    
+    /*Status nel localStorage di wishlist e carrello*/
     const [statusWishlist, setStatusWishlist] = useState({});
+    const [statusCarrello, setStatusCarrello] = useState({});
 
     /*Caricamento dei prodotti presenti nella wishlist*/
     const [prodottiInWishlist, setProdottiInWishlist] = useState([]);
@@ -49,6 +50,15 @@ function Wishlist(){
                     }
                     else{
                         setStatusWishlist({});
+                    }
+
+                    /*Recupero il carrello dell'utente dal localstorage*/
+                    const statusCarrello = localStorage.getItem(`${auth.currentUser.uid}_statusCarrello`);
+                    if(statusCarrello){
+                        setStatusCarrello(JSON.parse(statusCarrello));
+                    }
+                    else{
+                        setStatusCarrello({});
                     }
                 }
               }
@@ -140,13 +150,11 @@ function Wishlist(){
                 console.log("prodotto rimosso:", idProdotto);
                 setProdottiInWishlist(prevState => prevState.filter(prodotto => prodotto.id !== idProdotto));
 
-                const updatedStatusWishlist = {
-                    ...statusWishlist,
-                    [idProdotto]: !statusWishlist[idProdotto]
-                };
+                /*Aggiorno il localStorage*/
+                const updatedStatusWishlist = { ...statusWishlist };
+                delete updatedStatusWishlist[idProdotto];
                 setStatusWishlist(updatedStatusWishlist);
-                
-                /*Salvo lo stato nel localStorage*/
+
                 localStorage.setItem(`${auth.currentUser.uid}_statusWishlist`, JSON.stringify(updatedStatusWishlist));
             }
         }

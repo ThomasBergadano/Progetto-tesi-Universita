@@ -124,6 +124,23 @@ function GestioneProdotti(){
             Immagine: "https://firebasestorage.googleapis.com/v0/b/lumia-arredamenti.appspot.com/o/ImmaginiProdotti%2Fsoggiorno.jpg?alt=media&token=cb742ae8-1ae7-40a5-87b4-64e96872d62b",
         });
         
+        /*Dopodichè, andrò a creare un nuovo documento in Recensioni per tale prodotto*/
+        const RiferimentoRaccoltaRecensioni = collection(db, 'Recensioni');
+        const RecensioniProdottoDoc = await addDoc(RiferimentoRaccoltaRecensioni, {
+            ProdottoID: ProdottoDoc.id,
+        })
+
+        /*Dentro il documento "Recensioni" appena creato, creo una nuova raccolta "RecensioniProdotti"*/
+        const RiferimentoRaccoltaCarrelloElencoProdotti = collection(RecensioniProdottoDoc, "RecensioniProdotto");
+        const carrelloElencoProdottiDoc = await addDoc(RiferimentoRaccoltaCarrelloElencoProdotti,{
+            Commento: "",
+            DataCommento: "",
+            UtenteID: "",
+            NomeUtente: "",
+            CognomeUtente: "",
+        })
+
+
         setNomeProdotto("");
         setNomeSet("");
         setDescrizioneProdotto("");
@@ -213,8 +230,8 @@ function GestioneProdotti(){
                             <input type="number" className="prodotti-input-form" placeholder="Altezza prodotto: cm" autoComplete="0" onChange={(e) => setAltezzaProdotto(e.target.value)} required/>
                         </div>
                         <div className="lunghezza-inserisci-prodotto">
-                            <label className="label-dashpage">Inserisci la lunghezza del prodotto (in cm): </label>
-                            <input type="number" className="prodotti-input-form" placeholder="Lunghezza prodotto: cm" autoComplete="0" onChange={(e) => setLunghezzaProdotto(e.target.value)} required/>
+                            <label className="label-dashpage">Inserisci la larghezza del prodotto (in cm): </label>
+                            <input type="number" className="prodotti-input-form" placeholder="Larghezza prodotto: cm" autoComplete="0" onChange={(e) => setLunghezzaProdotto(e.target.value)} required/>
                         </div>
                         <div className="profondita-inserisci-prodotto">
                             <label className="label-dashpage">Inserisci la profondita del prodotto (in cm): </label>
@@ -235,7 +252,7 @@ function GestioneProdotti(){
                 <span className="titolo-form">Elimina prodotto</span>
                 <div className="id-elimina-prodotto">
                     <label className="label-dashpage">Inserisci l'ID del prodotto: </label>
-                    <input type="number" className="prodotti-input-form" placeholder="Profondità prodotto: cm" autoComplete="0" onChange={(e) => setProfonditaProdotto(e.target.value)} required/>
+                    <input type="number" className="prodotti-input-form" placeholder="ID prodotto" autoComplete="0" onChange={(e) => setProfonditaProdotto(e.target.value)} required/>
                 </div>
                 <div className="divisore-elimina-prodotto"/>
                 <button className="submit-gestione-prodotti2">Elimina prodotto</button>

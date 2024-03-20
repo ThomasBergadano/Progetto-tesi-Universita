@@ -125,9 +125,11 @@ function Login() {
                     Quantita: 0,
                 })
             }
-            setNomeUtente(nomeUtente);
-            setTipoPopup("successo");
-            setPopupActivated(true);
+            if(DocumentoUtente.exists()) {
+                setNomeUtente(DocumentoUtente.data().nome);
+                setTipoPopup("successo");
+                setPopupActivated(true);
+            }
         } catch(error){ /*Utente Google non ha mai fatto il primo accesso. Inseriamolo.*/
             console.log(error);
             console.log("login con google, non creato");

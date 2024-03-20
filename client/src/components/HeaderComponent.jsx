@@ -45,6 +45,13 @@ function Header() {
     /*Costanti per la gestione del popup*/
     const [popupActivated, setPopupActivated] = useState(false);
     const [nomeUtente, setNomeUtente] = useState("");
+
+    /*Status nel local storage di wishlist e carrello*/
+    const [statusWishlist, setStatusWishlist] = useState({});
+    const [statusCarrello, setStatusCarrello] = useState({});
+    const [sommaProdottiNellaWishlist, setSommaProdottiNellaWishlist] = useState(0);
+    const [sommaProdottiNelCarrello, setSommaProdottiNelCarrello] = useState(0);
+
     
     /*useEffect che viene aggiornato 1 volta appena auth cambia, ovvero appena l'utente fa il login firebase fa partire una sessione*/
     /*useEffect in realtà viene "runnato" appena il componente viene caricato nel DOM*/
@@ -61,6 +68,16 @@ function Header() {
                 console.log("ruolo utente: ", ruoloUtente);
                 setCurrentUserType(ruoloUtente);
                 setNomeUtente(DocumentoUtente.data().nome);
+
+                /*Ottengo la wishlist dell'utente dal localstorage*/
+                /*const statusWishlist = localStorage.getItem(`${userUID}_statusWishlist`);
+                if(statusWishlist){
+                    setStatusWishlist(JSON.parse(statusWishlist));
+                }
+                else{
+                    setStatusWishlist({});
+                }*/
+
               }
               else{ /*Quando stiamo accedendo a Google per la prima volta, l'header viene montato prima ancora di creare la creazione del documento utente in firestore*/
                 console.log("Per gli utenti Google: il documentoUtente non esiste, ma verrà creato a brevissimo");
@@ -72,6 +89,74 @@ function Header() {
         });
     }, [])
 
+    /* Cambio la somma dei prodotti nella wishlist utente nella UI! */
+    useEffect(() => {
+        const calcoloProdottiNellaWishlist = () => {
+            const userUID = auth.currentUser.uid;
+            const statusWishlist = localStorage.getItem(`${userUID}_statusWishlist`);
+            if(statusWishlist){
+                const wishlist = JSON.parse(statusWishlist);
+                let quantitaTotale = 0;
+                for(const prodottoID in wishlist){
+                    if(wishlist.hasOwnProperty(prodottoID)){
+                        quantitaTotale += wishlist[prodottoID].quantita;
+                    }
+                }
+                setSommaProdottiNellaWishlist(quantitaTotale);
+            }
+            else{
+                setSommaProdottiNellaWishlist(0);
+            }
+        };
+    
+        if(auth.currentUser){
+            calcoloProdottiNellaWishlist();
+        }
+    
+    }, [auth.currentUser !== null && localStorage.getItem(`${auth.currentUser?.uid}_statusWishlist`)]);
+        /*Richiamo la funzione ogni volta che il local storage viene aggiornato*/
+        /* Alla fine non serve!
+        const storageChangeHandler = () => {
+            calcoloProdottiNellaWishlist();
+        };
+    
+        window.addEventListener('storage', storageChangeHandler);
+    
+        return () => {
+            window.removeEventListener('storage', storageChangeHandler);
+        };*/
+
+
+    /* Cambio la somma dei prodotti nel carrello utente nella UI! */
+    useEffect(() => {
+        const calcoloProdottiNelCarrello = () => {
+            const userUID = auth.currentUser.uid;
+            const statusCarrello = localStorage.getItem(`${userUID}_statusCarrello`);
+            if(statusCarrello){
+                const carrello = JSON.parse(statusCarrello);
+                let quantitaTotale = 0;
+                for(const prodottoID in carrello){
+                    if(carrello.hasOwnProperty(prodottoID)){
+                        quantitaTotale += carrello[prodottoID].quantita;
+                    }
+                }
+                setSommaProdottiNelCarrello(quantitaTotale);
+            }
+            else{
+                setSommaProdottiNelCarrello(0);
+            }
+        };
+    
+        if(auth.currentUser){
+            calcoloProdottiNelCarrello();
+        }
+
+    }, [auth.currentUser !== null && localStorage.getItem(`${auth.currentUser?.uid}_statusCarrello`)])
+
+
+
+
+    /* ----- GESTIONE POPUP ----- */
     /*Ovunque io sia, quando compare il popup di logout io voglio evitare che l'utente possa scrollare*/
     useEffect(() => {
         const elementIds = [
@@ -101,16 +186,6 @@ function Header() {
                 }
             });
         }
-    
-        /*return () => {
-            document.body.style.overflow = 'auto';
-            elementIds.forEach(id => {
-                const element = document.getElementById(id);
-                if (element) {
-                    element.style.overflow = 'auto';
-                }
-            });
-        };*/
     }, [popupActivated]);
 
 
@@ -142,58 +217,59 @@ function Header() {
     };
 
 
-    /*useEffect per cambiare l'header (mostrare la navbar) sulla base della coordinata Y dell'utente'*/
-    const [isScrolled, setIsScrolled] = useState(false);
-    useEffect(() => {
-        const handleScroll = () => {
-            const scrollPosition = window.scrollY;
-            const headerHeight = 151;
-    
-            setIsScrolled(scrollPosition > headerHeight);
-        };
-    
-        window.addEventListener('scroll', handleScroll);
+    /* ----- HOOKS E FUNZIONI PER LA GESTIONE DELL'HEADER ----- */
+   /*useEffect per cambiare l'header (mostrare la navbar) sulla base della coordinata Y dell'utente'*/
+   const [isScrolled, setIsScrolled] = useState(false);
+   useEffect(() => {
+       const handleScroll = () => {
+           const scrollPosition = window.scrollY;
+           const headerHeight = 151;
+   
+           setIsScrolled(scrollPosition > headerHeight);
+       };
+   
+       window.addEventListener('scroll', handleScroll);
 
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
-    
-    /*Effetto dei link per scollare in cima alla pagina*/
-    const scrollToTop = () => {
-        const scrollDuration = 300; //ms
-        const scrollStep = -window.scrollY / (scrollDuration / 15);
-        
-        const scrollInterval = setInterval(() => {
-          if (window.scrollY !== 0) {
-            window.scrollBy(0, scrollStep);
-          } else {
-            clearInterval(scrollInterval);
-          }
-        }, 15);
-    };
+       return () => {
+           window.removeEventListener('scroll', handleScroll);
+       };
+   }, []);
+   
+   /*Effetto dei link per scollare in cima alla pagina*/
+   const scrollToTop = () => {
+       const scrollDuration = 300; //ms
+       const scrollStep = -window.scrollY / (scrollDuration / 15);
+       
+       const scrollInterval = setInterval(() => {
+         if (window.scrollY !== 0) {
+           window.scrollBy(0, scrollStep);
+         } else {
+           clearInterval(scrollInterval);
+         }
+       }, 15);
+   };
 
-    /*Gestisco il dropdown del profilo Utente*/
-    const [isDropdownVisibile, setDropdownVisible] = useState(false);
-    const handleDropdownProfilo = () => {
-        setDropdownVisible(!isDropdownVisibile);
-    }
-    /*Chiusura del dropdown appena clicco al di fuori del dropdown stesso*/
-    const dropdownRef = useRef(null);
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                setDropdownVisible(false);
-            }
-        };
+   /*Gestisco il dropdown del profilo Utente*/
+   const [isDropdownVisibile, setDropdownVisible] = useState(false);
+   const handleDropdownProfilo = () => {
+       setDropdownVisible(!isDropdownVisibile);
+   }
 
-        document.addEventListener('click', handleClickOutside);
+   /*Chiusura del dropdown appena clicco al di fuori del dropdown stesso*/
+   const dropdownRef = useRef(null);
+   useEffect(() => {
+       const handleClickOutside = (event) => {
+           if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+               setDropdownVisible(false);
+           }
+       };
 
-        return () => { /*Rimuovo il listener alla rimozione del componente*/
-            document.removeEventListener('click', handleClickOutside);
-        };
-    }, []);
+       document.addEventListener('click', handleClickOutside);
 
+       return () => {
+           document.removeEventListener('click', handleClickOutside);
+       };
+   }, []);
 
 
 
@@ -226,6 +302,9 @@ function Header() {
                         )}
                         { (currentUserType !== USER_TYPES.User) && <li className={`user-tool-content ${location.pathname === "/Wishlist" ? "active" : ""}`}>
                             <Link to="/Wishlist">
+                                <div className="numero-prodotti-wishlist">
+                                <p>{sommaProdottiNellaWishlist}</p>
+                                </div>
                                 <div className="link">
                                     <div className="icon-user-tool">
                                         <FaRegHeart />
@@ -236,6 +315,9 @@ function Header() {
                         }
                         { (currentUserType !== USER_TYPES.User) && <li className={`user-tool-content ${location.pathname.startsWith("/Carrello") ? "active" : ""}`}>
                             <Link to="/Carrello">
+                                <div className="numero-prodotti-carrello">
+                                    <p>{sommaProdottiNelCarrello}</p>
+                                </div>
                                 <div className="link">
                                     <div className="icon-user-tool">
                                         <FiShoppingCart />

@@ -162,6 +162,14 @@ function Carrello(){
             return;
         }
         else{
+            /*Riduco la quantita nel localStorage!*/
+            const updatedStatusCarrello = { ...statusCarrello };
+            if (updatedStatusCarrello.hasOwnProperty(prodotto.id)) {
+                updatedStatusCarrello[prodotto.id].quantita -= 1;
+            }
+            setStatusCarrello(updatedStatusCarrello);
+            localStorage.setItem(`${auth.currentUser.uid}_statusCarrello`, JSON.stringify(updatedStatusCarrello));
+
             if(audioDecrementaQuantita.current){
                 audioDecrementaQuantita.current.play();
             }
@@ -208,6 +216,14 @@ function Carrello(){
     const aumentaQuantita = async(e, prodotto) => {
         e.preventDefault();
         const idUtente = auth.currentUser.uid;
+
+        /*Aumento la quantita nel localStorage!*/
+        const updatedStatusCarrello = { ...statusCarrello };
+        if (updatedStatusCarrello.hasOwnProperty(prodotto.id)) {
+            updatedStatusCarrello[prodotto.id].quantita += 1;
+        }
+        setStatusCarrello(updatedStatusCarrello);
+        localStorage.setItem(`${auth.currentUser.uid}_statusCarrello`, JSON.stringify(updatedStatusCarrello));
 
         /*Effetto audio*/
         if(audioIncrementaQuantita.current){
@@ -260,14 +276,13 @@ function Carrello(){
             audioTogliProdottoDalCarrello.current.play();
         }
 
-        /*Aggiorno lo stato nel localStorage (anche per cambiare colore)*/
-        const updatedStatusCarrello = {
-            ...statusCarrello,
-            [prodotto.id]: !statusCarrello[prodotto.id]
-        };
+        /*Aggiorno il localStorage*/
+        const updatedStatusCarrello = { ...statusCarrello };
+        delete updatedStatusCarrello[prodotto.id];
         setStatusCarrello(updatedStatusCarrello);
-        
+
         localStorage.setItem(`${auth.currentUser.uid}_statusCarrello`, JSON.stringify(updatedStatusCarrello));
+        
 
         /*Elimino da tutto il resto*/
         const idUtente = auth.currentUser.uid;
@@ -366,7 +381,7 @@ function Carrello(){
                                 <div className="info-prodotti-carrello-right">
                                     <div className="quantita-prodotto">
                                         <div className="prezzo-singolo">
-                                            <p>{prodotto.Prezzo}€</p>
+                                            <p>{(prodotto.Prezzo).toFixed(2)}€</p>
                                         </div>
                                     </div>
                                     <div className="rimuovi-prodotto-carrello" onClick={(e) => togliProdottoDalCarrello(e, prodotto)}>

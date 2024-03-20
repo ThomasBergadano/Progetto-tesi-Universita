@@ -16,7 +16,10 @@ import visa from "../assets/images/metodi-pagamento/VISA.png"
 import postepay from "../assets/images/metodi-pagamento/postepay.png"
 import pp from "../assets/images/metodi-pagamento/pp.jpg"
 import spuntaverde from "../assets/images/spuntaverde.png"
+import error from "../assets/images/error.webp"
 import "../styles/CheckoutPage.css"
+import "../styles/Popup.css"
+import suonoCarrello from "../assets/sounds/cash.mp3"
 
 
 function Checkout() {
@@ -33,7 +36,7 @@ function Checkout() {
     const minuti = String(dataAttuale.getMinutes()).padStart(2, '0');
     const oraFormattata = `${ora}:${minuti}`;
 
-    /*Ottengo le props (costo totale)*/
+    /*Ottengo i parametri dallo stato della posizione corrente*/
     const location = useLocation();
     const prezzoTotale = location.state.prezzoTotale;
 
@@ -44,18 +47,20 @@ function Checkout() {
     const [popupActivated, setPopupActivated] = useState(false);
     const [tipoPopup, setTipoPopup] = useState(""); //tipoPopup = datiMancanti/richiestaConferma/AcquistoCompletato
 
-    /* Costanti vari su prodotti e acquisti */
+    /*Costanti vari su prodotti e acquisti*/
     const [spedizioneFissa, setSpedizioneFissa] = useState("15.00");
     const [costoTotale, setCostoTotale] = useState(0.00);
     const [quantitaTotale, setQuantitaTotale] = useState(0);
     const [metodoPagamento, setMetodoPagamento] = useState("carta_di_credito");
 
+    /*Audio per l'acquisto*/
+    const audioAcquistoRef = useRef();
 
 
     useEffect(() => {
         /*Recupero informazioni sull'utente*/
         onAuthStateChanged(auth, async (user) => {
-            if(user) {
+            if(user){
                 const userUID = user.uid;
                 const RiferimentoDocumentoUtente = await doc(db, 'Utenti', userUID);
                 const DocumentoUtente = await getDoc(RiferimentoDocumentoUtente);
@@ -71,7 +76,7 @@ function Checkout() {
                 navigate("/Login");
             }
         });
-    })
+    }, []);
 
     useEffect(() => {
         /*Calcolo il costo totale dei prodotti*/
@@ -79,6 +84,8 @@ function Checkout() {
         setCostoTotale(totale);
     }, [prezzoTotale, spedizioneFissa]);
 
+
+    /*Gestisco il metodo di pagamento*/
     const handlerMetodoPagamento = (e) => {
         setMetodoPagamento(e.target.value);
     };
@@ -97,13 +104,17 @@ function Checkout() {
             //gestisco popup per la richiesta di conferma
             setTipoPopup("richiestaConferma");
         }
-
         setPopupActivated(true);
+    }
+
+
+    const confermaAcquisto = async(e) => {
+        audioAcquistoRef.current.play();
 
         /*Creo un documento all'interno della cartella "Acquisti"*/
         const RiferimentoRaccoltaGestione = collection(db, "Gestione");
-        const queryGetWishlist = query(RiferimentoRaccoltaGestione, where("TipoGestione", "==", "Acquisti"));
-        let snapshotGestione = await getDocs(queryGetWishlist);
+        let queryGetAcquisti = query(RiferimentoRaccoltaGestione, where("TipoGestione", "==", "Acquisti"));
+        let snapshotGestione = await getDocs(queryGetAcquisti);
 
         let gestioneDoc = snapshotGestione.docs[0];
         const RiferimentoRaccoltaAcquisti = collection(gestioneDoc.ref, "Acquisti");
@@ -116,6 +127,7 @@ function Checkout() {
             NumeroCivicoDestinazione: oggettoUtente.NumeroCivico,
             MetodoSpedizione: metodoPagamento,
             StatusOrdine: "Consegnato",
+            Totale: costoTotale,
         });
 
         const RiferimentoRaccoltaProdottiAcquistati = collection(acquistoDoc, "ElencoProdottiAcquistati");
@@ -124,14 +136,33 @@ function Checkout() {
             QuantitaAcquistata: 0,
         })
 
-
         /*Svuoto il carrello nel database per tale utente*/
+        const queryGetGestione = query(RiferimentoRaccoltaGestione, where('TipoGestione', '==', 'Carrello'));
+        let shapshotGestione = await getDocs(queryGetGestione);
+
+        for(const gestioneDoc of shapshotGestione.docs){
+            const RiferimentoRaccoltaCarrello = collection(gestioneDoc.ref, "Carrello");
+            const queryGetUserCarrello = query(RiferimentoRaccoltaCarrello, where('IDUtente', '==', auth.currentUser.uid));
+            const shapshotCarrello = await getDocs(queryGetUserCarrello);
+
+            
+            for(const carrelloDoc of shapshotCarrello.docs){
+                const RiferimentoRaccoltaCarrelloProdotti = collection(carrelloDoc.ref, "CarrelloElencoProdotti");
+                const snapshotCarrelloElencoProdotti = await getDocs(RiferimentoRaccoltaCarrelloProdotti);
+
+                for(const carrelloElencoProdottiDoc of snapshotCarrelloElencoProdotti.docs){
+                    /*Lascio sempre il documento vuoto di default, altrimenti Firebase elimina la cartella*/
+                    if(carrelloElencoProdottiDoc.data().IDProdotto !== ""){
+                        await deleteDoc(carrelloElencoProdottiDoc.ref);
+                    }
+                }
+            }
+        }
+
 
         /*Svuoto il localStorage del carrello per tale utente*/
+        localStorage.removeItem(`${auth.currentUser.uid}_statusCarrello`);
 
-    }
-
-    const confermaAcquisto = async(e) => {
         setTipoPopup("AcquistoCompletato");
     }
 
@@ -147,9 +178,9 @@ function Checkout() {
             setPopupActivated(false);
             navigate("/Profilo/CronologiaOrdini");
         }
-        else if(scelta === "Profilo/InformazioniPersonali"){
+        else if(scelta === "modificaDati"){
             setPopupActivated(false);
-            navigate("/Profilo/InformazioniPersonali");
+            navigate("/Profilo/InformazioniPersonali")
         }
     }
 
@@ -174,7 +205,9 @@ function Checkout() {
                             <p className="checkout-info">Indirizzo: <span>{oggettoUtente.IndirizzoResidenza} {oggettoUtente.NumeroCivico}</span></p>    
                         </div>
                         <div className="spedizione-dx">
-                            <button className="modifica-dati-check"><span>Modifica dati</span></button>
+                            <Link to="/Profilo/InformazioniPersonali">
+                                <button className="modifica-dati-check"><span>Modifica dati</span></button>
+                            </Link>
                         </div>
                     </div>
                     <div className="checkout-pagamento">
@@ -231,11 +264,12 @@ function Checkout() {
                 {
                     (tipoPopup === "datiMancanti") &&
                     <>
-                        <div className="popup popupsignuppage">
+                        <div className="popup popupsignuppage popup-datimancanti">
                             <h2>Attenzione!</h2>
-                            <p>Prima di procedere è necessario che tu compili tutti i dati personali</p>
-                            <div className="btn">
-                                <button className="popupcheckout-home" onClick={(e) => chiudiPopup(e, "Profilo/InformazioniPersonali")}>Vai alla Home</button>
+                            <p>Prima di procedere con l'acquisto è necessario prima compilare i tuoi dati personali!</p>
+                            <img className="popup-croce-negativa" src={error} alt="conferma login"/>
+                            <div className="checkup-btn">
+                                <button className="popupcheckout-datimancanti" onClick={(e) => chiudiPopup(e, "modificaDati")}>Modifica dati</button>
                             </div>
                         </div>
                         <div id="overlay"/>
@@ -246,11 +280,12 @@ function Checkout() {
                     <>
                         <div className="popup popupsignuppage">
                             <h2>Acquisto quasi completato!</h2>
-                            <p>Confermi il tuo indirizzo? {oggettoUtente.IndirizzoResidenza} {oggettoUtente.NumeroCivico} {oggettoUtente.Comune}</p>
+                            <p>Confermi il tuo indirizzo? {oggettoUtente.IndirizzoResidenza} {oggettoUtente.NumeroCivico}, {oggettoUtente.Comune}</p>
                             <img className="popup-signup-img" src={spuntaverde} alt="conferma login"/>
-                            <div className="btn">
-                                <button className="popupcheckout-home" onClick={(e) => chiudiPopup(e, "home")}>Modifica i tuoi dati</button>
-                                <button className="popupcheckout-cronologia" onClick={(e) => chiudiPopup(e, "cronologia")}>Cronologia acquisti</button>
+                            <div className="checkup-btn checkup-btn-richiesta-conferma">
+                                <button className="popuprichiesta-conferma" onClick={(e) => confermaAcquisto(e)}>Conferma</button>
+                                <Link to="/Profilo/InformazioniPersonali"><p className="modifica-indirizzo">Modifica indirizzo</p></Link>
+                                <audio ref={audioAcquistoRef} src={suonoCarrello}/>
                             </div>
                         </div>
                         <div id="overlay"/>
@@ -263,8 +298,8 @@ function Checkout() {
                             <h2>Complimenti, <span className="popup-nomeutente">{oggettoUtente.nome}</span>!</h2>
                             <p>L'acquisto è andato a buon fine!</p>
                             <img className="popup-signup-img" src={spuntaverde} alt="conferma login"/>
-                            <div className="btn">
-                                <button className="popupcheckout-home" onClick={(e) => chiudiPopup(e, "home")}>Modifica i tuoi dati</button>
+                            <div className="checkup-btn">
+                                <button className="popupcheckout-home" onClick={(e) => chiudiPopup(e, "home")}>Torna alla home</button>
                                 <button className="popupcheckout-cronologia" onClick={(e) => chiudiPopup(e, "cronologia")}>Cronologia acquisti</button>
                             </div>
                         </div>

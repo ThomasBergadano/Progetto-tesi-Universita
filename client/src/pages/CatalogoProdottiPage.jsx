@@ -54,7 +54,7 @@ function CatalogoProdotti() {
         larghezzaMassima: "",
     });
 
-    /*Status dei bottoni aggiungi in wishlist e carrello (selezionati e non selezionati)*/
+    /*Status nel localStorage di wishlist e carrello*/
     const [statusWishlist, setStatusWishlist] = useState({});
     const [statusCarrello, setStatusCarrello] = useState({});
 
@@ -67,26 +67,6 @@ function CatalogoProdotti() {
     useEffect(() => {
         /*Teletrasporto l'utente all'inizio della pagina appena viene fatto il rendering*/
         window.scrollTo(0, 0);
-        
-
-        /*Ottengo la wishlist dell'utente dal localstorage*/
-        const savedStatusWishlist = localStorage.getItem(`${auth.currentUser.uid}_statusWishlist`);
-        if(savedStatusWishlist){
-            setStatusWishlist(JSON.parse(savedStatusWishlist));
-        }
-        else{
-            setStatusWishlist({});
-        }
-
-        /*Ottengo il carrello dell'utente dal localstorage*/
-        const savedStatusCarrello = localStorage.getItem(`${auth.currentUser.uid}_statusCarrello`);
-        if(savedStatusCarrello){
-            setStatusCarrello(JSON.parse(savedStatusCarrello));
-        }
-        else{
-            setStatusCarrello({});
-        }
-
 
         /*Caricamento di tutti i prodotti durante il rendering di /CatalogoProdotti*/
         const uploadProducts = async() => {
@@ -190,7 +170,9 @@ function CatalogoProdotti() {
                         const snapshotProdotti = await getDocs(RiferimentoRaccoltaProdotti);
                         if (snapshotProdotti.docs.length > 0) {
                             for (const prodottoDoc of snapshotProdotti.docs) {
-                                prodottiArray.push(prodottoDoc.data());
+                                const datiProdotto = prodottoDoc.data();
+                                const prodottoConId = { id: prodottoDoc.id, ...datiProdotto }
+                                prodottiArray.push(prodottoConId);
                             }
                         }
                     }
@@ -272,7 +254,30 @@ function CatalogoProdotti() {
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        /*Ottengo la wishlist dell'utente dal localstorage*/
+        if(auth.currentUser != null){
+            const statusWishlist = localStorage.getItem(`${auth.currentUser.uid}_statusWishlist`);
+            if(statusWishlist){
+                setStatusWishlist(JSON.parse(statusWishlist));
+            }
+            else{
+                setStatusWishlist({});
+            }
+
+            /*Ottengo il carrello dell'utente dal localstorage*/
+            const statusCarrello = localStorage.getItem(`${auth.currentUser.uid}_statusCarrello`);
+            if(statusCarrello){
+                setStatusCarrello(JSON.parse(statusCarrello));
+            }
+            else{
+                setStatusCarrello({});
+            }
+        }
+    }, [auth.currentUser]);
+        
 
     /*Effetto del floating button filter per scrollare in cima alla pagina*/
     const scrollToTop = () => {
@@ -400,7 +405,9 @@ function CatalogoProdotti() {
                     const snapshotProdotti = await getDocs(RiferimentoRaccoltaProdotti);
                     if (snapshotProdotti.docs.length > 0) {
                         for (const prodottoDoc of snapshotProdotti.docs) {
-                            prodottiArray.push(prodottoDoc.data());
+                            const datiProdotto = prodottoDoc.data();
+                            const prodottoConId = { id: prodottoDoc.id, ...datiProdotto }
+                            prodottiArray.push(prodottoConId);
                         }
                     }
                 }
@@ -429,10 +436,13 @@ function CatalogoProdotti() {
                 const snapshotProdotti = await getDocs(RiferimentoRaccoltaProdotti);
                 if (snapshotProdotti.docs.length > 0) {
                     for (const prodottoDoc of snapshotProdotti.docs) {
-                        prodottiArray.push(prodottoDoc.data());
+                        const datiProdotto = prodottoDoc.data();
+                        const prodottoConId = { id: prodottoDoc.id, ...datiProdotto }
+                        prodottiArray.push(prodottoConId);
                     }
                 }
             }
+            console.log("sito: ", prodottiArray);
         }
         
         /*Filtro del nome*/
@@ -493,38 +503,44 @@ function CatalogoProdotti() {
     /* -------------------------------------------------------------------------------------------------------*/
 
     /* GESTIONE WISHLIST*/
-    const handlerAggiuntaInWishlist = async (e, idProdotto) => {
+    const handlerAggiuntaInWishlist = async(e, idProdotto) => {
         e.preventDefault();
         e.stopPropagation(); //Quando clicco sul cuore, non voglio ascoltare il link esterno per andare nella pagina del prodotto
-        
+        console.log("ciaoo");
         try{
-            if(auth.currentUser.email !== null){
-                /*Faccio che cambiare il colore*/
-                const updatedStatusWishlist = {
-                    ...statusWishlist,
-                    [idProdotto]: !statusWishlist[idProdotto]
-                };
-                setStatusWishlist(updatedStatusWishlist);
-                const isProdottoInWishlist = statusWishlist[idProdotto];
-
-                /*Salvo lo stato nel localStorage*/
-                localStorage.setItem(`${auth.currentUser.uid}_statusWishlist`, JSON.stringify(updatedStatusWishlist));
-                
-                /*Aggiunta o rimozione del Prodotto dal database (Wishlist)*/
-                if(!isProdottoInWishlist){
-                    audioWishlistRef.current.play(); //Attivo suono!
+            if(auth.currentUser && auth.currentUser.email){
+                let statusWishlist = JSON.parse(localStorage.getItem(`${auth.currentUser?.uid}_statusWishlist`));               
+                const ProdottoIncluso = statusWishlist ? statusWishlist.hasOwnProperty(idProdotto) : false;
+                console.log("ciaoo");
+                if(!statusWishlist){
+                    statusWishlist = {};
+                }
+    
+                if(!ProdottoIncluso){
+                    statusWishlist[idProdotto] = { quantita: 1 };
+                }
+                else{
+                    delete statusWishlist[idProdotto];
+                }
+    
+                localStorage.setItem(`${auth.currentUser.uid}_statusWishlist`, JSON.stringify(statusWishlist));
+                setStatusWishlist(statusWishlist);
+                console.log("ciaoo");
+                if(!ProdottoIncluso){
+                    audioWishlistRef.current.play();
                     await aggiuntaProdottoInWishlist(idProdotto);
                 }
                 else{
                     await rimozioneProdottoDaWishlist(idProdotto);
                 }
             }
-
+            else{
+                navigate("/Login")
+            }
         }
         catch(error){ /*Entro qui se non sono loggato e sto provando a mettere qualcosa tra i preferiti*/
             navigate("/Login");
         }
-    
     }
 
     const aggiuntaProdottoInWishlist = async(idProdotto) => {
@@ -574,26 +590,37 @@ function CatalogoProdotti() {
         e.stopPropagation(); //Quando clicco sul carrello, non voglio ascoltare il link esterno per andare nella pagina del prodotto
         
         try{
-            if(auth.currentUser.email !== null){
-                /*Faccio che cambiare il colore*/
-                const updatedStatusCarrello = {
-                    ...statusCarrello,
-                    [idProdotto]: !statusCarrello[idProdotto]
-                };
-                setStatusCarrello(updatedStatusCarrello);
-                const isProdottoInCarrello = statusCarrello[idProdotto];
-                
+            if(auth.currentUser && auth.currentUser.email){
+                /*Gestisco il carrello nel local storage*/
+                let statusCarrello = JSON.parse(localStorage.getItem(`${auth.currentUser?.uid}_statusCarrello`));               
+                const ProdottoIncluso = statusCarrello ? statusCarrello.hasOwnProperty(idProdotto) : false;
+
+                if(!statusCarrello){
+                    statusCarrello = {};
+                }
+
+                if(!ProdottoIncluso){
+                    statusCarrello[idProdotto] = { quantita: 1 };
+                }
+                else{
+                    delete statusCarrello[idProdotto];
+                }
+
                 /*Salvo lo stato nel localStorage*/
-                localStorage.setItem(`${auth.currentUser.uid}_statusCarrello`, JSON.stringify(updatedStatusCarrello));
+                localStorage.setItem(`${auth.currentUser.uid}_statusCarrello`, JSON.stringify(statusCarrello));
+                setStatusCarrello(statusCarrello);
 
                 /*Aggiunta o rimozione del Prodotto dal database (Carrello)*/
-                if(!isProdottoInCarrello){
-                    audioCarrelloRef.current.play(); //Attivo suono!
+                if(!ProdottoIncluso){
+                    audioCarrelloRef.current.play(); //Attivo il suono!
                     await aggiuntaProdottoInCarrello(idProdotto);
                 }
                 else{
                     await rimozioneProdottoDaCarrello(idProdotto);
                 }
+            }
+            else{
+                navigate("/Login")
             }
         }
         catch(error){
@@ -715,7 +742,7 @@ function CatalogoProdotti() {
                             </div>
                         </div>
                         <div className="lunghezza-cercaprodotto">
-                            <label className="label-filter">Lunghezza (min/max) </label>
+                            <label className="label-filter">Larghezza (min/max) </label>
                             <div className="input-in-riga">
                                 <input type="text" placeholder="Min (cm)" autoComplete="0" onChange={(e) => handlerFiltroLunghezzaMinima(e)}/>
                                 <input type="text" placeholder="Max (cm)" autoComplete="200" onChange={(e) => handlerFiltroLunghezzaMassima(e)}/>
@@ -765,11 +792,11 @@ function CatalogoProdotti() {
                             <div className="prodotto-img">
                                 <img src={prodotto.Immagine} alt="icona-prodotto"></img>
                                 <div className="interagisci-prodotto">
-                                    <div className={`prodotto-in-wishlist ${statusWishlist[prodotto.id] ? 'aggiunto': ''}`} onClick={(e) => handlerAggiuntaInWishlist(e, prodotto.id)}>
+                                    <div className={`prodotto-in-wishlist ${statusWishlist.hasOwnProperty(prodotto.id) ? 'aggiunto': ''}`} onClick={(e) => handlerAggiuntaInWishlist(e, prodotto.id)}>
                                         <FaRegHeart />
                                         <audio ref={audioWishlistRef} src={suonoWishlist}/>
                                     </div>
-                                    <div className={`prodotto-in-carrello ${statusCarrello[prodotto.id] ? 'aggiunto': ''}`} onClick={(e) => handlerAggiuntaInCarrello(e, prodotto.id)}>
+                                    <div className={`prodotto-in-carrello ${statusCarrello.hasOwnProperty(prodotto.id) ? 'aggiunto': ''}`} onClick={(e) => handlerAggiuntaInCarrello(e, prodotto.id)}>
                                         <FiShoppingCart />
                                         <audio ref={audioCarrelloRef} src={suonoCarrello}/>
                                     </div>
@@ -779,7 +806,7 @@ function CatalogoProdotti() {
                         <div className="prodotto-info">
                             <p className="info1">{String(prodotto.NomeProdotto)}</p>
                             <p className="info2">Set: {String(prodotto.NomeSet)}</p>
-                            <p className="info3">{String(prodotto.Prezzo)}€</p>
+                            <p className="info3">{String((prodotto.Prezzo).toFixed(2))}€</p>
                         </div>
                     </div>
                 ))}

@@ -187,16 +187,71 @@
     display: flex;
     flex-direction: column;
     width: 1190px;
-    height: 300px;
-    margin: -40px 0 100px 80px;
+    height: auto;
+    margin: 20px 0 100px 80px;
 }
 
 .recensioni-prodotto-sub1{
     font-weight: bold;
-    font-size: 24px;
+    font-size: 26px;
+    margin: 0 0 15px 0;
 }
 
-.recensioni-prodotto-container{
+.recensione-paragrafo p{
+    margin: 15px 0 5px 20px;
+}
+.recensione-invito{
+    font-size: 18px;
+}
+.recensione-textarea{
+    width: 1120px;
+    height: 50px;
+    padding: 15px;
+    border-radius: 5px;
+    margin-left: 20px;
+    border: none;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    resize: none;
+    border: 1px solid var(--dark-gray);
+}
+.recensione-textarea:focus{
+    outline: 3px solid var(--firefly);
+}
+
+.invia-recensione{
+    width: 200px;
+    height: 50px;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--firefly);
+    color: var(--maastricht-blue);
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    border: 3px solid var(--maastricht-blue);
+    margin: 8px 0px 0px 470px;
+}
+.invia-recensione:hover{
+    background-color: var(--maastricht-blue);
+    color: var(--firefly);
+    border: 3px solid var(--firefly);
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.recensione-divisore{
+    width: 1008px;
+    height: 2px;
+    margin: 35px 0px 35px 90px;
+    background-color: var(--maastricht-blue);
+}
+
+.container-recensioni-empty{
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -204,8 +259,52 @@
     text-align: center;
     align-items: center;
     justify-content: center;
-    border: 3px solid var(--dark-gray);
+    margin-top: -40px;
 }
 .recensioni-prodotto-sub2{
     font-size: 18px;
+}
+
+.container-recensioni-notempty{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    border: 3px solid var(--dark-gray);
+    box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.1);
+}
+
+.recensione-utente{
+    width: 1148px;
+    height: auto;
+    background-color: var(--maastricht-blue);
+    margin: 0px 0px 25px 20px;
+    padding: 0px;
+    border: 3px solid var(--dark-gray);
+    color: white;
+}
+.recensione-utente p{
+    margin: 0px 0px 0px 6px
+}
+
+.recensione-informazioni{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.recensione-nome-utente{
+    font-size: 18px;
+    margin: 6px 0px 0px 6px;
+    color: var(--firefly);
+}
+.recensione-data{
+    padding-top: 6px;
+    padding-right: 6px;
+}
+
+.caricamento-carrello-list .loading-gif-recensioni{
+    width: 120px;
+    height: 120px;
+    margin-right: 75px;
+    margin-bottom: 10px;
 }
